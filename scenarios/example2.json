@@ -1,0 +1,108 @@
+// Inclusion of the server location
+{
+    "storageLocation": "54.152.190.217",
+    "serverLocation": "http://5574serverapi.azurewebsites.net/",
+        "users": [
+        {
+            "Username":"User1",
+            "UserID": "12345",
+            "Password": "thePassword",
+            "Coordinates": 
+            {
+                "x":"1234",
+                "y":"4321",
+                "z":"6789"
+            }
+            
+        },
+        {
+            "Username": "User2",
+            "UserID": "67890",
+            "Password": "secondPassword",
+            "Coordinates": 
+            {
+                "x":"1234",
+                "y":"4321",
+                "z":"6789"
+            }
+            
+        }
+    ],
+    "houses": [
+    {
+      "name": "house1",
+      "devices": [
+        {
+          "name": "light1",
+          "class": "Light",
+          "type": "Simulated",
+          "startState": false
+        },
+        {
+          "name": "Kitchen Ceiling Fan",
+          "class": "Fan",
+          "type": "Simulated",
+          "startState": false,
+          "speed": 0
+        }
+      ],
+      "rooms": [
+        {
+          "type": "Simulated",
+          "name": "Kitchen",
+          "dimensions": {
+            "x": 100,
+            "y": 200
+          },
+          "roomLevel": 1,
+          "doors": 
+          [
+            {
+              "x": 20,
+              "y": 200,
+              "connectingRoom": 1
+            }
+          ],
+          "devices":
+          [
+            1
+          ]
+        },
+        {
+          "type": "Simulated",
+          "name": "Family ROom",
+          "dimensions": {
+            "x": 300,
+            "y": 200
+          },
+          "roomLevel": 1,
+          "doors": 
+          [
+            {
+              "x": 20,
+              "y": 0,
+              "connectingRoom": 0
+            }
+          ],
+          "devices":
+          [
+            0
+          ]
+        }
+      ],
+      "weather":
+      [
+        {
+          "time": "10:00pm",
+          "day": "1/1/2015",
+          "temp": 50
+        },
+        {
+          "time": "11:00pm",
+          "day": "1/2/2015",
+          "temp": 30
+        }
+      ]
+    }
+  ]
+}
