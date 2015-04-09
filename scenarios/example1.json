@@ -33,13 +33,11 @@
         {
           "name": "light1",
           "class": "LightSwitch",
-          "type": "Simulated",
           "Enabled": false
         },
         {
           "name": "Kitchen Ceiling Fan",
           "class": "CeilingFan",
-          "type": "Simulated",
           "Enabled": false,
           "State": 0
         }
