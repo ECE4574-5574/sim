@@ -1,7 +1,9 @@
 ﻿using System;
-using Gtk;
-using Sim_Harness_GUI;
 using System.IO;
+using Gtk;
+using Hats.Time;
+using Newtonsoft.Json;
+using Sim_Harness_GUI;
 
 public partial class MainWindow: Gtk.Window
 {
@@ -148,12 +150,8 @@ public partial class MainWindow: Gtk.Window
 
 	private string buildStartString()
 	{
-		string jsonString = "{\n\t\"TimeFrame\": {" +
-			"\n\t\t\"wall\": \"" + DateTime.Now.ToString("o") + "\"," +
-			"\n\t\t\"sim\": \"" + DateTime.Now.ToString("o") + "\"," + 
-			"\n\t\t\"rate\": " + timeFrameSpeedSpinbutton.Text +
-			"\n\t}\n}";
-		return jsonString;
+		var frame = new TimeFrame(DateTime.Now, DateTime.Now, Double.Parse(timeFrameSpeedSpinbutton.Text));
+		return JsonConvert.SerializeObject(frame);
 	}
 
 	protected void OnEndTestButtonClicked (object sender, EventArgs e)
