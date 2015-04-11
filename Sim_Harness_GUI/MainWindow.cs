@@ -6,12 +6,17 @@ using System.IO;
 public partial class MainWindow: Gtk.Window
 {
 	protected InstanceManager _instances;
+	protected DateTime _simTime;
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
 		Console.WriteLine("Build");
 		Build();
+		_simTime = DateTime.UtcNow;
+		//_simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0);
+
 	}
+
 
 	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
 	{
@@ -101,17 +106,17 @@ public partial class MainWindow: Gtk.Window
 		this.testScenarioComboBox.Active = 0;
 	}
 
-	protected void OnScenarioDirectoryTextChanged (object sender, EventArgs e)
+	protected void OnScenarioDirectoryTextChanged(object sender, EventArgs e)
 	{
 		changeStartButton();
 	}
 
-	protected void OnAppSimLocationEntryChanged (object sender, EventArgs e)
+	protected void OnAppSimLocationEntryChanged(object sender, EventArgs e)
 	{
 		changeStartButton();
 	}
 
-	protected void OnHouseSimLocationEntryChanged (object sender, EventArgs e)
+	protected void OnHouseSimLocationEntryChanged(object sender, EventArgs e)
 	{
 		changeStartButton();
 	}
@@ -149,17 +154,37 @@ public partial class MainWindow: Gtk.Window
 	private string buildStartString()
 	{
 		string jsonString = "{\n\t\"TimeFrame\": {" +
-			"\n\t\t\"wall\": \"" + DateTime.Now.ToString("o") + "\"," +
-			"\n\t\t\"sim\": \"" + DateTime.Now.ToString("o") + "\"," + 
-			"\n\t\t\"rate\": " + timeFrameSpeedSpinbutton.Text +
-			"\n\t}\n}";
+		                    "\n\t\t\"wall\": \"" + DateTime.Now.ToString("O") + "\"," +
+							"\n\t\t\"sim\": \"" + _simTime.ToString("O") + "\"," +
+		                    "\n\t\t\"rate\": " + timeFrameSpeedSpinbutton.Text +
+		                    "\n\t}\n}";
+
 		return jsonString;
 	}
 
-	protected void OnEndTestButtonClicked (object sender, EventArgs e)
+	protected void OnEndTestButtonClicked(object sender, EventArgs e)
 	{
-		_instances.Kill();
+		//_instances.Kill();
 		endTestButton.Sensitive = false;
 		startTestButton.Sensitive = true;
 	}
+		
+
+	protected void OnSpinbutton1ValueChanged (object sender, EventArgs e)
+	{
+//			TimeSpan inputTime = new TimeSpan(hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0);
+//			_simTime = _simTime.Date + inputTime;	
+		_simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0, DateTimeKind.Local);
+	}
+
+	protected void OnMinSpinBoxValueChanged (object sender, EventArgs e)
+	{
+//			TimeSpan inputTime = new TimeSpan(hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0);
+//			_simTime = _simTime.Date + inputTime;	
+
+		_simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0, DateTimeKind.Local);
+
+	}
+		
+
 }

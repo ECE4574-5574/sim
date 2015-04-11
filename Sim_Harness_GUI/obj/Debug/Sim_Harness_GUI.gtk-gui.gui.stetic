@@ -7,22 +7,22 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/Sim_Harness_GUI.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="734 544">
+  <widget class="Gtk.Window" id="MainWindow" design-size="939 753">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Sim Harness</property>
     <property name="WindowPosition">CenterOnParent</property>
-    <property name="BorderWidth">24</property>
+    <property name="BorderWidth">27</property>
     <property name="Gravity">Center</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
-      <widget class="Gtk.VBox" id="vbox2">
+      <widget class="Gtk.VBox" id="mainLayoutBox">
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
           <widget class="Gtk.Label" id="mainWindowTitleLabel">
             <property name="MemberName" />
             <property name="Ypad">7</property>
-            <property name="LabelProp" translatable="yes">Sim Harnes</property>
+            <property name="LabelProp" translatable="yes">Sim Harness</property>
             <property name="Justify">Center</property>
           </widget>
           <packing>
@@ -33,280 +33,64 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.HBox" id="hbox3">
+          <widget class="Gtk.HBox" id="topLayoutBox">
             <property name="MemberName" />
-            <property name="Spacing">6</property>
+            <property name="Spacing">10</property>
             <child>
-              <widget class="Gtk.VBox" id="vbox1">
+              <widget class="Gtk.VBox" id="paramsBox">
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.VBox" id="vbox5">
+                  <widget class="Gtk.Label" id="serverURLLable">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">Server URL</property>
+                    <property name="Justify">Center</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Entry" id="serverURLEntry">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="IsEditable">True</property>
+                    <property name="InvisibleChar">●</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="scenarioLabel">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">Scenarios Directory</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.HBox" id="hbox3">
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.VBox" id="vbox6">
+                      <widget class="Gtk.Button" id="scenarioDirButton">
                         <property name="MemberName" />
-                        <property name="Spacing">6</property>
-                        <child>
-                          <widget class="Gtk.Label" id="serverURLLable">
-                            <property name="MemberName" />
-                            <property name="LabelProp" translatable="yes">Server URL</property>
-                            <property name="Justify">Center</property>
-                          </widget>
-                          <packing>
-                            <property name="Position">0</property>
-                            <property name="AutoSize">True</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Entry" id="serverURLEntry">
-                            <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="IsEditable">True</property>
-                            <property name="InvisibleChar">●</property>
-                          </widget>
-                          <packing>
-                            <property name="Position">1</property>
-                            <property name="AutoSize">True</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.VBox" id="vbox7">
-                            <property name="MemberName" />
-                            <property name="Spacing">6</property>
-                            <child>
-                              <widget class="Gtk.Label" id="appSimLocationLabel">
-                                <property name="MemberName" />
-                                <property name="LabelProp" translatable="yes">App Simulater Location</property>
-                                <property name="Justify">Center</property>
-                              </widget>
-                              <packing>
-                                <property name="Position">0</property>
-                                <property name="AutoSize">True</property>
-                                <property name="Expand">False</property>
-                                <property name="Fill">False</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="Gtk.HBox" id="hbox1">
-                                <property name="MemberName" />
-                                <property name="Spacing">6</property>
-                                <child>
-                                  <widget class="Gtk.Button" id="appSimulatorChooseFileButton">
-                                    <property name="MemberName" />
-                                    <property name="CanFocus">True</property>
-                                    <property name="Type">TextOnly</property>
-                                    <property name="Label" translatable="yes">Select FIle</property>
-                                    <property name="UseUnderline">True</property>
-                                    <signal name="Clicked" handler="OnAppSimulatorChooseFileButtonClicked" />
-                                  </widget>
-                                  <packing>
-                                    <property name="Position">0</property>
-                                    <property name="AutoSize">True</property>
-                                    <property name="Expand">False</property>
-                                    <property name="Fill">False</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="Gtk.Entry" id="appSimLocationEntry">
-                                    <property name="MemberName" />
-                                    <property name="CanFocus">True</property>
-                                    <property name="IsEditable">True</property>
-                                    <property name="InvisibleChar">●</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="Position">1</property>
-                                    <property name="AutoSize">True</property>
-                                  </packing>
-                                </child>
-                              </widget>
-                              <packing>
-                                <property name="Position">1</property>
-                                <property name="AutoSize">True</property>
-                                <property name="Expand">False</property>
-                                <property name="Fill">False</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="Gtk.VBox" id="vbox8">
-                                <property name="MemberName" />
-                                <property name="Spacing">6</property>
-                                <child>
-                                  <widget class="Gtk.VBox" id="vbox9">
-                                    <property name="MemberName" />
-                                    <property name="Spacing">6</property>
-                                    <child>
-                                      <widget class="Gtk.Label" id="houseSimLocationLabel">
-                                        <property name="MemberName" />
-                                        <property name="LabelProp" translatable="yes">House Simulator Location</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="Position">0</property>
-                                        <property name="AutoSize">True</property>
-                                        <property name="Expand">False</property>
-                                        <property name="Fill">False</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="Gtk.HBox" id="hbox9">
-                                        <property name="MemberName" />
-                                        <property name="Spacing">6</property>
-                                        <child>
-                                          <widget class="Gtk.Button" id="houseSimLocationButton">
-                                            <property name="MemberName" />
-                                            <property name="CanFocus">True</property>
-                                            <property name="Type">TextOnly</property>
-                                            <property name="Label" translatable="yes">Select File</property>
-                                            <property name="UseUnderline">True</property>
-                                            <signal name="Clicked" handler="OnHouseSimLocationButtonClicked" />
-                                          </widget>
-                                          <packing>
-                                            <property name="Position">0</property>
-                                            <property name="AutoSize">True</property>
-                                            <property name="Expand">False</property>
-                                            <property name="Fill">False</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="Gtk.Entry" id="houseSimLocationEntry">
-                                            <property name="MemberName" />
-                                            <property name="CanFocus">True</property>
-                                            <property name="IsEditable">True</property>
-                                            <property name="InvisibleChar">●</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="Position">1</property>
-                                            <property name="AutoSize">True</property>
-                                          </packing>
-                                        </child>
-                                      </widget>
-                                      <packing>
-                                        <property name="Position">1</property>
-                                        <property name="AutoSize">True</property>
-                                        <property name="Expand">False</property>
-                                        <property name="Fill">False</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="Gtk.Label" id="timeFrameLabel">
-                                        <property name="MemberName" />
-                                        <property name="LabelProp" translatable="yes">Select Time Frame Speed</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="Position">2</property>
-                                        <property name="AutoSize">True</property>
-                                        <property name="Expand">False</property>
-                                        <property name="Fill">False</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                  <packing>
-                                    <property name="Position">0</property>
-                                    <property name="AutoSize">True</property>
-                                    <property name="Expand">False</property>
-                                    <property name="Fill">False</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="Gtk.HBox" id="hbox2">
-                                    <property name="MemberName" />
-                                    <property name="Spacing">6</property>
-                                    <child>
-                                      <widget class="Gtk.VBox" id="vbox10">
-                                        <property name="MemberName" />
-                                        <property name="Spacing">6</property>
-                                        <child>
-                                          <widget class="Gtk.HBox" id="hbox10">
-                                            <property name="MemberName" />
-                                            <property name="Spacing">6</property>
-                                            <child>
-                                              <widget class="Gtk.Label" id="realSecondLabel">
-                                                <property name="MemberName" />
-                                                <property name="LabelProp" translatable="yes">1 Real Second = </property>
-                                              </widget>
-                                              <packing>
-                                                <property name="Position">0</property>
-                                                <property name="AutoSize">True</property>
-                                                <property name="Expand">False</property>
-                                                <property name="Fill">False</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="Gtk.SpinButton" id="timeFrameSpeedSpinbutton">
-                                                <property name="MemberName" />
-                                                <property name="CanFocus">True</property>
-                                                <property name="Lower">1</property>
-                                                <property name="Upper">10000</property>
-                                                <property name="PageIncrement">10</property>
-                                                <property name="StepIncrement">1</property>
-                                                <property name="ClimbRate">1</property>
-                                                <property name="Numeric">True</property>
-                                                <property name="Value">1</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="Position">1</property>
-                                                <property name="AutoSize">True</property>
-                                                <property name="Expand">False</property>
-                                                <property name="Fill">False</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="Gtk.Label" id="simSecondLabel">
-                                                <property name="MemberName" />
-                                                <property name="LabelProp" translatable="yes">Simulated Seconds</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="Position">2</property>
-                                                <property name="AutoSize">True</property>
-                                                <property name="Expand">False</property>
-                                                <property name="Fill">False</property>
-                                              </packing>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="Position">0</property>
-                                            <property name="AutoSize">True</property>
-                                            <property name="Expand">False</property>
-                                            <property name="Fill">False</property>
-                                          </packing>
-                                        </child>
-                                      </widget>
-                                      <packing>
-                                        <property name="Position">0</property>
-                                        <property name="AutoSize">True</property>
-                                        <property name="Expand">False</property>
-                                        <property name="Fill">False</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                  <packing>
-                                    <property name="Position">1</property>
-                                    <property name="AutoSize">True</property>
-                                    <property name="Expand">False</property>
-                                    <property name="Fill">False</property>
-                                  </packing>
-                                </child>
-                              </widget>
-                              <packing>
-                                <property name="Position">2</property>
-                                <property name="AutoSize">True</property>
-                                <property name="Expand">False</property>
-                                <property name="Fill">False</property>
-                              </packing>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="Position">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
+                        <property name="CanFocus">True</property>
+                        <property name="Type">TextOnly</property>
+                        <property name="Label" translatable="yes">Choose...</property>
+                        <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnScenarioDirectoryLoad" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -315,9 +99,195 @@
                         <property name="Fill">False</property>
                       </packing>
                     </child>
+                    <child>
+                      <widget class="Gtk.Entry" id="scenarioDirectoryText">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="IsEditable">False</property>
+                        <property name="InvisibleChar">●</property>
+                        <signal name="Changed" handler="OnScenarioDirectoryTextChanged" />
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                      </packing>
+                    </child>
                   </widget>
                   <packing>
-                    <property name="Position">0</property>
+                    <property name="Position">3</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="appSimLocationLabel">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">App Simulator Location</property>
+                    <property name="Justify">Center</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">4</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.HBox" id="appLocationHBox">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="Gtk.Button" id="appSimulatorChooseFileButton">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Type">TextOnly</property>
+                        <property name="Label" translatable="yes">Choose...</property>
+                        <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnAppSimulatorChooseFileButtonClicked" />
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Entry" id="appSimLocationEntry">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="IsEditable">False</property>
+                        <property name="InvisibleChar">●</property>
+                        <signal name="Changed" handler="OnAppSimLocationEntryChanged" />
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">5</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="houseSimLocationLabel">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">House Simulator Location</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">6</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.HBox" id="houseLocationHBox">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="Gtk.Button" id="houseSimLocationButton">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Type">TextOnly</property>
+                        <property name="Label" translatable="yes">Choose...</property>
+                        <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnHouseSimLocationButtonClicked" />
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Entry" id="houseSimLocationEntry">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="IsEditable">False</property>
+                        <property name="InvisibleChar">●</property>
+                        <signal name="Changed" handler="OnHouseSimLocationEntryChanged" />
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">7</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="timeFrameLabel">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">Select Time Frame Speed</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">8</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.HBox" id="hbox10">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="Gtk.Label" id="realSecondLabel">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">1 Real Second = </property>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.SpinButton" id="timeFrameSpeedSpinbutton">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Lower">1</property>
+                        <property name="Upper">10000</property>
+                        <property name="PageIncrement">10</property>
+                        <property name="StepIncrement">1</property>
+                        <property name="ClimbRate">1</property>
+                        <property name="Numeric">True</property>
+                        <property name="Value">4</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="simSecondLabel">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Simulated Seconds</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">2</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">9</property>
                     <property name="AutoSize">True</property>
                     <property name="Expand">False</property>
                     <property name="Fill">False</property>
@@ -347,9 +317,9 @@
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.Label" id="Test_Senario_Lable">
+                  <widget class="Gtk.Label" id="Test_Scenario_Lable">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Test Senarios</property>
+                    <property name="LabelProp" translatable="yes">Test Scenarios</property>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -359,67 +329,48 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.VBox" id="vbox11">
+                  <widget class="Gtk.ComboBox" id="testScenarioComboBox">
                     <property name="MemberName" />
-                    <property name="Spacing">6</property>
-                    <child>
-                      <widget class="Gtk.ComboBox" id="testSenarioComboBox">
-                        <property name="MemberName" />
-                        <property name="IsTextCombo">True</property>
-                        <property name="Items" translatable="yes" />
-                      </widget>
-                      <packing>
-                        <property name="Position">0</property>
-                        <property name="AutoSize">True</property>
-                        <property name="Expand">False</property>
-                        <property name="Fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.VBox" id="vbox16">
-                        <property name="MemberName" />
-                        <property name="Spacing">6</property>
-                        <child>
-                          <widget class="Gtk.Label" id="simDetailsLabel">
-                            <property name="MemberName" />
-                            <property name="LabelProp" translatable="yes">Test Details</property>
-                          </widget>
-                          <packing>
-                            <property name="Position">0</property>
-                            <property name="AutoSize">True</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
-                            <property name="MemberName" />
-                            <property name="ShadowType">In</property>
-                            <child>
-                              <widget class="Gtk.TextView" id="testSenarioTextview">
-                                <property name="MemberName" />
-                                <property name="CanFocus">True</property>
-                                <property name="ShowScrollbars">True</property>
-                                <property name="Editable">False</property>
-                                <property name="Text" translatable="yes">None Selected 
-(This will show what is contained in the selected Senario)</property>
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="Position">1</property>
-                            <property name="AutoSize">True</property>
-                          </packing>
-                        </child>
-                      </widget>
-                      <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">True</property>
-                      </packing>
-                    </child>
+                    <property name="IsTextCombo">True</property>
+                    <property name="Items" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="simDetailsLabel">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">Test Details</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+                    <property name="MemberName" />
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TextView" id="testSenarioTextview">
+                        <property name="MemberName" />
+                        <property name="WidthRequest">200</property>
+                        <property name="CanFocus">True</property>
+                        <property name="ShowScrollbars">True</property>
+                        <property name="Editable">False</property>
+                        <property name="Text" translatable="yes">None Selected 
+(This will show what is contained in the selected Senario)</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">3</property>
                     <property name="AutoSize">True</property>
                   </packing>
                 </child>
@@ -440,11 +391,134 @@
           </packing>
         </child>
         <child>
+          <widget class="Gtk.VBox" id="vbox4">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.HBox" id="hbox11">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Label" id="label8">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">Simulation Time:</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.HBox" id="hbox14">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="Gtk.SpinButton" id="hourSpinBox">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Lower">1</property>
+                        <property name="Upper">24</property>
+                        <property name="PageIncrement">1</property>
+                        <property name="StepIncrement">1</property>
+                        <property name="ClimbRate">1</property>
+                        <property name="Numeric">True</property>
+                        <property name="Value">1</property>
+                        <signal name="ValueChanged" handler="OnSpinbutton1ValueChanged" />
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label10">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Hour</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.HBox" id="hbox16">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.SpinButton" id="minSpinBox">
+                            <property name="MemberName" />
+                            <property name="CanFocus">True</property>
+                            <property name="Upper">59</property>
+                            <property name="PageIncrement">1</property>
+                            <property name="StepIncrement">1</property>
+                            <property name="ClimbRate">1</property>
+                            <property name="Numeric">True</property>
+                            <property name="Value">59</property>
+                            <signal name="ValueChanged" handler="OnMinSpinBoxValueChanged" />
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Label" id="label13">
+                            <property name="MemberName" />
+                            <property name="LabelProp" translatable="yes">Minute</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">2</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
           <widget class="Gtk.HSeparator" id="hseparator3">
             <property name="MemberName" />
           </widget>
           <packing>
-            <property name="Position">2</property>
+            <property name="Position">3</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
@@ -463,13 +537,13 @@
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.Button" id="newSenarioCreateButton">
+                      <widget class="Gtk.Button" id="loadScenarioButton">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Type">TextOnly</property>
-                        <property name="Label" translatable="yes">New Senario</property>
+                        <property name="Label" translatable="yes">Load Scenario</property>
                         <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnNewSenarioCreateButtonClicked" />
+                        <signal name="Clicked" handler="OnLoadScenarioButton" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -537,6 +611,7 @@
                         <child>
                           <widget class="Gtk.TextView" id="currentTestTextview">
                             <property name="MemberName" />
+                            <property name="WidthRequest">500</property>
                             <property name="CanFocus">True</property>
                             <property name="ShowScrollbars">True</property>
                             <property name="Text" translatable="yes" />
@@ -556,6 +631,7 @@
                         <property name="Type">TextOnly</property>
                         <property name="Label" translatable="yes">End Test</property>
                         <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnEndTestButtonClicked" />
                       </widget>
                       <packing>
                         <property name="Position">1</property>
@@ -580,14 +656,14 @@
             </child>
           </widget>
           <packing>
-            <property name="Position">3</property>
+            <property name="Position">4</property>
             <property name="AutoSize">True</property>
           </packing>
         </child>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="Sim_Harness_GUI.New_Senario" design-size="400 300">
+  <widget class="Gtk.Dialog" id="Sim_Harness_GUI.NewScenario" design-size="400 300">
     <property name="MemberName" />
     <property name="Title" translatable="yes">New Senario</property>
     <property name="WindowPosition">CenterOnParent</property>
