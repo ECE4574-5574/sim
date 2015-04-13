@@ -278,13 +278,13 @@ public partial class MainWindow
 		w17.Expand = false;
 		w17.Fill = false;
 		// Container child hbox10.Gtk.Box+BoxChild
-		this.timeFrameSpeedSpinbutton = new global::Gtk.SpinButton (1D, 10000D, 1D);
+		this.timeFrameSpeedSpinbutton = new global::Gtk.SpinButton (1, 10000, 1);
 		this.timeFrameSpeedSpinbutton.CanFocus = true;
 		this.timeFrameSpeedSpinbutton.Name = "timeFrameSpeedSpinbutton";
-		this.timeFrameSpeedSpinbutton.Adjustment.PageIncrement = 10D;
-		this.timeFrameSpeedSpinbutton.ClimbRate = 1D;
+		this.timeFrameSpeedSpinbutton.Adjustment.PageIncrement = 10;
+		this.timeFrameSpeedSpinbutton.ClimbRate = 1;
 		this.timeFrameSpeedSpinbutton.Numeric = true;
-		this.timeFrameSpeedSpinbutton.Value = 1D;
+		this.timeFrameSpeedSpinbutton.Value = 1;
 		this.hbox10.Add (this.timeFrameSpeedSpinbutton);
 		global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox10 [this.timeFrameSpeedSpinbutton]));
 		w18.Position = 1;
