@@ -2,11 +2,19 @@
 using Gtk;
 using Sim_Harness_GUI;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Text;
 
 public partial class MainWindow: Gtk.Window
 {
 	protected InstanceManager _instances;
 	protected DateTime _simTime;
+	const string deviceApiHost = "http://52.1.192.214:80/";
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
@@ -79,10 +87,10 @@ public partial class MainWindow: Gtk.Window
 	protected void OnScenarioDirectoryLoad(object sender, EventArgs e)
 	{
 		Gtk.FileChooserDialog chooser = new Gtk.FileChooserDialog("Select Scenario Directory",
-			                                this,
-			                                FileChooserAction.SelectFolder,
-			                                "Cancel", ResponseType.Cancel,
-			                                "Select", ResponseType.Accept);
+			this,
+			FileChooserAction.SelectFolder,
+			"Cancel", ResponseType.Cancel,
+			"Select", ResponseType.Accept);
 
 		if(chooser.Run() == (int)ResponseType.Accept)
 		{
@@ -154,12 +162,35 @@ public partial class MainWindow: Gtk.Window
 	private string buildStartString()
 	{
 		string jsonString = "{\n\t\"TimeFrame\": {" +
-		                    "\n\t\t\"wall\": \"" + DateTime.Now.ToString("O") + "\"," +
-							"\n\t\t\"sim\": \"" + _simTime.ToString("O") + "\"," +
-		                    "\n\t\t\"rate\": " + timeFrameSpeedSpinbutton.Text +
-		                    "\n\t}\n}";
+			"\n\t\t\"wall\": \"" + DateTime.Now.ToString("O") + "\"," +
+			"\n\t\t\"sim\": \"" + _simTime.ToString("O") + "\"," +
+			"\n\t\t\"rate\": " + timeFrameSpeedSpinbutton.Text +
+			"\n\t}\n}";
+
+		//postTimeFrame(jsonString);
 
 		return jsonString;
+	}
+
+
+	public void postTimeFrame(string time){
+		WebRequest request = WebRequest.Create(deviceApiHost);
+		request.Method = "POST";
+		request.ContentType = "application/json";
+		byte[] byteArray = Encoding.UTF8.GetBytes(time);
+		Stream data = request.GetRequestStream();
+		request.ContentLength = byteArray.Length;
+		data.Write(byteArray, 0, byteArray.Length);
+		data.Close();
+
+		WebResponse response = request.GetResponse();
+		data = request.GetRequestStream();
+		StreamReader read = new StreamReader(data);
+		string responseFromServer = read.ReadToEnd();
+		Console.WriteLine(responseFromServer);
+		read.Close();
+		data.Close();
+		response.Close();
 	}
 
 	protected void OnEndTestButtonClicked(object sender, EventArgs e)
@@ -168,23 +199,21 @@ public partial class MainWindow: Gtk.Window
 		endTestButton.Sensitive = false;
 		startTestButton.Sensitive = true;
 	}
-		
 
-	protected void OnSpinbutton1ValueChanged (object sender, EventArgs e)
-	{
-//			TimeSpan inputTime = new TimeSpan(hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0);
-//			_simTime = _simTime.Date + inputTime;	
-		_simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0, DateTimeKind.Local);
-	}
+
 
 	protected void OnMinSpinBoxValueChanged (object sender, EventArgs e)
 	{
-//			TimeSpan inputTime = new TimeSpan(hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0);
-//			_simTime = _simTime.Date + inputTime;	
+		//			TimeSpan inputTime = new TimeSpan(hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0);
+		//			_simTime = _simTime.Date + inputTime;	
 
 		_simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0, DateTimeKind.Local);
 
 	}
 		
+	protected void OnHourSpinBoxValueChanged (object sender, EventArgs e)
+	{
+		_simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0, DateTimeKind.Local);
 
+	}
 }

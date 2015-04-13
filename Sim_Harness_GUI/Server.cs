@@ -1,118 +1,52 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Net.Http;
-using System.Net.NetworkInformation;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web;
 
-/**
- * Server Class
- * Establish Connection to server
- * Make requests / receive responses
- * \author: Nate Hughes <njh2986@vt.edu>
- */
-namespace Hats.ServerInterface
+namespace sim_server
 {
 public class Server
 {
-	// the reference to the physical server
-	private HttpClient client;
+	private string deviceApiHost = "http://52.1.192.214:80/";
+	private string appApiHost = "";
 
-	// server response
-	private HttpResponseMessage response;
-
-	/**
- 	 * Instantiates a new server object
- 	 * \param[in] client Client to connect to and communicate through
- 	 */
-	public Server(Uri url)
-	{			
-		client = new HttpClient();
-		client.BaseAddress = url;
-	}
-
-	/**
- 	 * Connect to the remote host
- 	 */
-	public async void connect()
+	public bool PostDeviceState(UInt64 houseid, UInt64 roomid, UInt64 deviceid, JObject data, JObject timeFactor)
 	{
-		try	
+		WebRequest request = WebRequest.Create(deviceApiHost + houseid + "/" + roomid + "/" + deviceid + "/" + timeFactor);
+		request.ContentType = "application/json";
+		request.Method = "POST";
+
+		using (var streamWriter = new StreamWriter(request.GetRequestStream()))
 		{
-			response = await client.GetAsync(client.BaseAddress);
-			response.EnsureSuccessStatusCode(); // throws exception if unsuccessful connection
-		}
-		catch
-		{
-			// handle exception
+			streamWriter.Write(data.ToString());
+			streamWriter.Flush();
+			streamWriter.Close();
 		}
 
-	}
-
-	/**
- 	 * Get server's response to last request
- 	 * \param[out] string representing server's response to latest request
- 	 */
-	public string getResponse()
-	{
-		return response.Content.ToString();
-	}
-
-	/**
- 	 * Ping the server to make sure it's connected and ready to go
- 	 */
-	public bool serverReady()
-	{
-
-		// code reference:
-		// http://www.codeproject.com/Tips/109427/How-to-PING-Server-in-C
-
-		string host = string.Format("{0}", client.BaseAddress.Host); 
-		Ping p = new Ping();
 		try
 		{
-			PingReply reply = p.Send(host, 3000);
-			if (reply.Status == IPStatus.Success)
-				return true;
+			using (var response = request.GetResponse() as HttpWebResponse)
+			{
+				if (response.StatusCode != HttpStatusCode.OK)
+				{
+					throw new Exception(String.Format(
+						"Server error (HTTP {0}: {1}).",
+						response.StatusCode,
+						response.StatusDescription));
+				}
+			}
 		}
-		catch 
-		{ 
-			// handle exception
+
+		catch (WebException)
+		{
+			//return false;
 		}
 
-		return false;
-	}
-
-	/**
- 	 * Run the operator's selected test scenario
- 	 * \param[in] testScenario string representing scenario chosen by the operator
- 	 * \param[out] Config info for the selected test scenario - JSON string
- 	 */
-	public String runScenario(string testScenario)
-	{
-		return "";
-	}
-
-	/**
- 	 * Free any simulation-dedicated resources
- 	 */
-	public bool cleanUp()
-	{
 		return true;
 	}
-
-	/**
- 	 * Query the server for the state of the spawned apps and houses 
- 	 */
-	public bool simReady()
-	{
-		return true;
-	}
-
-	/**
- 	 * Send a go signal to the server
- 	 * Precondition: Ensure all component instances are ready - call simReady()
- 	 */
-	public bool startSim()
-	{
-		return true;
-	}
-
 }
 }

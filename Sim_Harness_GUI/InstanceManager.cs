@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Hats.ServerInterface;
+//using System.Diagnostics;
+//using Hats.ServerInterface;
 using Hats.Sim;
 using Newtonsoft.Json;
 

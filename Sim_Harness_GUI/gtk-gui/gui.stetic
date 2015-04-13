@@ -425,7 +425,7 @@
                         <property name="ClimbRate">1</property>
                         <property name="Numeric">True</property>
                         <property name="Value">1</property>
-                        <signal name="ValueChanged" handler="OnSpinbutton1ValueChanged" />
+                        <signal name="ValueChanged" handler="OnHourSpinBoxValueChanged" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>

@@ -597,7 +597,7 @@ public partial class MainWindow
 		this.appSimLocationEntry.Changed += new global::System.EventHandler (this.OnAppSimLocationEntryChanged);
 		this.houseSimLocationButton.Clicked += new global::System.EventHandler (this.OnHouseSimLocationButtonClicked);
 		this.houseSimLocationEntry.Changed += new global::System.EventHandler (this.OnHouseSimLocationEntryChanged);
-		this.hourSpinBox.ValueChanged += new global::System.EventHandler (this.OnSpinbutton1ValueChanged);
+		this.hourSpinBox.ValueChanged += new global::System.EventHandler (this.OnHourSpinBoxValueChanged);
 		this.minSpinBox.ValueChanged += new global::System.EventHandler (this.OnMinSpinBoxValueChanged);
 		this.loadScenarioButton.Clicked += new global::System.EventHandler (this.OnLoadScenarioButton);
 		this.startTestButton.Clicked += new global::System.EventHandler (this.OnStartTestButtonClicked);
