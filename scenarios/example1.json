@@ -1,6 +1,7 @@
 {
     "storageLocation": "54.152.190.217",
-    "users": [
+    "serverLocation": "http://5574serverapi.azurewebsites.net/",
+        "users": [
         {
             "Username":"User1",
             "UserID": "12345",
@@ -32,21 +33,20 @@
       "devices": [
         {
           "name": "light1",
-          "class": "Light",
+          "class": "LightSwitch",
           "type": "Simulated",
           "startState": false
         },
         {
-          "name": "Kitchen Ceiling Fan",
-          "class": "Fan",
-          "type": "Simulated",
-          "startState": false,
-          "speed": 0
+           "name": "Kitchen Ceiling Fan",    
+           "class": "CeilingFan",    
+           "type": "Simulated",    
+           "Enabled": false,    
+           "State": 0    
         }
       ],
       "rooms": [
         {
-          "type": "Simulated",
           "name": "Kitchen",
           "dimensions": {
             "x": 100,
@@ -67,8 +67,7 @@
           ]
         },
         {
-          "type": "Simulated",
-          "name": "Family ROom",
+          "name": "Family Room",
           "dimensions": {
             "x": 300,
             "y": 200
@@ -91,14 +90,12 @@
       "weather":
       [
         {
-          "time": "10:00pm",
-          "day": "1/1/2015",
-          "temp": 50
+          "Time": "2015-04-08T13:25:21.803833-04:00",    
+           "Temp": 50 
         },
         {
-          "time": "11:00pm",
-          "day": "1/2/2015",
-          "temp": 30
+           "Time": "2015-04-08T13:25:21.803833-04:00",    
+           "Temp": 30   
         }
       ]
     }

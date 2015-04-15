@@ -21,7 +21,7 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
 	{
-		Console.WriteLine("Deleted");
+		_instances.killGeneratorProcesses();
 		Application.Quit();
 		a.RetVal = true;
 	}
@@ -31,11 +31,16 @@ public partial class MainWindow: Gtk.Window
 		var item = new Gtk.TreeIter();
 		this.testScenarioComboBox.GetActiveIter(out item);
 
-		//TODO: Read in file, prep for launch here
+		//TODO: Read in file, prep for launch here right now the "house1" is hard coded in
 		this.testScenarioComboBox.Model.GetValue(item,1);
 		testSenarioTextview.Buffer.Text = File.ReadAllText(this.testScenarioComboBox.Model.GetValue(item,1).ToString());
 
 		jsonBlob = testSenarioTextview.Buffer.Text;
+
+		// Remove every new line and tab otherwise it will not work as a command line argument
+		jsonBlob = jsonBlob.Replace("\n", "");
+		jsonBlob = jsonBlob.Replace("\t", "");
+
 	}
 
 	protected void OnAppSimulatorChooseFileButtonClicked(object sender, EventArgs e)

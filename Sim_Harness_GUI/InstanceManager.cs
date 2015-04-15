@@ -21,10 +21,9 @@ public class InstanceManager{
 		string output = "";
 
 
-
+		//TODO: set up how to start the mobile app
 		//set process settings app
 		//appGenerator_info.FileName = appGeneratorLocation;
-
 		//appGenerator_info.Arguments = string.Concat("--house_id=", appQueueName_r, "--test_scenario='", testScenarioBlob);
 
 
@@ -35,11 +34,6 @@ public class InstanceManager{
 		houseGenerator_info.RedirectStandardInput = true;
 		houseGenerator_info.RedirectStandardOutput = true;
 		houseGenerator_info.UseShellExecute = false;
-
-
-		//start the processes
-		//output += "App: ";
-		//output += startProcess(ref appGenerator, ref appGenerator_info);
 
 		output += "House:\n";
 
