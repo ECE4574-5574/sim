@@ -1,3 +1,6 @@
+# Json time blob being sent to the app as well as the server
+
+
 {
 	"timeFrame": {
 		"wall": "1997-07-16T19:20:30+01:00",
