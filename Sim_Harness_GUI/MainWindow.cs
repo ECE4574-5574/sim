@@ -1,19 +1,17 @@
 ﻿using System;
 using Gtk;
+using Hats.Time;
+using Newtonsoft.Json;
 using Sim_Harness_GUI;
 using System.IO;
 
 public partial class MainWindow: Gtk.Window
 {
 	protected InstanceManager _instances;
-	protected DateTime _simTime;
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
-		Console.WriteLine("Build");
 		Build();
-		_simTime = DateTime.UtcNow;
-		//_simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0);
 
 	}
 
@@ -29,8 +27,8 @@ public partial class MainWindow: Gtk.Window
 	{
 		String jsonStartString = buildStartString();
 		currentTestTextview.Buffer.Text = jsonStartString;
-		//_instances = new InstanceManager(scenarioDirectoryText.Text, houseSimLocationEntry.Text, appSimLocationEntry.Text);
-		//_instances.Start();
+		_instances = new InstanceManager(scenarioDirectoryText.Text, houseSimLocationEntry.Text, appSimLocationEntry.Text);
+		_instances.Start();
 		startTestButton.Sensitive = false;
 		endTestButton.Sensitive = true;
 
@@ -153,38 +151,28 @@ public partial class MainWindow: Gtk.Window
 
 	private string buildStartString()
 	{
-		string jsonString = "{\n\t\"TimeFrame\": {" +
-		                    "\n\t\t\"wall\": \"" + DateTime.Now.ToString("O") + "\"," +
-							"\n\t\t\"sim\": \"" + _simTime.ToString("O") + "\"," +
-		                    "\n\t\t\"rate\": " + timeFrameSpeedSpinbutton.Text +
-		                    "\n\t}\n}";
+		DateTime wallTime = DateTime.Now;
+		TimeSpan oneMin = new TimeSpan(0,1, 0);
+		wallTime.Add(oneMin);
+
+		DateTime simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0, DateTimeKind.Local);
+
+		TimeFrame newTime = new TimeFrame(wallTime, simTime, timeFrameSpeedSpinbutton.Value);
+
+
+		string jsonString = JsonConvert.SerializeObject(newTime);
 
 		return jsonString;
 	}
 
 	protected void OnEndTestButtonClicked(object sender, EventArgs e)
 	{
-		//_instances.Kill();
+		_instances.Kill();
 		endTestButton.Sensitive = false;
 		startTestButton.Sensitive = true;
 	}
 		
 
-	protected void OnSpinbutton1ValueChanged (object sender, EventArgs e)
-	{
-//			TimeSpan inputTime = new TimeSpan(hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0);
-//			_simTime = _simTime.Date + inputTime;	
-		_simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0, DateTimeKind.Local);
-	}
-
-	protected void OnMinSpinBoxValueChanged (object sender, EventArgs e)
-	{
-//			TimeSpan inputTime = new TimeSpan(hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0);
-//			_simTime = _simTime.Date + inputTime;	
-
-		_simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0, DateTimeKind.Local);
-
-	}
 		
 
 }

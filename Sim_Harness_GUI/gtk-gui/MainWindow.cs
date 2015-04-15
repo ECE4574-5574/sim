@@ -400,7 +400,7 @@ public partial class MainWindow
 		// Container child hbox11.Gtk.Box+BoxChild
 		this.label8 = new global::Gtk.Label ();
 		this.label8.Name = "label8";
-		this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Simulation Time:");
+		this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Simulation Start Time:");
 		this.hbox11.Add (this.label8);
 		global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.hbox11 [this.label8]));
 		w30.Position = 0;
@@ -411,7 +411,7 @@ public partial class MainWindow
 		this.hbox14.Name = "hbox14";
 		this.hbox14.Spacing = 6;
 		// Container child hbox14.Gtk.Box+BoxChild
-		this.hourSpinBox = new global::Gtk.SpinButton (1, 24, 1);
+		this.hourSpinBox = new global::Gtk.SpinButton (0, 23, 1);
 		this.hourSpinBox.CanFocus = true;
 		this.hourSpinBox.Name = "hourSpinBox";
 		this.hourSpinBox.Adjustment.PageIncrement = 1;
