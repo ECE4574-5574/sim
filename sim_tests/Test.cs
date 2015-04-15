@@ -8,25 +8,25 @@ using NUnit.Framework;
 
 namespace sim_tests
 {
-[TestFixture ()]
+[TestFixture]
 public class Test
 {
-	[Test ()]
+	[Test]
 	public void SettingTimeFrame()
 	{
 		var frame = new TimeFrame();
-		Assert.True(TimeInterface.setTimeFrameFromString (frame, ""));
+		Assert.That(TimeInterface.setTimeFrameFromString (frame, ""));
 	}
 
-	[Test ()]
+	[Test]
+	[ExpectedException(typeof(ArgumentException))]
 	public void CreatingTimeFrame()
 	{
 		var frame = new TimeFrame();
-		Assert.Throws<ArgumentException>(() => frame.setTimeFrame(rate: -1.0));
+		frame.setTimeFrame(rate: -1.0);
 	}
 
-
-
+	[Test]
 	public void TimeRate()
 	{
 		const Double SimRate = 2.0;
@@ -50,7 +50,7 @@ public class Test
 		Assert.Less(diff, 0.01);
 	}
 
-	[Test ()]
+	[Test]
 	public void LinearWeather()
 	{
 		var frame = new TimeFrame();
