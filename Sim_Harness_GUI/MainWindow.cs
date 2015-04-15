@@ -1,5 +1,7 @@
 ﻿using System;
 using Gtk;
+using Hats.Time;
+using Newtonsoft.Json;
 using Sim_Harness_GUI;
 using System.IO;
 
@@ -11,9 +13,10 @@ public partial class MainWindow: Gtk.Window
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
-		Console.WriteLine("Build");
 		Build();
+
 	}
+
 
 	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
 	{
@@ -21,7 +24,7 @@ public partial class MainWindow: Gtk.Window
 		Application.Quit();
 		a.RetVal = true;
 	}
-
+		
 	protected void OnLoadScenarioButton(object sender, EventArgs e)
 	{
 		var item = new Gtk.TreeIter();
@@ -90,17 +93,17 @@ public partial class MainWindow: Gtk.Window
 		this.testScenarioComboBox.Active = 0;
 	}
 
-	protected void OnScenarioDirectoryTextChanged (object sender, EventArgs e)
+	protected void OnScenarioDirectoryTextChanged(object sender, EventArgs e)
 	{
 		changeStartButton();
 	}
 
-	protected void OnAppSimLocationEntryChanged (object sender, EventArgs e)
+	protected void OnAppSimLocationEntryChanged(object sender, EventArgs e)
 	{
 		changeStartButton();
 	}
 
-	protected void OnHouseSimLocationEntryChanged (object sender, EventArgs e)
+	protected void OnHouseSimLocationEntryChanged(object sender, EventArgs e)
 	{
 		changeStartButton();
 	}
@@ -137,19 +140,25 @@ public partial class MainWindow: Gtk.Window
 
 	private string buildStartString()
 	{
-		string jsonString = "{\n\t\"TimeFrame\": {" +
-			"\n\t\t\"wall\": \"" + DateTime.Now.ToString("o") + "\"," +
-			"\n\t\t\"sim\": \"" + DateTime.Now.ToString("o") + "\"," + 
-			"\n\t\t\"rate\": " + timeFrameSpeedSpinbutton.Text +
-			"\n\t}\n}";
+		DateTime wallTime = DateTime.Now;
+		TimeSpan oneMin = new TimeSpan(0,1, 0);
+		wallTime.Add(oneMin);
+
+		DateTime simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0, DateTimeKind.Local);
+
+		TimeFrame newTime = new TimeFrame(wallTime, simTime, timeFrameSpeedSpinbutton.Value);
+
+
+		string jsonString = JsonConvert.SerializeObject(newTime);
+
 		return jsonString;
 	}
+
 
 	protected void OnStartTestButtonClicked(object sender, EventArgs e)
 	{
 		_instances = new InstanceManager();
 		String jsonStartString = buildStartString();
-
 		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n";
 		currentTestTextview.Buffer.Text += _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text);
 		currentTestTextview.Buffer.Text += "Sending the JSON string to the Generator processes...\n";
@@ -158,8 +167,8 @@ public partial class MainWindow: Gtk.Window
 		startTestButton.Sensitive = false;
 		endTestButton.Sensitive = true;
 	}
-
-	protected void OnEndTestButtonClicked (object sender, EventArgs e)
+		
+	protected void OnEndTestButtonClicked(object sender, EventArgs e)
 	{
 		currentTestTextview.Buffer.Text += _instances.killGeneratorProcesses();
 		endTestButton.Sensitive = false;
