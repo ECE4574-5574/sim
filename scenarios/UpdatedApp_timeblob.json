@@ -27,21 +27,21 @@
 		              "roomid": 5,
 		              "name": "light1",
 		                  },
-		         "time":"1997-07-16T19:40:22+01:00"
-		         "key": "physical change",
+		         "time":"1997-07-16T19:40:22+01:00",
+		         "key":"physical change",
 		         "value": {
 		              "deviceid":2.00,
-		              "type":"dimmer/switch"
+		              "type": "dimmer/switch"
 		              "value": true
 		                  },
-		       "time":"1997-07-16T19:50:22+01:00"
+		       "time":"1997-07-16T19:50:22+01:00",
 		        "key": "voicechange",
 			      "value": {
 				"lat": 7.123456,
 				"lon": 8.123456,
 				"altitude": 9.123456
-				"action": “brighter”
-			          } 
+				"action" : "brighter"
+				} 
 			}
 		]
 	}
