@@ -1,7 +1,6 @@
 ﻿using System;
 using Hats.Time;
 using System.Net.Http;
-using Newtonsoft.Json;
 
 namespace Hats
 {
@@ -31,11 +30,6 @@ static public bool sendTimeFrame(DateTime sim, double rate, HttpClient client)
  */
 static public bool sendTimeFrame(TimeFrame frame, HttpClient client)
 {
-    if(frame == null)
-    {
-        return false;
-    }
-    string json = JsonConvert.SerializeObject(frame);
 	return true;
 }
 

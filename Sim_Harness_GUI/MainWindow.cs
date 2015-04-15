@@ -1,9 +1,7 @@
 ﻿using System;
-using System.IO;
 using Gtk;
-using Hats.Time;
-using Newtonsoft.Json;
 using Sim_Harness_GUI;
+using System.IO;
 
 
 
@@ -22,7 +20,6 @@ public partial class MainWindow: Gtk.Window
 		Console.WriteLine("Deleted");
 		Application.Quit();
 		a.RetVal = true;
-		int o = 0;
 	}
 
 	protected void OnLoadScenarioButton(object sender, EventArgs e)
@@ -140,8 +137,12 @@ public partial class MainWindow: Gtk.Window
 
 	private string buildStartString()
 	{
-		var frame = new TimeFrame(DateTime.Now, DateTime.Now, Double.Parse(timeFrameSpeedSpinbutton.Text));
-		return JsonConvert.SerializeObject(frame);
+		string jsonString = "{\n\t\"TimeFrame\": {" +
+			"\n\t\t\"wall\": \"" + DateTime.Now.ToString("o") + "\"," +
+			"\n\t\t\"sim\": \"" + DateTime.Now.ToString("o") + "\"," + 
+			"\n\t\t\"rate\": " + timeFrameSpeedSpinbutton.Text +
+			"\n\t}\n}";
+		return jsonString;
 	}
 
 	protected void OnStartTestButtonClicked(object sender, EventArgs e)

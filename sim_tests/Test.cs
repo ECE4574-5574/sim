@@ -25,7 +25,8 @@ public class Test
 		Assert.Throws<ArgumentException>(() => frame.setTimeFrame(rate: -1.0));
 	}
 
-	[Test ()]
+
+
 	public void TimeRate()
 	{
 		const Double SimRate = 2.0;

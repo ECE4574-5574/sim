@@ -5,25 +5,25 @@
             "Username":"User1",
             "UserID": "12345",
             "Password": "thePassword",
-            "Coordinates":
+            "Coordinates": 
             {
                 "x":"1234",
                 "y":"4321",
                 "z":"6789"
             }
-
+            
         },
         {
             "Username": "User2",
             "UserID": "67890",
             "Password": "secondPassword",
-            "Coordinates":
+            "Coordinates": 
             {
                 "x":"1234",
                 "y":"4321",
                 "z":"6789"
             }
-
+            
         }
     ],
     "houses": [
@@ -32,25 +32,28 @@
       "devices": [
         {
           "name": "light1",
-          "class": "LightSwitch",
-          "Enabled": false
+          "class": "Light",
+          "type": "Simulated",
+          "startState": false
         },
         {
           "name": "Kitchen Ceiling Fan",
-          "class": "CeilingFan",
-          "Enabled": false,
-          "State": 0
+          "class": "Fan",
+          "type": "Simulated",
+          "startState": false,
+          "speed": 0
         }
       ],
       "rooms": [
         {
+          "type": "Simulated",
           "name": "Kitchen",
           "dimensions": {
             "x": 100,
             "y": 200
           },
           "roomLevel": 1,
-          "doors":
+          "doors": 
           [
             {
               "x": 20,
@@ -64,13 +67,14 @@
           ]
         },
         {
-          "name": "Family Room",
+          "type": "Simulated",
+          "name": "Family ROom",
           "dimensions": {
             "x": 300,
             "y": 200
           },
           "roomLevel": 1,
-          "doors":
+          "doors": 
           [
             {
               "x": 20,
@@ -87,12 +91,14 @@
       "weather":
       [
         {
-          "Time": "2015-04-08T13:25:21.803833-04:00",
-          "Temp": 50
+          "time": "10:00pm",
+          "day": "1/1/2015",
+          "temp": 50
         },
         {
-          "Time": "2015-04-08T14:25:21.803833-04:00",
-          "Temp": 30
+          "time": "11:00pm",
+          "day": "1/2/2015",
+          "temp": 30
         }
       ]
     }
