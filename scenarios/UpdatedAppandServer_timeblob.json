@@ -26,15 +26,15 @@
 		         "time":"1997-07-16T19:30:22+01:00",
 		         "key": "add device",
 		         "value": {
-		              "type":"switch/dimmer",
+		              "type":"dimmer",
 		              "roomid": 5,
 		              "name": "light1",
 		                  },
 		         "time":"1997-07-16T19:40:22+01:00",
 		         "key":"physical change",
 		         "value": {
-		              "deviceid":2.00,
-		              "type": "dimmer/switch",
+		              "deviceid":2,
+		              "type": "switch",
 		              "value": true
 		                  },
 		       "time":"1997-07-16T19:50:22+01:00",
