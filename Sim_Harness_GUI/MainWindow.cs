@@ -22,6 +22,7 @@ public partial class MainWindow: Gtk.Window
 		Console.WriteLine("Deleted");
 		Application.Quit();
 		a.RetVal = true;
+		int o = 0;
 	}
 
 	protected void OnLoadScenarioButton(object sender, EventArgs e)
