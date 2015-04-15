@@ -5,6 +5,8 @@ using Hats.Time;
 using Newtonsoft.Json;
 using Sim_Harness_GUI;
 
+
+
 public partial class MainWindow: Gtk.Window
 {
 	protected InstanceManager _instances;
@@ -20,19 +22,6 @@ public partial class MainWindow: Gtk.Window
 		Console.WriteLine("Deleted");
 		Application.Quit();
 		a.RetVal = true;
-	}
-
-	protected void OnStartTestButtonClicked(object sender, EventArgs e)
-	{
-		String jsonStartString = buildStartString();
-		currentTestTextview.Buffer.Text = jsonStartString;
-		//_instances = new InstanceManager(scenarioDirectoryText.Text, houseSimLocationEntry.Text, appSimLocationEntry.Text);
-		//_instances.Start();
-		startTestButton.Sensitive = false;
-		endTestButton.Sensitive = true;
-
-
-
 	}
 
 	protected void OnLoadScenarioButton(object sender, EventArgs e)
@@ -76,10 +65,10 @@ public partial class MainWindow: Gtk.Window
 	protected void OnScenarioDirectoryLoad(object sender, EventArgs e)
 	{
 		Gtk.FileChooserDialog chooser = new Gtk.FileChooserDialog("Select Scenario Directory",
-			                                this,
-			                                FileChooserAction.SelectFolder,
-			                                "Cancel", ResponseType.Cancel,
-			                                "Select", ResponseType.Accept);
+			this,
+			FileChooserAction.SelectFolder,
+			"Cancel", ResponseType.Cancel,
+			"Select", ResponseType.Accept);
 
 		if(chooser.Run() == (int)ResponseType.Accept)
 		{
@@ -154,10 +143,27 @@ public partial class MainWindow: Gtk.Window
 		return JsonConvert.SerializeObject(frame);
 	}
 
+	protected void OnStartTestButtonClicked(object sender, EventArgs e)
+	{
+		_instances = new InstanceManager();
+		String jsonStartString = buildStartString();
+
+		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n";
+		currentTestTextview.Buffer.Text += _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text);
+		currentTestTextview.Buffer.Text += "Sending the JSON string to the Generator processes...\n";
+		currentTestTextview.Buffer.Text += _instances.sendJSON(jsonStartString);
+
+		startTestButton.Sensitive = false;
+		endTestButton.Sensitive = true;
+	}
+
 	protected void OnEndTestButtonClicked (object sender, EventArgs e)
 	{
-		_instances.Kill();
+		currentTestTextview.Buffer.Text += _instances.killGeneratorProcesses();
 		endTestButton.Sensitive = false;
 		startTestButton.Sensitive = true;
 	}
+
+
 }
+
