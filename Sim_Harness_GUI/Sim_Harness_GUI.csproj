@@ -69,8 +69,6 @@
     <Compile Include="Server.cs" />
     <Compile Include="SimApp.cs" />
     <Compile Include="SimHouse.cs" />
-    <Compile Include="NewScenario.cs" />
-    <Compile Include="gtk-gui\Sim_Harness_GUI.NewScenario.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

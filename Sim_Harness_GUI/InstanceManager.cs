@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Messaging; //message queues
 using System.Diagnostics; //processes
+using System.IO;
 
 namespace Sim_Harness_GUI
 {
@@ -9,97 +10,103 @@ public class InstanceManager{
 	ProcessStartInfo appGenerator_info = new ProcessStartInfo();
 	ProcessStartInfo houseGenerator_info = new ProcessStartInfo();
 	Process appGenerator, houseGenerator;
-	MessageQueue appQueue_r, appQueue_w, houseQueue_r, houseQueue_w;
-	string appQueueName_r = @".\private$\appQueueRead";
-	string appQueueName_w = @".\private$\appQueueWrite";
-	string houseQueueName_r = @".\private$\houseQueueRead";
-	string houseQueueName_w = @".\private$\houseQueueWrite";
+
+	StreamWriter houseStandardIn, appStandardIn;
+	StreamReader houseStandardOut, appStandardOut;
+
+
 	//NOTE: names are from the parent's (this program's) perspective
 
-	public string startGeneratorProcesses(string appGeneratorLocation, string houseGeneratorLocation){
+	public string startGeneratorProcesses(string appGeneratorLocation, string houseGeneratorLocation, String timeFrameBlob, String testScenarioBlob){
 		string output = "";
 
-		//open the message queues
-		openMessageQueue(ref appQueue_r, ref appQueueName_r);
-		openMessageQueue(ref appQueue_w, ref appQueueName_w);
-		openMessageQueue(ref houseQueue_r, ref houseQueueName_r);
-		openMessageQueue(ref houseQueue_w, ref houseQueueName_w);
 
-		//set process settings
-		appGenerator_info.FileName = appGeneratorLocation;
+
+		//set process settings app
+		//appGenerator_info.FileName = appGeneratorLocation;
+
+		//appGenerator_info.Arguments = string.Concat("--house_id=", appQueueName_r, "--test_scenario='", testScenarioBlob);
+
+
+
+		// set process setting for house
 		houseGenerator_info.FileName = houseGeneratorLocation;
-		appGenerator_info.Arguments = string.Concat(appQueueName_r, " ", appQueueName_w);
-		houseGenerator_info.Arguments = string.Concat(houseQueueName_r, " ", houseQueueName_w);
+		houseGenerator_info.Arguments = "--house_id=house1 --test_scenario='" + testScenarioBlob + "'";
+		houseGenerator_info.RedirectStandardInput = true;
+		houseGenerator_info.RedirectStandardOutput = true;
+		houseGenerator_info.UseShellExecute = false;
+
 
 		//start the processes
-		output += "App: ";
-		output += startProcess(ref appGenerator, ref appGenerator_info);
-		output += "House: ";
-		output += startProcess(ref houseGenerator, ref houseGenerator_info);
+		//output += "App: ";
+		//output += startProcess(ref appGenerator, ref appGenerator_info);
 
-		return output;
-	}
+		output += "House:\n";
 
-	public string killGeneratorProcesses(){
-		string output = "";
+		bool houseStarted = startProcess(ref houseGenerator, ref houseGenerator_info);
+		if(houseStarted)
+		{
+			output += "\tHouse has stated up correctly\n\tProccess ID: " + houseGenerator.Id + "\n";
+			// Set standard input and standard outputs
+			houseStandardIn = houseGenerator.StandardInput;
+			houseStandardOut = houseGenerator.StandardOutput;
 
-		output += ("App: ");
-		output += (killProcess(ref appGenerator));
-		output += ("House: ");
-		output += (killProcess(ref houseGenerator));
+			output += "\tStandad in and out have been handled correctly\n";
 
-		return output;
-	}
-
-	public string sendJSON(string json){
-		string output = "";
-
-		//send the first JSON string through the queue
-		sendMessage(ref appQueue_w, json);
-		sendMessage(ref houseQueue_w, json);
-
-		//receive confirmation messages
-		output += "App: ";
-		output += receiveMessage(ref appQueue_r);
-		output += "\n";
-		output += "House: ";
-		output += receiveMessage(ref houseQueue_r);
-		output += "\n";
-
-		return output;
-	}
-
-	public string tuesdayDemo(){
-		return "";
-	}
-
-
-
-	//  helper functions //
-
-	private string startProcess(ref Process p, ref ProcessStartInfo ps) {
-		string output = "";
-		try {
-			
-			p = Process.Start(ps);
-			output = string.Concat(output,"Process started successfully\n");
-		} catch (Exception ex) {
-			output = string.Concat(output, "Unable to start process from location: ");
-			output = string.Concat(output, ps.FileName);
-			output = string.Concat(output, "\n");
+			// Read in and look for the "OK"
+			String processOutput = houseStandardOut.ReadLine();
+			output += "\tProcess Output: " + processOutput + "\n";
+			if(processOutput == "OK")
+			{
+				output += "\tWriting timeframe:\n" + timeFrameBlob;
+				houseStandardIn.WriteLine(timeFrameBlob);
+			}else
+			{
+				output += "ERROR INSIDE PROCESS AND DID NOT RECIEVE OK\n";
+			}
 		}
 		return output;
 	}
 
+	public string killGeneratorProcesses(){
+		string output = "Killing processes...\n\n";
+
+		//output += ("App: ");
+		//output += (killProcess(ref appGenerator));
+
+		output += ("House: \n\n");
+		output += (killProcess(ref houseGenerator));
+
+		return output;
+	}
+		
+
+	//  helper functions //
+
+	/**
+	 * Attempts to start a process with particualar information. If the process starts
+	 * correctly it will retrun true.
+	 */
+	private bool startProcess(ref Process p, ref ProcessStartInfo ps){
+		bool started = false;
+		try {
+			p = Process.Start(ps);
+			started = true;
+		} catch (Exception ex) {
+			Console.WriteLine(ex.ToString());
+		}
+		return started;
+	}
+
 	private string killProcess(ref Process p){
-		string output = "";
+		string output = "\tProcess ID: " + p.Id + "\n";
 		try {
 			p.Kill();
-			output = string.Concat(output,"Process killed successfully\n");
+			output = string.Concat(output,"\tProcess killed successfully\n");
 		} catch (InvalidOperationException ex) {
-			output = string.Concat(output, "InvalidOperationException thrown - the process has already exited\n");
+			output = string.Concat(output, "\tInvalidOperationException thrown - the process has already exited\n");
 		} catch (Exception ex) {
-			output = string.Concat(output, "Exception thrown while trying to kill the process\n");
+			output = string.Concat(output, "\tException thrown while trying to kill the process\n");
 			output = string.Concat(output, ex.Message);
 			output = string.Concat(output, "\n");
 		}
