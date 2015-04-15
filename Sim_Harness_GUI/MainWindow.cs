@@ -10,6 +10,7 @@ using System.IO;
 public partial class MainWindow: Gtk.Window
 {
 	protected InstanceManager _instances;
+	protected String jsonBlob;
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
@@ -20,7 +21,7 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
 	{
-		Console.WriteLine("Deleted");
+		_instances.killGeneratorProcesses();
 		Application.Quit();
 		a.RetVal = true;
 	}
@@ -30,8 +31,16 @@ public partial class MainWindow: Gtk.Window
 		var item = new Gtk.TreeIter();
 		this.testScenarioComboBox.GetActiveIter(out item);
 
-		//TODO: Read in file, prep for launch here
-		Console.WriteLine(this.testScenarioComboBox.Model.GetValue(item, 1));
+		//TODO: Read in file, prep for launch here right now the "house1" is hard coded in
+		this.testScenarioComboBox.Model.GetValue(item,1);
+		testSenarioTextview.Buffer.Text = File.ReadAllText(this.testScenarioComboBox.Model.GetValue(item,1).ToString());
+
+		jsonBlob = testSenarioTextview.Buffer.Text;
+
+		// Remove every new line and tab otherwise it will not work as a command line argument
+		jsonBlob = jsonBlob.Replace("\n", "");
+		jsonBlob = jsonBlob.Replace("\t", "");
+
 	}
 
 	protected void OnAppSimulatorChooseFileButtonClicked(object sender, EventArgs e)
@@ -124,7 +133,7 @@ public partial class MainWindow: Gtk.Window
 	}
 
 	/**
-	 * Makes sure the three files selected are 
+	 * Makes sure the three files selected are valid files.
 	 */
 	private bool checkFiles()
 	{
@@ -138,17 +147,21 @@ public partial class MainWindow: Gtk.Window
 		}
 	}
 
+	/**
+	 * Builds the TimeFrame JSON string to be passed to the house for starting information.
+	 */ 
 	private string buildStartString()
 	{
+		// Create a DateTime for when all processes should start. It will be one minute from the current time.
 		DateTime wallTime = DateTime.Now;
 		TimeSpan oneMin = new TimeSpan(0,1, 0);
 		wallTime.Add(oneMin);
-
 		DateTime simTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hourSpinBox.ValueAsInt, minSpinBox.ValueAsInt, 0, DateTimeKind.Local);
 
+		// Construct the timeframe object to be passed
 		TimeFrame newTime = new TimeFrame(wallTime, simTime, timeFrameSpeedSpinbutton.Value);
 
-
+		// Automatically construct the JSON string to be passed
 		string jsonString = JsonConvert.SerializeObject(newTime);
 
 		return jsonString;
@@ -159,10 +172,8 @@ public partial class MainWindow: Gtk.Window
 	{
 		_instances = new InstanceManager();
 		String jsonStartString = buildStartString();
-		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n";
-		currentTestTextview.Buffer.Text += _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text);
-		currentTestTextview.Buffer.Text += "Sending the JSON string to the Generator processes...\n";
-		currentTestTextview.Buffer.Text += _instances.sendJSON(jsonStartString);
+		currentTestTextview.Buffer.Text = "Attempting to open the Generator processes..\n\n";
+		currentTestTextview.Buffer.Text += _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text, jsonStartString, jsonBlob);
 
 		startTestButton.Sensitive = false;
 		endTestButton.Sensitive = true;
@@ -170,6 +181,7 @@ public partial class MainWindow: Gtk.Window
 		
 	protected void OnEndTestButtonClicked(object sender, EventArgs e)
 	{
+		currentTestTextview.Buffer.Text += "\n\n";
 		currentTestTextview.Buffer.Text += _instances.killGeneratorProcesses();
 		endTestButton.Sensitive = false;
 		startTestButton.Sensitive = true;
