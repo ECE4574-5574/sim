@@ -44,13 +44,17 @@ public partial class MainWindow: Gtk.Window
 
 		//TODO: Read in file, prep for launch here right now the "house1" is hard coded in
 		this.testScenarioComboBox.Model.GetValue(item,1);
-		testSenarioTextview.Buffer.Text = File.ReadAllText(this.testScenarioComboBox.Model.GetValue(item,1).ToString());
+		// Make sure a valid file was selected
+		if(this.testScenarioComboBox.Model.GetValue(item,1) != null && File.Exists(this.testScenarioComboBox.Model.GetValue(item,1).ToString()))
+		{
+			testSenarioTextview.Buffer.Text = File.ReadAllText(this.testScenarioComboBox.Model.GetValue(item,1).ToString());
+			jsonBlob = testSenarioTextview.Buffer.Text;
 
-		jsonBlob = testSenarioTextview.Buffer.Text;
+			// Remove every new line and tab otherwise it will not work as a command line argument
+			jsonBlob = jsonBlob.Replace("\n", "");
+			jsonBlob = jsonBlob.Replace("\t", "");
+		}
 
-		// Remove every new line and tab otherwise it will not work as a command line argument
-		jsonBlob = jsonBlob.Replace("\n", "");
-		jsonBlob = jsonBlob.Replace("\t", "");
 
 	}
 
@@ -189,11 +193,22 @@ public partial class MainWindow: Gtk.Window
 		data.Write(byteArray, 0, byteArray.Length);
 		data.Close();*/
 
+
+		currentTestTextview.Buffer.Text = "Make request to server:\n\n\t" + time + "\n\n\tServer: http://requestb.in/s26p52s2\n\n";
+
 		var task = MakeRequest(time);
+		currentTestTextview.Buffer.Text += "\t Waiting...\n\n";
 		task.Wait();
 
+
 		var response = task.Result;
+
+		currentTestTextview.Buffer.Text += "\tResponse: " + response + "\n\n----------------------------------\n\n";
+
+
 		var body = response.Content.ReadAsStringAsync().Result;
+
+
 	}
 	private static async Task<HttpResponseMessage> MakeRequest(string time)
 	{
@@ -201,6 +216,7 @@ public partial class MainWindow: Gtk.Window
 		await httpClient.GetAsync(new Uri("http://requestb.in/s26p52s2"));
 
 		var stringContent = new StringContent(time);
+
 		var response= await httpClient.PostAsync("http://requestb.in/s26p52s2", stringContent);	
 	    return response;
 	}
@@ -209,11 +225,14 @@ public partial class MainWindow: Gtk.Window
 	{
 		_instances = new InstanceManager();
 		String jsonStartString = buildStartString();
-		currentTestTextview.Buffer.Text = "Attempting to open the Generator processes..\n\n";
+		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n\n";
 		currentTestTextview.Buffer.Text += _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text, jsonStartString, jsonBlob);
 
-		startTestButton.Sensitive = false;
-		endTestButton.Sensitive = true;
+		if(!currentTestTextview.Buffer.Text.Contains("ERROR:")){
+			startTestButton.Sensitive = false;
+			endTestButton.Sensitive = true;
+		}
+
 	}
 		
 	protected void OnEndTestButtonClicked(object sender, EventArgs e)

@@ -12,7 +12,7 @@ public class InstanceManager{
 	Process appGenerator, houseGenerator;
 
 	StreamWriter houseStandardIn, appStandardIn;
-	StreamReader houseStandardOut, appStandardOut;
+	StreamReader houseStandardOut, appStandardOut, houseErrorOut;
 
 
 	//NOTE: names are from the parent's (this program's) perspective
@@ -33,6 +33,7 @@ public class InstanceManager{
 		houseGenerator_info.Arguments = "--house_id=house1 --test_scenario='" + testScenarioBlob + "'";
 		houseGenerator_info.RedirectStandardInput = true;
 		houseGenerator_info.RedirectStandardOutput = true;
+		houseGenerator_info.RedirectStandardError = true;
 		houseGenerator_info.UseShellExecute = false;
 
 		output += "House:\n";
@@ -40,24 +41,35 @@ public class InstanceManager{
 		bool houseStarted = startProcess(ref houseGenerator, ref houseGenerator_info);
 		if(houseStarted)
 		{
-			output += "\tHouse has stated up correctly\n\tProccess ID: " + houseGenerator.Id + "\n";
+
+
 			// Set standard input and standard outputs
 			houseStandardIn = houseGenerator.StandardInput;
 			houseStandardOut = houseGenerator.StandardOutput;
+			houseErrorOut = houseGenerator.StandardError;
 
-			output += "\tStandad in and out have been handled correctly\n";
+			System.Threading.Thread.Sleep(1000);
 
-			// Read in and look for the "OK"
-			String processOutput = houseStandardOut.ReadLine();
-			output += "\tProcess Output: " + processOutput + "\n";
-			if(processOutput == "OK")
+			if(houseGenerator.HasExited)
 			{
-				output += "\tWriting timeframe:\n" + timeFrameBlob;
-				houseStandardIn.WriteLine(timeFrameBlob);
-			}else
-			{
-				output += "ERROR INSIDE PROCESS AND DID NOT RECIEVE OK\n";
+				output += "\n\tERROR: " + houseErrorOut.ReadToEnd() + "\n\n";
 			}
+			else
+			{
+				output += "\tHouse has stated up correctly\n\tProccess ID: " + houseGenerator.Id + "\n";
+				// Read in and look for the "OK"
+				String processOutput = houseStandardOut.ReadLine();
+				output += "\tProcess Output: " + processOutput + "\n";
+				if(processOutput == "OK")
+				{
+					output += "\tWriting timeframe:\n" + timeFrameBlob;
+					houseStandardIn.WriteLine(timeFrameBlob);
+				}else
+				{
+					output += "ERROR INSIDE PROCESS AND DID NOT RECIEVE OK\n";
+				}
+			}
+
 		}
 		return output;
 	}
@@ -86,7 +98,7 @@ public class InstanceManager{
 		try {
 			p = Process.Start(ps);
 			started = true;
-		} catch (Exception ex) {
+		}catch(Exception ex){
 			Console.WriteLine(ex.ToString());
 		}
 		return started;
