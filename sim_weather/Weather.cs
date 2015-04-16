@@ -6,7 +6,7 @@ namespace Hats.SimWeather
 /**
  * Interface for accessing the weather for a given house.
  */
-interface IWeather
+public interface IWeather
 {
 	Double Temperature();
 };
