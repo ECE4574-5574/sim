@@ -6,30 +6,30 @@
             "Username":"User1",
             "UserID": "12345",
             "Password": "thePassword",
-            "Coordinates": 
+            "Coordinates":
             {
                 "x":"1234",
                 "y":"4321",
                 "z":"6789"
             }
-            
+
         },
         {
             "Username": "User2",
             "UserID": "67890",
             "Password": "secondPassword",
-            "Coordinates": 
+            "Coordinates":
             {
                 "x":"1234",
                 "y":"4321",
                 "z":"6789"
             }
-            
         }
     ],
     "houses": [
     {
       "name": "house1",
+      "port": 80801,
       "devices": [
         {
           "name": "light1",
@@ -38,11 +38,11 @@
           "startState": false
         },
         {
-           "name": "Kitchen Ceiling Fan",    
-           "class": "CeilingFan",    
-           "type": "Simulated",    
-           "Enabled": false,    
-           "State": 0    
+           "name": "Kitchen Ceiling Fan",
+           "class": "CeilingFan",
+           "type": "Simulated",
+           "Enabled": false,
+           "State": 0
         }
       ],
       "rooms": [
@@ -53,7 +53,7 @@
             "y": 200
           },
           "roomLevel": 1,
-          "doors": 
+          "doors":
           [
             {
               "x": 20,
@@ -73,7 +73,7 @@
             "y": 200
           },
           "roomLevel": 1,
-          "doors": 
+          "doors":
           [
             {
               "x": 20,
@@ -90,12 +90,12 @@
       "weather":
       [
         {
-          "Time": "2015-04-08T13:25:21.803833-04:00",    
-           "Temp": 50 
+          "Time": "2015-04-08T13:25:21.803833-04:00",
+           "Temp": 50
         },
         {
-           "Time": "2015-04-08T13:25:21.803833-04:00",    
-           "Temp": 30   
+           "Time": "2015-04-08T13:25:21.803833-04:00",
+           "Temp": 30
         }
       ]
     }
