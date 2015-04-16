@@ -5,6 +5,17 @@ using Newtonsoft.Json;
 using Sim_Harness_GUI;
 using System.IO;
 
+using System.Web;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Text;
+
+using System.Net.Http;
+using System.Threading.Tasks;
+
 
 
 public partial class MainWindow: Gtk.Window
@@ -164,9 +175,35 @@ public partial class MainWindow: Gtk.Window
 		// Automatically construct the JSON string to be passed
 		string jsonString = JsonConvert.SerializeObject(newTime);
 
+		postTimeFrame(jsonString);
 		return jsonString;
 	}
 
+	public void postTimeFrame(string time){
+		/*WebRequest request = WebRequest.CreateHttp("https://posttestserver.com/post.php");
+		request.Method = "POST";
+		request.ContentType = "application/json";
+		byte[] byteArray = Encoding.UTF8.GetBytes(time);
+		Stream data = request.GetRequestStream();
+		request.ContentLength = byteArray.Length; //byteArray
+		data.Write(byteArray, 0, byteArray.Length);
+		data.Close();*/
+
+		var task = MakeRequest(time);
+		task.Wait();
+
+		var response = task.Result;
+		var body = response.Content.ReadAsStringAsync().Result;
+	}
+	private static async Task<HttpResponseMessage> MakeRequest(string time)
+	{
+		var httpClient = new HttpClient();
+		await httpClient.GetAsync(new Uri("http://requestb.in/s26p52s2"));
+
+		var stringContent = new StringContent(time);
+		var response= await httpClient.PostAsync("http://requestb.in/s26p52s2", stringContent);	
+	    return response;
+	}
 
 	protected void OnStartTestButtonClicked(object sender, EventArgs e)
 	{
