@@ -1,0 +1,8 @@
+language: csharp
+solution: sim_harness.sln
+install:
+  - nuget restore sim_harness.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+script:
+  - xbuild
+  - MONO_PATH=./time_frame/time_frame/obj/Debug mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./sim_tests/bin/Debug/sim_tests.dll
