@@ -1,6 +1,6 @@
 {
     "storageLocation": "54.152.190.217",
-    "serverLocation": "http://5574serverapi.azurewebsites.net/",
+    "serverLocation": "52.5.95.215",
         "users": [
         {
             "Username":"User1",
@@ -29,7 +29,7 @@
     "houses": [
     {
       "name": "house1",
-      "port": 80801,
+      "port": 8081,
       "devices": [
         {
           "name": "light1",

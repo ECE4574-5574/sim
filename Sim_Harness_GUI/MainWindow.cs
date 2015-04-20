@@ -226,9 +226,11 @@ public partial class MainWindow: Gtk.Window
 		_instances = new InstanceManager();
 		String jsonStartString = buildStartString();
 		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n\n";
-		currentTestTextview.Buffer.Text += _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text, jsonStartString, jsonBlob);
+		bool successfullStart = _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text, jsonStartString, jsonBlob);
 
-		if(!currentTestTextview.Buffer.Text.Contains("ERROR:")){
+		currentTestTextview.Buffer.Text += _instances.ToString();
+
+		if(successfullStart){
 			startTestButton.Sensitive = false;
 			endTestButton.Sensitive = true;
 		}
