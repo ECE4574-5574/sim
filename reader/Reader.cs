@@ -58,10 +58,10 @@ namespace Hats
             public toVerify readFile(string fileName)
             {
                 toVerify output = new toVerify();
-                var myConfig = Newtonsoft.Json.JsonConvert.DeserializeObject<Configuration>(System.IO.File.ReadAllText(fileName));
+                //var myConfig = Newtonsoft.Json.JsonConvert.DeserializeObject<Configuration>(System.IO.File.ReadAllText(fileName));
 
 
-                foreach (Users item in myConfig.users)
+                /*foreach (Users item in myConfig.users)
                 {
                     output.userNames.Add(item.UserID);
                 }
@@ -75,7 +75,7 @@ namespace Hats
                         output.deviceIDs.Add(item2.name);
                     }
 
-                } 
+                } */
                 return (output);
             }
         }
