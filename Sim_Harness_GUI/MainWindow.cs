@@ -5,18 +5,6 @@ using Newtonsoft.Json;
 using Sim_Harness_GUI;
 using System.IO;
 
-using System.Web;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Text;
-
-using System.Net.Http;
-using System.Threading.Tasks;
-
-
 
 public partial class MainWindow: Gtk.Window
 {
