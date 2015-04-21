@@ -1,0 +1,29 @@
+{
+    "Weather": [
+        {
+            "condition": "sunny",
+            "temp": 80,
+            "WeatherTimeStamp": "2015-04-20T20:30:40+01:00"
+        },
+        {
+            "condition": "snowy",
+            "temp": 0,
+            "WeatherTimeStamp": "2015-04-20T21:30:40+01:00"
+        },
+        {
+            "condition": "rainy",
+            "temp": 12,
+            "WeatherTimeStamp": "2015-04-20T22:30:40+01:00"
+        },
+        {
+            "condition": "windy",
+            "temp": 3,
+            "WeatherTimeStamp": "2015-04-20T23:30:40+01:00"
+        },
+        {
+            "condition": "stormy",
+            "temp": 1,
+            "WeatherTimeStamp": "2015-04-20T24:30:40+01:00"
+        }
+    ]
+}
