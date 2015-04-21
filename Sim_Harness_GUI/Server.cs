@@ -1,6 +1,8 @@
 using System;
+
+
 using System.Net.Http;
-using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 
 /**
  * Server Class
@@ -8,110 +10,57 @@ using System.Net.NetworkInformation;
  * Make requests / receive responses
  * \author: Nate Hughes <njh2986@vt.edu>
  */
-namespace Hats.ServerInterface
+namespace Sim_Harness_GUI
 {
 public class Server
 {
-	// the reference to the physical server
-	private HttpClient client;
-
-	// server response
-	private HttpResponseMessage response;
-
-	/**
- 	 * Instantiates a new server object
- 	 * \param[in] client Client to connect to and communicate through
- 	 */
-	public Server(Uri url)
-	{			
-		client = new HttpClient();
-		client.BaseAddress = url;
-	}
-
-	/**
- 	 * Connect to the remote host
- 	 */
-	public async void connect()
+	protected static string url;
+	public string URL
 	{
-		try	
+		get
 		{
-			response = await client.GetAsync(client.BaseAddress);
-			response.EnsureSuccessStatusCode(); // throws exception if unsuccessful connection
+			return url;
 		}
-		catch
+		set
 		{
-			// handle exception
+			url = value;
 		}
+	}
+
+
+	public Server(string serverURL){
+		url =  serverURL;
+	}
+
+	public string postMessage(string msg){
+		/*WebRequest request = WebRequest.CreateHttp("https://posttestserver.com/post.php");
+		request.Method = "POST";
+		request.ContentType = "application/json";
+		byte[] byteArray = Encoding.UTF8.GetBytes(time);
+		Stream data = request.GetRequestStream();
+		request.ContentLength = byteArray.Length; //byteArray
+		data.Write(byteArray, 0, byteArray.Length);
+		data.Close();*/
+
+		var task = MakeRequest(msg);
+		task.Wait();
+
+		var response = task.Result;
+
+		var body = response.Content.ReadAsStringAsync().Result;
+		return body;
 
 	}
 
-	/**
- 	 * Get server's response to last request
- 	 * \param[out] string representing server's response to latest request
- 	 */
-	public string getResponse()
+	private static async Task<HttpResponseMessage> MakeRequest(string msg)
 	{
-		return response.Content.ToString();
-	}
+		var httpClient = new HttpClient();
+		await httpClient.GetAsync(new Uri(url));
 
-	/**
- 	 * Ping the server to make sure it's connected and ready to go
- 	 */
-	public bool serverReady()
-	{
+		var stringContent = new StringContent(msg);
 
-		// code reference:
-		// http://www.codeproject.com/Tips/109427/How-to-PING-Server-in-C
-
-		string host = string.Format("{0}", client.BaseAddress.Host); 
-		Ping p = new Ping();
-		try
-		{
-			PingReply reply = p.Send(host, 3000);
-			if (reply.Status == IPStatus.Success)
-				return true;
-		}
-		catch 
-		{ 
-			// handle exception
-		}
-
-		return false;
-	}
-
-	/**
- 	 * Run the operator's selected test scenario
- 	 * \param[in] testScenario string representing scenario chosen by the operator
- 	 * \param[out] Config info for the selected test scenario - JSON string
- 	 */
-	public String runScenario(string testScenario)
-	{
-		return "";
-	}
-
-	/**
- 	 * Free any simulation-dedicated resources
- 	 */
-	public bool cleanUp()
-	{
-		return true;
-	}
-
-	/**
- 	 * Query the server for the state of the spawned apps and houses 
- 	 */
-	public bool simReady()
-	{
-		return true;
-	}
-
-	/**
- 	 * Send a go signal to the server
- 	 * Precondition: Ensure all component instances are ready - call simReady()
- 	 */
-	public bool startSim()
-	{
-		return true;
+		var response= await httpClient.PostAsync(url, stringContent);	
+		return response;
 	}
 
 }

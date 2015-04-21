@@ -54,5 +54,9 @@
       <Name>sim_weather</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Sim_Harness_GUI\Sim_Harness_GUI.csproj">
+      <Project>{B4104772-C10F-45D8-B238-1BC155C6C943}</Project>
+      <Name>Sim_Harness_GUI</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
