@@ -43,6 +43,10 @@
            "type": "Simulated",
            "Enabled": false,
            "State": 0
+        },
+        {
+          "name": "thermo",
+          "class": "Thermostat",
         }
       ],
       "rooms": [
