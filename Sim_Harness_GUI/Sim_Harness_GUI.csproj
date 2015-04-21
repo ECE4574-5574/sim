@@ -76,12 +76,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\time_frame\time_frame\time_frame.csproj">
       <Project>{E9C8A0A8-16D9-4FEF-AB45-04E9EE9A579E}</Project>
       <Name>time_frame</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

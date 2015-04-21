@@ -61,7 +61,19 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnAppSimulatorChooseFileButtonClicked(object sender, EventArgs e)
 	{
-		this.appSimLocationEntry.Text = this.selectFile();
+		//this.appSimLocationEntry.Text = this.selectFile();
+		Gtk.FileChooserDialog chooser = new Gtk.FileChooserDialog("Select Directory of App Files",
+			this,
+			FileChooserAction.SelectFolder,
+			"Cancel", ResponseType.Cancel,
+			"Select", ResponseType.Accept);
+
+		if(chooser.Run() == (int)ResponseType.Accept)
+		{
+			this.appSimLocationEntry.Text = chooser.Filename;
+		}
+
+		chooser.Destroy();
 	}
 
 	protected void OnHouseSimLocationButtonClicked(object sender, EventArgs e)
@@ -149,11 +161,11 @@ public partial class MainWindow: Gtk.Window
 	}
 
 	/**
-	 * Makes sure the three files selected are valid files.
+	 * Makes sure the two files selected (json scenario and house exe) are valid files.
 	 */
 	private bool checkFiles()
 	{
-		if(File.Exists(scenarioDirectoryText.Text + "/" + testScenarioComboBox.ActiveText + ".json") && File.Exists(appSimLocationEntry.Text) && File.Exists(houseSimLocationEntry.Text))
+		if(File.Exists(scenarioDirectoryText.Text + "/" + testScenarioComboBox.ActiveText + ".json") && File.Exists(houseSimLocationEntry.Text))
 		{
 			return true;
 		}
@@ -198,9 +210,11 @@ public partial class MainWindow: Gtk.Window
 		currentTestTextview.Buffer.Text = "Make request to server:\n\n\t" + jsonStartString + "\n\n\tServer: " + urlserver + "\n\n\tResponse: " + serverResponse + "\n\n----------------------------------\n\n";
 
 		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n\n";
-		currentTestTextview.Buffer.Text += _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text, jsonStartString, jsonBlob);
+		bool successfullStart = _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text, jsonStartString, jsonBlob);
 
-		if(!currentTestTextview.Buffer.Text.Contains("ERROR:")){
+		currentTestTextview.Buffer.Text += _instances.ToString();
+
+		if(successfullStart){
 			startTestButton.Sensitive = false;
 			endTestButton.Sensitive = true;
 		}
@@ -210,7 +224,8 @@ public partial class MainWindow: Gtk.Window
 	protected void OnEndTestButtonClicked(object sender, EventArgs e)
 	{
 		currentTestTextview.Buffer.Text += "\n\n";
-		currentTestTextview.Buffer.Text += _instances.killGeneratorProcesses();
+		_instances.killGeneratorProcesses();
+		currentTestTextview.Buffer.Text += _instances.ToString();
 		endTestButton.Sensitive = false;
 		startTestButton.Sensitive = true;
 	}

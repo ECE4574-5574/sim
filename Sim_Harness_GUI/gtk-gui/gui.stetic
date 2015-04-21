@@ -419,8 +419,7 @@
                       <widget class="Gtk.SpinButton" id="hourSpinBox">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="Lower">1</property>
-                        <property name="Upper">24</property>
+                        <property name="Upper">23</property>
                         <property name="PageIncrement">1</property>
                         <property name="StepIncrement">1</property>
                         <property name="ClimbRate">1</property>

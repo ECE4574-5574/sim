@@ -296,13 +296,13 @@ public partial class MainWindow
 		w17.Expand = false;
 		w17.Fill = false;
 		// Container child hbox10.Gtk.Box+BoxChild
-		this.timeFrameSpeedSpinbutton = new global::Gtk.SpinButton (1, 10000, 1);
+		this.timeFrameSpeedSpinbutton = new global::Gtk.SpinButton (1D, 10000D, 1D);
 		this.timeFrameSpeedSpinbutton.CanFocus = true;
 		this.timeFrameSpeedSpinbutton.Name = "timeFrameSpeedSpinbutton";
-		this.timeFrameSpeedSpinbutton.Adjustment.PageIncrement = 10;
-		this.timeFrameSpeedSpinbutton.ClimbRate = 1;
+		this.timeFrameSpeedSpinbutton.Adjustment.PageIncrement = 10D;
+		this.timeFrameSpeedSpinbutton.ClimbRate = 1D;
 		this.timeFrameSpeedSpinbutton.Numeric = true;
-		this.timeFrameSpeedSpinbutton.Value = 4;
+		this.timeFrameSpeedSpinbutton.Value = 4D;
 		this.hbox10.Add (this.timeFrameSpeedSpinbutton);
 		global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox10 [this.timeFrameSpeedSpinbutton]));
 		w18.Position = 1;
@@ -411,13 +411,13 @@ public partial class MainWindow
 		this.hbox14.Name = "hbox14";
 		this.hbox14.Spacing = 6;
 		// Container child hbox14.Gtk.Box+BoxChild
-		this.hourSpinBox = new global::Gtk.SpinButton (1, 24, 1);
+		this.hourSpinBox = new global::Gtk.SpinButton (0, 23, 1);
 		this.hourSpinBox.CanFocus = true;
 		this.hourSpinBox.Name = "hourSpinBox";
-		this.hourSpinBox.Adjustment.PageIncrement = 1;
-		this.hourSpinBox.ClimbRate = 1;
+		this.hourSpinBox.Adjustment.PageIncrement = 1D;
+		this.hourSpinBox.ClimbRate = 1D;
 		this.hourSpinBox.Numeric = true;
-		this.hourSpinBox.Value = 1;
+		this.hourSpinBox.Value = 1D;
 		this.hbox14.Add (this.hourSpinBox);
 		global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox14 [this.hourSpinBox]));
 		w31.Position = 0;
@@ -437,13 +437,13 @@ public partial class MainWindow
 		this.hbox16.Name = "hbox16";
 		this.hbox16.Spacing = 6;
 		// Container child hbox16.Gtk.Box+BoxChild
-		this.minSpinBox = new global::Gtk.SpinButton (0, 59, 1);
+		this.minSpinBox = new global::Gtk.SpinButton (0D, 59D, 1D);
 		this.minSpinBox.CanFocus = true;
 		this.minSpinBox.Name = "minSpinBox";
-		this.minSpinBox.Adjustment.PageIncrement = 1;
-		this.minSpinBox.ClimbRate = 1;
+		this.minSpinBox.Adjustment.PageIncrement = 1D;
+		this.minSpinBox.ClimbRate = 1D;
 		this.minSpinBox.Numeric = true;
-		this.minSpinBox.Value = 59;
+		this.minSpinBox.Value = 59D;
 		this.hbox16.Add (this.minSpinBox);
 		global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.hbox16 [this.minSpinBox]));
 		w33.Position = 0;
