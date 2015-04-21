@@ -591,6 +591,7 @@ public partial class MainWindow
 		this.DefaultHeight = 753;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+		this.serverURLEntry.Changed += new global::System.EventHandler (this.OnServerURLEntryChanged);
 		this.scenarioDirButton.Clicked += new global::System.EventHandler (this.OnScenarioDirectoryLoad);
 		this.scenarioDirectoryText.Changed += new global::System.EventHandler (this.OnScenarioDirectoryTextChanged);
 		this.appSimulatorChooseFileButton.Clicked += new global::System.EventHandler (this.OnAppSimulatorChooseFileButtonClicked);

@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Sim_Harness_GUI;
 using Newtonsoft.Json;
 
+
 namespace sim_tests
 {
 [TestFixture]
@@ -178,8 +179,26 @@ public class Test
 		Assert.AreEqual(false, start);
 		Assert.AreEqual(0, manager.getNumberHouses());
 		Assert.AreEqual(0, manager.getNumberApps());
-
 		manager.killGeneratorProcesses();
+
+	}
+
+	public void ServerTest()
+	{
+		//yay server
+		Server s = new Server("http://requestb.in/1ehzgva1");
+		Assert.AreEqual("http://requestb.in/1ehzgva1", s.URL);
+
+		string response = s.postMessage("Hello");
+		Assert.AreEqual("ok", response);
+
+		//faulty server
+		s.URL = "http://requestb.in/1eh1";
+		Assert.AreEqual("http://requestb.in/1eh1", s.URL);
+
+		string response2 = s.postMessage("Hello");
+		Assert.AreNotEqual("ok", response2);
+
 	}
 }
 }
