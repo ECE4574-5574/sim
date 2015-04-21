@@ -1,0 +1,37 @@
+{
+    "DeviceState": [
+        {
+            "deviceID": 5,
+            "deviceName": "Kitchen Ceiling Fan",
+            "deviceType": "Ceiling Fan",
+            "spaceID": 2,
+            "stateDevice": 0,
+            "DeviceStateTimeStamp": "2015-04-20T21:31:40+01:00"
+        },
+        {
+            "deviceID": 4,
+            "deviceName": "Light1",
+            "deviceType": "LightSwitch",
+            "spaceID": 2,
+            "stateDevice": 1,
+            "DeviceStateTimeStamp": "2015-04-20T21:33:40+01:00"
+        },
+        {
+            "deviceID": 3,
+            "deviceName": "Light2",
+            "deviceType": "LightSwitch",
+            "spaceID": 2,
+            "stateDevice": 0,
+            "DeviceStateTimeStamp": "2015-04-20T21:32:40+01:00"
+        },
+        {
+            "deviceID": 2,
+            "deviceName": "Light3",
+            "deviceType": "LightSwitch",
+            "spaceID": 2,
+            "stateDevice": 1,
+            "DeviceStateTimeStamp": "2015-04-20T21:35:40+01:00"
+        }
+    ]
+}
+         
