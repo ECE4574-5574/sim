@@ -28,6 +28,7 @@ public class SimHouse
 		_houseName = house_id;
 		_processStarted = false;
 		_processError = false;
+
 	}
 
 	public void Start()
@@ -83,7 +84,6 @@ public class SimHouse
 				_houseOutput = _errorOut.ReadToEnd();
 			}
 		}
-			
 	}
 
 	/**

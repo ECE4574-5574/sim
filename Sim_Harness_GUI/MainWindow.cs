@@ -60,7 +60,19 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnAppSimulatorChooseFileButtonClicked(object sender, EventArgs e)
 	{
-		this.appSimLocationEntry.Text = this.selectFile();
+		//this.appSimLocationEntry.Text = this.selectFile();
+		Gtk.FileChooserDialog chooser = new Gtk.FileChooserDialog("Select Directory of App Files",
+			this,
+			FileChooserAction.SelectFolder,
+			"Cancel", ResponseType.Cancel,
+			"Select", ResponseType.Accept);
+
+		if(chooser.Run() == (int)ResponseType.Accept)
+		{
+			this.appSimLocationEntry.Text = chooser.Filename;
+		}
+
+		chooser.Destroy();
 	}
 
 	protected void OnHouseSimLocationButtonClicked(object sender, EventArgs e)
@@ -148,11 +160,11 @@ public partial class MainWindow: Gtk.Window
 	}
 
 	/**
-	 * Makes sure the three files selected are valid files.
+	 * Makes sure the two files selected (json scenario and house exe) are valid files.
 	 */
 	private bool checkFiles()
 	{
-		if(File.Exists(scenarioDirectoryText.Text + "/" + testScenarioComboBox.ActiveText + ".json") && File.Exists(appSimLocationEntry.Text) && File.Exists(houseSimLocationEntry.Text))
+		if(File.Exists(scenarioDirectoryText.Text + "/" + testScenarioComboBox.ActiveText + ".json") && File.Exists(houseSimLocationEntry.Text))
 		{
 			return true;
 		}
