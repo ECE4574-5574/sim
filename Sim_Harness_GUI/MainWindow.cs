@@ -252,7 +252,8 @@ public partial class MainWindow: Gtk.Window
 	protected void OnEndTestButtonClicked(object sender, EventArgs e)
 	{
 		currentTestTextview.Buffer.Text += "\n\n";
-		currentTestTextview.Buffer.Text += _instances.killGeneratorProcesses();
+		_instances.killGeneratorProcesses();
+		currentTestTextview.Buffer.Text += _instances.ToString();
 		endTestButton.Sensitive = false;
 		startTestButton.Sensitive = true;
 	}
