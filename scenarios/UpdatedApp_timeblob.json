@@ -40,7 +40,7 @@
 				"lat": 7.123456,
 				"lon": 8.123456,
 				"altitude": 9.123456,
-				"action" : "brighter"
+				"action" : "brightenNearMe"
 				}
 			}
 		]
