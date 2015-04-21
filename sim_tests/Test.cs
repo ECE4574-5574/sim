@@ -5,6 +5,7 @@ using System.Threading;
 using Hats.SimWeather;
 using Hats.Time;
 using NUnit.Framework;
+using Sim_Harness_GUI;
 
 namespace sim_tests
 {
@@ -82,6 +83,24 @@ public class Test
 		Assert.AreEqual(temps[0].Temp, linear.Temperature(start));
 		Assert.AreEqual(5, linear.Temperature(start + new TimeSpan(0, 0, 5)));
 		Assert.AreEqual(15, linear.Temperature(start + new TimeSpan(0, 0, 25)));
+	}
+
+	[Test]
+	public void ServerTest()
+	{
+		//yay server
+		Server s = new Server("http://requestb.in/1ehzgva1");
+		Assert.AreEqual("http://requestb.in/1ehzgva1", s.URL);
+
+		string response = s.postMessage("Hello");
+		Assert.AreEqual("ok", response);
+
+		//faulty server
+		s.URL = "http://requestb.in/1eh1";
+		Assert.AreEqual("http://requestb.in/1eh1", s.URL);
+
+		string response2 = s.postMessage("Hello");
+		Assert.AreNotEqual("ok", response2);
 	}
 }
 }

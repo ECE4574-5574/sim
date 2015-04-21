@@ -22,6 +22,7 @@ public partial class MainWindow: Gtk.Window
 {
 	protected InstanceManager _instances;
 	protected String jsonBlob;
+	string urlserver;
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
@@ -179,52 +180,23 @@ public partial class MainWindow: Gtk.Window
 		// Automatically construct the JSON string to be passed
 		string jsonString = JsonConvert.SerializeObject(newTime);
 
-		postTimeFrame(jsonString);
 		return jsonString;
-	}
-
-	public void postTimeFrame(string time){
-		/*WebRequest request = WebRequest.CreateHttp("https://posttestserver.com/post.php");
-		request.Method = "POST";
-		request.ContentType = "application/json";
-		byte[] byteArray = Encoding.UTF8.GetBytes(time);
-		Stream data = request.GetRequestStream();
-		request.ContentLength = byteArray.Length; //byteArray
-		data.Write(byteArray, 0, byteArray.Length);
-		data.Close();*/
-
-
-		currentTestTextview.Buffer.Text = "Make request to server:\n\n\t" + time + "\n\n\tServer: http://requestb.in/s26p52s2\n\n";
-
-		var task = MakeRequest(time);
-		currentTestTextview.Buffer.Text += "\t Waiting...\n\n";
-		task.Wait();
-
-
-		var response = task.Result;
-
-		currentTestTextview.Buffer.Text += "\tResponse: " + response + "\n\n----------------------------------\n\n";
-
-
-		var body = response.Content.ReadAsStringAsync().Result;
-
-
-	}
-	private static async Task<HttpResponseMessage> MakeRequest(string time)
-	{
-		var httpClient = new HttpClient();
-		await httpClient.GetAsync(new Uri("http://requestb.in/s26p52s2"));
-
-		var stringContent = new StringContent(time);
-
-		var response= await httpClient.PostAsync("http://requestb.in/s26p52s2", stringContent);	
-	    return response;
 	}
 
 	protected void OnStartTestButtonClicked(object sender, EventArgs e)
 	{
 		_instances = new InstanceManager();
 		String jsonStartString = buildStartString();
+
+		// build obj
+		Server s = new Server(urlserver);
+
+		// sendmsg store response in serverResponse
+		string serverResponse = s.postMessage(jsonStartString);
+
+
+		currentTestTextview.Buffer.Text = "Make request to server:\n\n\t" + jsonStartString + "\n\n\tServer: " + urlserver + "\n\n\tResponse: " + serverResponse + "\n\n----------------------------------\n\n";
+
 		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n\n";
 		currentTestTextview.Buffer.Text += _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text, jsonStartString, jsonBlob);
 
@@ -243,6 +215,10 @@ public partial class MainWindow: Gtk.Window
 		startTestButton.Sensitive = true;
 	}
 
-
+	protected void OnServerURLEntryChanged (object sender, EventArgs e)
+	{
+		urlserver = serverURLEntry.Text;
+		//throw new NotImplementedException ();
+	}
 }
 
