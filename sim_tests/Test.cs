@@ -1,10 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using Hats.SimWeather;
 using Hats.Time;
 using NUnit.Framework;
+using Sim_Harness_GUI;
+using Newtonsoft.Json;
 
 namespace sim_tests
 {
@@ -75,6 +78,108 @@ public class Test
 		Assert.AreEqual(temps[0].Temp, linear.Temperature(start));
 		Assert.AreEqual(5, linear.Temperature(start + new TimeSpan(0, 0, 5)));
 		Assert.AreEqual(15, linear.Temperature(start + new TimeSpan(0, 0, 25)));
+	}
+
+	[Test]
+	public void InstanceManagerWorkingHouse()
+	{
+		InstanceManager manager = new InstanceManager();
+
+		Assert.AreEqual(0, manager.getNumberHouses());
+		Assert.AreEqual(0, manager.getNumberApps());
+
+		string pathToHouse = Directory.GetCurrentDirectory();
+
+		// get path to the dummyHouseAppWorkingProperly
+		pathToHouse += "/../../../dummyHouseAppWorkingProperly/bin/Debug/dummyHouseAppWorkingProperly.exe";
+
+		string pathToApp = pathToHouse;
+
+
+		string jsonBlob = Directory.GetCurrentDirectory();
+		jsonBlob += "/../../../scenarios/example1.json";
+		jsonBlob = File.ReadAllText(jsonBlob);
+		jsonBlob = jsonBlob.Replace("\n", "");
+		jsonBlob = jsonBlob.Replace("\t", "");
+
+		TimeFrame tf = new TimeFrame(DateTime.Now, DateTime.Now, 2.0);
+		string tfString = JsonConvert.SerializeObject(tf);
+
+		// Test for working HouseApp
+		bool start = manager.startGeneratorProcesses(pathToApp, pathToHouse, tfString, jsonBlob);
+		Assert.AreEqual(true, start);
+		Assert.AreEqual(1, manager.getNumberHouses());
+		Assert.AreEqual(0, manager.getNumberApps());
+
+		manager.killGeneratorProcesses();
+		Assert.AreEqual(0, manager.getNumberHouses());
+		Assert.AreEqual(0, manager.getNumberApps());
+
+	}
+
+	[Test]
+	public void InstanceManagerInvalidHouseExe()
+	{
+		InstanceManager manager = new InstanceManager();
+
+		Assert.AreEqual(0, manager.getNumberHouses());
+		Assert.AreEqual(0, manager.getNumberApps());
+
+		string pathToHouse = Directory.GetCurrentDirectory();
+
+		// get path to the dummyHouseAppWorkingProperly
+		pathToHouse += "/../../../dummyHouseAppWorkingProperly/bin/Debug/dummyHouseAppWorkingProperl";
+
+		string pathToApp = pathToHouse;
+
+
+		string jsonBlob = Directory.GetCurrentDirectory();
+		jsonBlob += "/../../../scenarios/example1.json";
+		jsonBlob = File.ReadAllText(jsonBlob);
+		jsonBlob = jsonBlob.Replace("\n", "");
+
+		TimeFrame tf = new TimeFrame(DateTime.Now, DateTime.Now, 2.0);
+		string tfString = JsonConvert.SerializeObject(tf);
+
+		// Test for working HouseApp
+		bool start = manager.startGeneratorProcesses(pathToApp, pathToHouse, tfString, jsonBlob);
+		Assert.AreEqual(false, start);
+		Assert.AreEqual(0, manager.getNumberHouses());
+		Assert.AreEqual(0, manager.getNumberApps());
+	}
+
+	[Test]
+	public void InstanceManagerErrorHouse()
+	{
+		InstanceManager manager = new InstanceManager();
+
+		Assert.AreEqual(0, manager.getNumberHouses());
+		Assert.AreEqual(0, manager.getNumberApps());
+
+		string pathToHouse = Directory.GetCurrentDirectory();
+
+		// get path to the dummyHouseAppWorkingProperly
+		pathToHouse += "/../../../dummyHouseAppError/bin/Debug/dummyHouseAppError.exe";
+
+		string pathToApp = pathToHouse;
+
+
+		string jsonBlob = Directory.GetCurrentDirectory();
+		jsonBlob += "/../../../scenarios/example1.json";
+		jsonBlob = File.ReadAllText(jsonBlob);
+		jsonBlob = jsonBlob.Replace("\n", "");
+		jsonBlob = jsonBlob.Replace("\t", "");
+
+		TimeFrame tf = new TimeFrame(DateTime.Now, DateTime.Now, 2.0);
+		string tfString = JsonConvert.SerializeObject(tf);
+
+		// Test for working HouseApp
+		bool start = manager.startGeneratorProcesses(pathToApp, pathToHouse, tfString, jsonBlob);
+		Assert.AreEqual(false, start);
+		Assert.AreEqual(0, manager.getNumberHouses());
+		Assert.AreEqual(0, manager.getNumberApps());
+
+		manager.killGeneratorProcesses();
 	}
 }
 }

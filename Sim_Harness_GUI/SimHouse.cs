@@ -26,23 +26,24 @@ public class SimHouse
 		_startInformation.RedirectStandardError = true;
 		_startInformation.UseShellExecute = false;
 		_houseName = house_id;
+		_processStarted = false;
+		_processError = false;
 	}
 
-	public bool Start()
+	public void Start()
 	{
-		bool success = true;
 		try{
 			_process = Process.Start(_startInformation);
+			_processStarted = true;
 		}
 		catch (Exception e){
-			Console.Write(e.ToString());
-			success =  false;
+			_houseOutput = e.ToString();
+			_processStarted =  false;
+			return;
 		}
-
 		_standardIn = _process.StandardInput;
 		_standardOut = _process.StandardOutput;
 		_errorOut = _process.StandardError;
-		return success;
 	}
 
 	public string Kill()
@@ -63,27 +64,26 @@ public class SimHouse
 
 	public void waitForResponse()
 	{
-		while(_standardOut.EndOfStream && _errorOut.EndOfStream)
-		{
-			System.Threading.Thread.Sleep(10);
-		}
 
-		if(!_standardOut.EndOfStream)
+		if(_processStarted)
 		{
-			_error = false;
-			_errorMessage = _standardOut.ReadToEnd();
-		}
-		else
-		{
-			_error = true; 
-			_errorMessage = _errorOut.ReadToEnd();
+			while(_standardOut.EndOfStream && _errorOut.EndOfStream)
+			{
+				System.Threading.Thread.Sleep(10);
+			}
+
+			if(!_standardOut.EndOfStream)
+			{
+				_processError = false;
+				_houseOutput = _standardOut.ReadLine();
+			}
+			else
+			{
+				_processError = true; 
+				_houseOutput = _errorOut.ReadToEnd();
+			}
 		}
 			
-	}
-
-	public bool startUpSuccessfull()
-	{
-		return !_error;
 	}
 
 	/**
@@ -91,22 +91,25 @@ public class SimHouse
 	 */ 
 	public void sendMessage(String msg)
 	{
-		_standardIn.WriteLine(msg);
+		if(!_process.HasExited)
+		{
+			_standardIn.WriteLine(msg);
+		}
 	}
 
 	public override string ToString(){
-		string output = "House Name:   " + _houseName + "\n" +
-						"\tLocation:     " + _process.StartInfo.FileName + "\n" +
-						"\tProcess ID:   " + _process.Id + "\n" +
-						"\tProcess Name: " + _process.ProcessName + "\n";
-		if(_error)
+		string output = "\tHouse Name:        " + _houseName + "\n" +
+		                "\tLocation:        " + _process.StartInfo.FileName + "\n" +
+		                "\tProcess Started: " + _processStarted + "\n"; 
+
+		if(_processStarted)
 		{
-			output += "\tError Message:\n\n" + _errorMessage;
+			output += 	"\tProcess ID:      " + _process.Id + "\n" +
+						"\tProcess Name:    " + _process.ProcessName + "\n" +
+						"\tError:           " + _processError + "\n";
 		}
-		else
-		{
-			output += "\tResponse:    " + _errorMessage;
-		}
+
+		output += 		"\tProcess Output:  " + _houseOutput + "\n";
 		return output;
 	}
 
@@ -114,8 +117,24 @@ public class SimHouse
 	protected ProcessStartInfo _startInformation;
 	protected StreamWriter _standardIn;
 	protected StreamReader _standardOut, _errorOut;
-	protected String _errorMessage, _houseName, exitMessage;
-	protected bool _error;
+	protected String _status, _houseName, _houseOutput;
+	protected bool _processStarted;
+	public bool ProcessStarted
+	{
+		get
+		{
+			return _processStarted;
+		}
+	}
+	protected bool _processError;
+	public bool Error
+	{
+		get
+		{
+			return _processError;
+		}
+	}
+
 	// NOTE: the ready signal is gotten via the server, not directly from the sim house
 }
 }
