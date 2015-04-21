@@ -13,13 +13,6 @@ namespace sim_tests
 public class Test
 {
 	[Test]
-	public void SettingTimeFrame()
-	{
-		var frame = new TimeFrame();
-		Assert.That(TimeInterface.setTimeFrameFromString (frame, ""));
-	}
-
-	[Test]
 	[ExpectedException(typeof(ArgumentException))]
 	public void CreatingTimeFrame()
 	{
