@@ -29,7 +29,10 @@ public class Server
 
 
 	public Server(string serverURL){
-		url =  serverURL;
+		if(serverURL != null)
+			url = serverURL;
+		else
+			url = "fake_server";
 	}
 
 	public string postMessage(string msg){
@@ -41,13 +44,20 @@ public class Server
 		request.ContentLength = byteArray.Length; //byteArray
 		data.Write(byteArray, 0, byteArray.Length);
 		data.Close();*/
-
+		var body = "";
 		var task = MakeRequest(msg);
-		task.Wait();
+		if(task.Status != TaskStatus.Faulted)
+		{
+			task.Wait();
 
-		var response = task.Result;
+			var response = task.Result;
 
-		var body = response.Content.ReadAsStringAsync().Result;
+			body = response.Content.ReadAsStringAsync().Result;
+		}
+		else
+		{
+			body = "Invalid Server";
+		}
 		return body;
 
 	}
