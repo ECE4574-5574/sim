@@ -3,6 +3,24 @@ using System;
 
 using System.Net.Http;
 using System.Threading.Tasks;
+using System;
+using Gtk;
+using Hats.Time;
+using Newtonsoft.Json;
+using Sim_Harness_GUI;
+using System.IO;
+
+using System.Web;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Text;
+
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 /**
  * Server Class
@@ -67,7 +85,7 @@ public class Server
 		var httpClient = new HttpClient();
 		await httpClient.GetAsync(new Uri(url));
 
-		var stringContent = new StringContent(msg);
+		var stringContent = new StringContent(msg, Encoding.UTF8, "application/json");
 
 		var response= await httpClient.PostAsync(url, stringContent);	
 		return response;
