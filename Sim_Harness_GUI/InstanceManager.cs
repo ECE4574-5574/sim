@@ -44,6 +44,7 @@ public class InstanceManager{
 		_timeFrameInfo = timeFrameBlob;
 		_houseLocation = houseLocation;
 		_appPath = appLocation;
+		_jsonScenario = testScenarioBlob;
 
 		_status = "";
 
