@@ -49,8 +49,8 @@ public class InstanceManager{
 		_status = "";
 
 		//TODO: read the test Scenario blob. right now it is hard coded to start only one house named "house1"
-		//prepProcesses();
-		//startSimHouses();
+		prepProcesses();
+		startSimHouses();
 	
 		if(_errorHouses.Count != 0)
 		{
