@@ -46,7 +46,7 @@
         },
         {
           "name": "thermo",
-          "class": "Thermostat",
+          "class": "Thermostat"
         }
       ],
       "rooms": [
