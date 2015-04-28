@@ -10,6 +10,7 @@ public class InstanceManager{
 	protected List<SimHouse> _houses, _errorHouses;
 	protected List<SimApp> _apps;
 	protected string _timeFrameInfo, _jsonScenario, _appPath, _houseLocation, _status;
+	protected string myOS;
 
 
 
@@ -19,6 +20,10 @@ public class InstanceManager{
 		_errorHouses = new List<SimHouse>();
 		_apps = new List<SimApp>();
 		_status = "";
+
+		//set myOS as either "Unix" for a Mac OS, or "Win32NT" for a Windows OS
+		OperatingSystem os = Environment.OSVersion;
+		myOS = os.Platform.ToString();
 	}
 
 
@@ -58,14 +63,10 @@ public class InstanceManager{
 		}
 
 		//TODO: set up how to start the mobile app
-
-
-
+		startOneApp(appLocation);
 
 		// Send the "go command to the houses 
 		sendGoHouses();
-
-		startOneApp(appLocation);
 
 		return true;
 	}
@@ -88,6 +89,29 @@ public class InstanceManager{
 	private string startOneApp(string dir){
 		string output = "";
 
+		ProcessStartInfo p_info = new ProcessStartInfo();
+
+		p_info.UseShellExecute = true;
+		p_info.ErrorDialog = false;
+
+		if (myOS == "Unix") p_info.FileName = dir + "/launch.sh";
+		else if (myOS == "Win32NT") p_info.FileName = dir + "/launch.bat";
+		else{
+			output = "OS not recognized: " + myOS + "\n";
+			return output;
+		}
+
+		//start the process
+		Process p = new Process();
+		p.StartInfo = p_info;
+
+		Console.WriteLine(startProcess(ref p, ref p_info));
+
+		return output;
+
+
+
+		/*
 		//load resource files
 		string shellScript = dir + "/adb.sh";
 		string appInstaller = dir + "/com.homeAutomationApp.apk";
@@ -103,23 +127,13 @@ public class InstanceManager{
 			output += "Can not spawn app.";
 			return output;
 		}
-
+		*/
 		//this process will send commands to adb.exe, and install the app
 		//set information about the process
-		ProcessStartInfo p_info = new ProcessStartInfo();
-
-		p_info.FileName = dir + "/launch.sh"; //hack hack hack - use a path join that is OS agnostic here
-		p_info.UseShellExecute = true;
-		p_info.ErrorDialog = false;
-	
-		//start the process
-		Process p = new Process();
-		p.StartInfo = p_info;
-
-		Console.WriteLine(startProcess(ref p, ref p_info));
-
-		return output;
 	}
+
+
+
 
 	/**
 	 * Attempts to start a process with particualar information. If the process starts
