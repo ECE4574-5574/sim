@@ -55,7 +55,7 @@ public class InstanceManager{
 
 		//TODO: read the test Scenario blob. right now it is hard coded to start only one house named "house1"
 		prepProcesses();
-		startSimHouses();
+		//startSimHouses();
 	
 		if(_errorHouses.Count != 0)
 		{
@@ -63,7 +63,7 @@ public class InstanceManager{
 		}
 
 		//TODO: set up how to start the mobile app
-		startOneApp(appLocation);
+		startOneApp(appLocation, testScenarioBlob);
 
 		// Send the "go command to the houses 
 		sendGoHouses();
@@ -86,16 +86,22 @@ public class InstanceManager{
 
 	//  helper functions //
 
-	private string startOneApp(string dir){
+	private string startOneApp(string apk_dir, string jsonblob){
 		string output = "";
 
 		ProcessStartInfo p_info = new ProcessStartInfo();
-
-		p_info.UseShellExecute = true;
+		p_info.UseShellExecute = false;
 		p_info.ErrorDialog = false;
 
-		if (myOS == "Unix") p_info.FileName = dir + "/launch.sh";
-		else if (myOS == "Win32NT") p_info.FileName = dir + "/launch.bat";
+		//set command line arguments to batch/sh file
+		//the first argument is the path to the .apk that was passed in through the GUI
+		//the second argument is the JSON string to be passed to the app (previously contained in adb.sh)
+		p_info.Arguments = apk_dir + " " + jsonblob;
+
+		//detect operating system and use launch.bat or launch.sh accordingly
+		string base_dir = AppDomain.CurrentDomain.BaseDirectory;
+		if (myOS == "Unix") p_info.FileName = base_dir + "launch.sh";
+		else if (myOS == "Win32NT") p_info.FileName = base_dir + "launch.bat";
 		else{
 			output = "OS not recognized: " + myOS + "\n";
 			return output;
@@ -108,28 +114,6 @@ public class InstanceManager{
 		Console.WriteLine(startProcess(ref p, ref p_info));
 
 		return output;
-
-
-
-		/*
-		//load resource files
-		string shellScript = dir + "/adb.sh";
-		string appInstaller = dir + "/com.homeAutomationApp.apk";
-
-
-		if(!File.Exists(shellScript)){
-			output += "Could not find 'adb.sh' in " + dir + "\n";
-			output += "Can not spawn app.";
-			return output;
-		}
-		if(!File.Exists(appInstaller)){
-			output += "Could not find 'com.homeAutomationApp.apk' in " + dir + "\n";
-			output += "Can not spawn app.";
-			return output;
-		}
-		*/
-		//this process will send commands to adb.exe, and install the app
-		//set information about the process
 	}
 
 

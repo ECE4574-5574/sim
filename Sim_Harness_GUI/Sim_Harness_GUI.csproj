@@ -81,4 +81,12 @@
       <Name>time_frame</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="launch.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="launch.sh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
