@@ -183,11 +183,12 @@ public class Test
 
 	}
 
+	[Test]
 	public void ServerTest()
 	{
 		//yay server
-		Server s = new Server("http://requestb.in/1ehzgva1");
-		Assert.AreEqual("http://requestb.in/1ehzgva1", s.URL);
+		Server s = new Server("http://requestb.in/1lzvdlh1");
+		Assert.AreEqual("http://requestb.in/1lzvdlh1", s.URL);
 
 		string response = s.postMessage("Hello");
 		Assert.AreEqual("ok", response);
@@ -199,6 +200,70 @@ public class Test
 		string response2 = s.postMessage("Hello");
 		Assert.AreNotEqual("ok", response2);
 
+	}
+
+	[Test]
+	public void houseTest()
+	{
+		List<string> houseList = new List<string> {"House1", "House2", "House3"};
+
+		//yay server
+		Server s = new Server("http://requestb.in/r5jmi9r5");
+		Assert.AreEqual("http://requestb.in/r5jmi9r5", s.URL);
+
+		for(int i = 0; i < houseList.Count; i++)
+		{
+			string response = s.postMessage(houseList[i]);
+			Assert.AreEqual("ok", response);
+		}
+	}
+
+	[Test]
+	public void userTest()
+	{
+		List<string> userList = new List<string> {"User1", "User2", "User3"};
+
+		//yay server
+		Server s = new Server("http://requestb.in/zozsmgzp");
+		Assert.AreEqual("http://requestb.in/zozsmgzp", s.URL);
+
+		for(int i = 0; i < userList.Count; i++)
+		{
+			string response = s.postMessage(userList[i]);
+			Assert.AreEqual("ok", response);
+		}
+	}
+
+	[Test]
+	public void allServerTest()
+	{
+
+		List<string> houseList = new List<string> {"House1", "House2", "House3"};
+		List<string> userList = new List<string> {"User1", "User2", "User3"};
+
+		Server s = new Server("http://requestb.in/1lzvdlh1");
+		Assert.AreEqual("http://requestb.in/1lzvdlh1", s.URL);
+
+		string response = s.postMessage("Hello");
+		Assert.AreEqual("ok", response);
+
+		Server h = new Server("http://requestb.in/r5jmi9r5");
+		Assert.AreEqual("http://requestb.in/r5jmi9r5", s.URL);
+
+		for(int i = 0; i < houseList.Count; i++)
+		{
+			string houseresponse = h.postMessage(houseList[i]);
+			Assert.AreEqual("ok", houseresponse);
+		}
+			
+		Server u = new Server("http://requestb.in/zozsmgzp");
+		Assert.AreEqual("http://requestb.in/zozsmgzp", s.URL);
+
+		for(int i = 0; i < userList.Count; i++)
+		{
+			string userresponse = u.postMessage(userList[i]);
+			Assert.AreEqual("ok", userresponse);
+		}
 	}
 }
 }

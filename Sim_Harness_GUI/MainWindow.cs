@@ -23,6 +23,8 @@ public partial class MainWindow: Gtk.Window
 	protected InstanceManager _instances;
 	protected String jsonBlob;
 	string urlserver;
+	string houseserver;
+	string userserver;
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
@@ -206,8 +208,35 @@ public partial class MainWindow: Gtk.Window
 		// sendmsg store response in serverResponse
 		string serverResponse = s.postMessage(jsonStartString);
 
-
 		currentTestTextview.Buffer.Text = "Make request to server:\n\n\t" + jsonStartString + "\n\n\tServer: " + urlserver + "\n\n\tResponse: " + serverResponse + "\n\n----------------------------------\n\n";
+
+
+		//Create Houses and Users in the database
+
+		//start prepopulation
+
+
+		List<string> houseList = new List<string> {"House1", "House2", "House3"};
+		List<string> userList = new List<string> {"User1", "User2", "User3"};
+
+		//Parsing function call, returns list of houses
+		//parsing function call, returns list of users
+
+		Server h = new Server(houseserver);
+
+		for(int i = 0; i < houseList.Count; i++)
+		{
+			h.postMessage(houseList[i]);
+		}
+			
+		Server u = new Server(userserver);
+
+		for(int j = 0; j < userList.Count; j++)
+		{
+			u.postMessage(userList[j]);
+		}
+			
+		//end prepopulation
 
 		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n\n";
 		bool successfullStart = _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text, jsonStartString, jsonBlob);
@@ -233,6 +262,24 @@ public partial class MainWindow: Gtk.Window
 	protected void OnServerURLEntryChanged (object sender, EventArgs e)
 	{
 		urlserver = serverURLEntry.Text;
+		//throw new NotImplementedException ();
+	}
+
+	protected void OnHouseURLentryChanged (object sender, EventArgs e)
+	{
+		houseserver = HouseURLentry.Text;
+		//throw new NotImplementedException ();
+	}
+
+	/*protected void OnUserURLentryChanged (object sender, EventArgs e)
+	{
+		userserver = userURLentry.Text;
+		//throw new NotImplementedException ();
+	}*/
+
+	protected void OnUserURLentryTextInserted (object o, TextInsertedArgs args)
+	{
+		userserver = userURLentry.Text;
 		//throw new NotImplementedException ();
 	}
 }

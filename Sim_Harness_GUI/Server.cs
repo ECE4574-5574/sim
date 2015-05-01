@@ -4,6 +4,10 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
+using System.Text;
+
+using System.Net.Http.Headers;
+
 /**
  * Server Class
  * Establish Connection to server
@@ -57,10 +61,16 @@ public class Server
 		var httpClient = new HttpClient();
 		await httpClient.GetAsync(new Uri(url));
 
-		var stringContent = new StringContent(msg);
+		//var stringContent = new StringContent(msg);
+		string m = "@" + msg;
 
-		var response= await httpClient.PostAsync(url, stringContent);	
+		var stringCon = new StringContent(m, Encoding.UTF8, "application/json");
+
+		var response= await httpClient.PostAsync(url, stringCon);	
 		return response;
+
+		//var response= await httpClient.PostAsync(url, stringContent);	
+		//return response;
 	}
 
 }
