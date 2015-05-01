@@ -29,6 +29,7 @@ public class SimHouse
 		_processStarted = false;
 		_processError = false;
 
+		_process = new Process();
 		/* register a handler */
 		_process.EnableRaisingEvents = true;
 		_process.Exited += new EventHandler(house_Exited);
@@ -121,7 +122,7 @@ public class SimHouse
 		Console.WriteLine("House exited!");
 	}
 
-	protected Process _process;
+	protected Process _process = new Process();
 	protected ProcessStartInfo _startInformation;
 	protected StreamWriter _standardIn;
 	protected StreamReader _standardOut, _errorOut;
