@@ -73,6 +73,9 @@
     <Compile Include="Server.cs" />
     <Compile Include="SimApp.cs" />
     <Compile Include="SimHouse.cs" />
+    <Compile Include="JsonFile.cs" />
+    <Compile Include="JsonHouse.cs" />
+    <Compile Include="JsonUser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
