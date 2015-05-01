@@ -218,7 +218,7 @@ public class InstanceManager{
 
 	public override string ToString()
 	{
-		/*
+		
 		string output = "[Instance Manager]\n\n\tNumber of Houses: " + (_houses.Count + _errorHouses.Count)  + "\n" +
 						"\tNumber of Apps: " +_apps.Count + "\n"+
 						"\tHouses:\n\n";
@@ -232,8 +232,9 @@ public class InstanceManager{
 		foreach(SimHouse house in _errorHouses)
 		{
 			output += house.ToString() + "\n\n";
-		}*/
-		return "";
+		}
+//		return "";
+		return output;
 	}
 
 } //end class
