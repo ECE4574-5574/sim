@@ -59,7 +59,6 @@
                     <property name="CanFocus">True</property>
                     <property name="IsEditable">True</property>
                     <property name="InvisibleChar">●</property>
-                    <signal name="Changed" handler="OnServerURLEntryChanged" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -406,7 +405,6 @@
                     <property name="CanFocus">True</property>
                     <property name="IsEditable">True</property>
                     <property name="InvisibleChar">●</property>
-                    <signal name="TextInserted" handler="OnUserURLentryTextInserted" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -433,7 +431,6 @@
                     <property name="CanFocus">True</property>
                     <property name="IsEditable">True</property>
                     <property name="InvisibleChar">●</property>
-                    <signal name="Changed" handler="OnHouseURLentryChanged" after="yes" />
                   </widget>
                   <packing>
                     <property name="Position">3</property>
@@ -696,7 +693,6 @@
                         <property name="Type">TextOnly</property>
                         <property name="Label" translatable="yes">End Test</property>
                         <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnEndTestButtonClicked" />
                       </widget>
                       <packing>
                         <property name="Position">1</property>

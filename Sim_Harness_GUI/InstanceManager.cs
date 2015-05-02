@@ -7,26 +7,26 @@ using Hats.Sim; // SimHouse
 namespace Sim_Harness_GUI
 {
 public class InstanceManager{
-	protected List<SimHouse> _houses, _errorHouses;
+	//protected List<SimHouse> _houses, _errorHouses;
 	protected List<SimApp> _apps;
-	protected string _timeFrameInfo, _jsonScenario, _appPath, _houseLocation, _status;
+	protected string _timeFrameInfo, _jsonScenario, _appPath, _houseLocation, _status, _testScenarioBlob;
 
 
 
 	public InstanceManager()
 	{
-		_houses = new List<SimHouse>();
-		_errorHouses = new List<SimHouse>();
+		//_houses = new List<SimHouse>();
+		//_errorHouses = new List<SimHouse>();
 		_apps = new List<SimApp>();
 		_status = "";
 	}
 
 
 
-	public int getNumberHouses()
+	/*public int getNumberHouses()
 	{
 		return _houses.Count;
-	}
+	}*/
 
 	public int getNumberApps()
 	{
@@ -39,16 +39,17 @@ public class InstanceManager{
 	//NOTE: names are from the parent's (this program's) perspective
 
 	//this function gets called when the 'startTestButton' button is clicked
-	public bool startGeneratorProcesses(string appLocation, string houseLocation, string timeFrameBlob, string testScenarioBlob){
+	public bool startGeneratorProcesses(string appLocation,string houseLocation, string timeFrameBlob, string testScenarioBlob){
 
 		_timeFrameInfo = timeFrameBlob;
 		_houseLocation = houseLocation;
 		_appPath = appLocation;
+		_jsonScenario = testScenarioBlob;
 
 		_status = "";
 
 		//TODO: read the test Scenario blob. right now it is hard coded to start only one house named "house1"
-		prepProcesses();
+		/*prepProcesses();
 		startSimHouses();
 	
 		if(_errorHouses.Count != 0)
@@ -62,27 +63,28 @@ public class InstanceManager{
 
 
 		// Send the "go command to the houses 
-		sendGoHouses();
+		sendGoHouses();*/
 
-		//startOneApp(appLocation);
+		startOneApp(appLocation);
 
 
 
 		// Send the "go command to the houses 
-		sendGoHouses();
+		//sendGoHouses();
 
-		return true;
+	return true;
 	}
+
 
 	public void killGeneratorProcesses(){
 		_status = "Killing Processes:\n\n";
 
-		foreach(SimHouse house in _houses)
+		/*foreach(SimHouse house in _houses)
 		{
 			_status += "\t" + house.Kill() + "\n";
 		}
 
-		_houses.Clear();
+		_houses.Clear();*/
 
 	}
 		
@@ -178,7 +180,7 @@ public class InstanceManager{
 		return started;
 	}
 
-	/*
+
 	private string killProcess(ref Process p){
 		string output = "\tProcess ID: " + p.Id + "\n";
 		try {
@@ -192,38 +194,38 @@ public class InstanceManager{
 			output = string.Concat(output, "\n");
 		}
 		return output;
-	}*/
+	}
 
 	/**
 	 * This will create every simHouse and every simApp found in the JSON config file
 	 */
-	private void prepProcesses()
+	/*private void prepProcesses()
 	{
 		// TODO: prep all of the app process information
-		List<string> houseNames= findHouses();
-		foreach(string houseName in houseNames)
-		{
+		//List<string> houseNames= findHouses();
+		//foreach(string houseName in houseNames)
+		//{
 			SimHouse newHouse = new SimHouse(_jsonScenario, _houseLocation, houseName);
-			_houses.Add(newHouse);
-		}
-	}
+			//_houses.Add(newHouse);
+		//}
+	}*/
 
 	/**
 	 * This function will read in the JSON blob and find every house name and return a list of the house names
 	 */
-	private List<string> findHouses()
+	/*private List<string> findHouses()
 	{
 		// TODO: Read in the JSON blob
 		List<string> houseNames = new List<string>();
 		houseNames.Add("house1");
 		return houseNames;
-	}
+	}*/
 
 	/**
 	 * Attempts to start every single simHouse in the list and returns any that fail to 
 	 * open correctly
 	 */ 
-	private void startSimHouses()
+	/*private void startSimHouses()
 	{
 		List<int> houseIndexRemove = new List<int>();
 		// Start the process, if it fail to start then add it to the errorHouses
@@ -244,21 +246,21 @@ public class InstanceManager{
 		{
 			_houses.RemoveAt(i);
 		}
-	}
+	}*/
 
 		
 	/**
 	 * Sends the "go" to each of the SimHouse apps.
 	 */ 
-	private void sendGoHouses()
+	/*private void sendGoHouses()
 	{
 		foreach(SimHouse house in _houses)
 		{
 			house.sendMessage(_timeFrameInfo);
 		}
-	}
+	}*/
 
-	public override string ToString()
+	/*public override string ToString()
 	{
 		string output = "[Instance Manager]\n\n\tNumber of Houses: " + (_houses.Count + _errorHouses.Count)  + "\n" +
 						"\tNumber of Apps: " +_apps.Count + "\n"+
@@ -275,7 +277,7 @@ public class InstanceManager{
 			output += house.ToString() + "\n\n";
 		}
 		return output;
-	}
+	}*/
 
 } //end class
 } //end namespace
