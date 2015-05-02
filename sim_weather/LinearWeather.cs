@@ -70,12 +70,7 @@ public class LinearWeather : IWeather
 	{
 		int idx = _temps.BinarySearch(temp);
 
-		if(idx == 0)
-		{
-			_temps.Add(temp);
-			return;
-		}
-		else if(idx < 0)
+		if(idx < 0)
 		{
 			idx = ~idx;
 		}
