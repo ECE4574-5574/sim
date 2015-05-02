@@ -204,5 +204,10 @@ public class Test
 		Assert.AreNotEqual("ok", response2);*/
 
 	}
+
+	[Test]
+	public void testJsonHouse()
+	{
+	}
 }
 }

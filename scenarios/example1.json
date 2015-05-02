@@ -4,7 +4,7 @@
         "users": [
         {
             "Username":"User1",
-            "UserID": "12345",
+            "UserID": 0,
             "Password": "thePassword",
             "Coordinates":
             {
@@ -16,7 +16,7 @@
         },
         {
             "Username": "User2",
-            "UserID": "67890",
+            "UserID": 1,
             "Password": "secondPassword",
             "Coordinates":
             {
@@ -30,6 +30,7 @@
     {
       "name": "house1",
       "port": 8081,
+      "id": 0,
       "devices": [
         {
           "name": "light1",
