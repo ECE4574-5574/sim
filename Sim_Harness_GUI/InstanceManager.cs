@@ -86,9 +86,9 @@ public class InstanceManager{
 
 	//  helper functions //
 
-	private string startOneApp(string apk_dir, string jsonblob){
+	public string startOneApp(string apk_dir, string jsonblob){
 		string output = "";
-
+		string blob_to_pass = jsonblob.Replace("\"", "\\\""); //escape the double quotes
 		ProcessStartInfo p_info = new ProcessStartInfo();
 		p_info.UseShellExecute = false;
 		p_info.ErrorDialog = false;
@@ -96,7 +96,7 @@ public class InstanceManager{
 		//set command line arguments to batch/sh file
 		//the first argument is the path to the .apk that was passed in through the GUI
 		//the second argument is the JSON string to be passed to the app (previously contained in adb.sh)
-		p_info.Arguments = apk_dir + " " + jsonblob;
+		p_info.Arguments = apk_dir + " " + blob_to_pass;
 
 		//detect operating system and use launch.bat or launch.sh accordingly
 		string base_dir = AppDomain.CurrentDomain.BaseDirectory;
@@ -111,7 +111,7 @@ public class InstanceManager{
 		Process p = new Process();
 		p.StartInfo = p_info;
 
-		Console.WriteLine(startProcess(ref p, ref p_info));
+		output += startProcess(ref p, ref p_info);
 
 		return output;
 	}
@@ -123,13 +123,13 @@ public class InstanceManager{
 	 * Attempts to start a process with particualar information. If the process starts
 	 * correctly it will retrun true.
 	 */
-	private bool startProcess(ref Process p, ref ProcessStartInfo ps){
-		bool started = false;
+	private string startProcess(ref Process p, ref ProcessStartInfo ps){
+		string started = "Process not started";
 		try {
 			p = Process.Start(ps);
-			started = true;
+			started = "Process started successfully";
 		}catch(Exception ex){
-			Console.WriteLine(ex.ToString());
+			started = ex.ToString();
 		}
 		return started;
 	}
