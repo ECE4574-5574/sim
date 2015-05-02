@@ -216,8 +216,8 @@ public partial class MainWindow: Gtk.Window
 		//start prepopulation
 
 
-		//List<string> houseList = new List<string> {"House1", "House2", "House3"};
-		//List<string> userList = new List<string> {"User1", "User2", "User3"};
+		List<string> houseList = new List<string> {"House1", "House2", "House3"};
+		List<string> userList = new List<string> {"User1", "User2", "User3"};
 
 		//houseList.ForEach(Console.Write);
 		//userList.ForEach(Console.Write);
@@ -226,9 +226,9 @@ public partial class MainWindow: Gtk.Window
 		//Parsing function call, returns list of houses
 		//parsing function call, returns list of users
 
-		//Server h = new Server(houseserver);
+		Server h = new Server(houseserver);
 
-		/*for(int i = 0; i < houseList.Count; i++)
+		for(int i = 0; i < houseList.Count; i++)
 		{
 			h.postMessage(houseList[i]);
 		}
@@ -238,7 +238,7 @@ public partial class MainWindow: Gtk.Window
 		for(int j = 0; j < userList.Count; j++)
 		{
 			u.postMessage(userList[j]);
-		}*/
+		}
 			
 		//end prepopulation
 
