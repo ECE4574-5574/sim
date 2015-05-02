@@ -81,13 +81,12 @@ public class Test
 		Assert.AreEqual(15, linear.Temperature(start + new TimeSpan(0, 0, 25)));
 	}
 
-	[Test]
-	public void InstanceManagerWorkingHouse()
+	//[Test]
+	/*public void InstanceManagerWorkingHouse()
 	{
-		Assert.AreEqual(1, 1);
-		/*InstanceManager manager = new InstanceManager();
+		InstanceManager manager = new InstanceManager();
 
-		Assert.AreEqual(0, manager.getNumberHouses());
+		//Assert.AreEqual(0, manager.getNumberHouses());
 		Assert.AreEqual(0, manager.getNumberApps());
 
 		string pathToHouse = Directory.GetCurrentDirectory();
@@ -115,15 +114,14 @@ public class Test
 
 		manager.killGeneratorProcesses();
 		Assert.AreEqual(0, manager.getNumberHouses());
-		Assert.AreEqual(0, manager.getNumberApps());*/
+		Assert.AreEqual(0, manager.getNumberApps());
 
-	}
+	}*/
 
-	[Test]
-	public void InstanceManagerInvalidHouseExe()
+	//[Test]
+	/*public void InstanceManagerInvalidHouseExe()
 	{
-		Assert.AreEqual(1, 1);
-		/*InstanceManager manager = new InstanceManager();
+		InstanceManager manager = new InstanceManager();
 
 		Assert.AreEqual(0, manager.getNumberHouses());
 		Assert.AreEqual(0, manager.getNumberApps());
@@ -148,14 +146,13 @@ public class Test
 		bool start = manager.startGeneratorProcesses(pathToApp, pathToHouse, tfString, jsonBlob);
 		Assert.AreEqual(false, start);
 		Assert.AreEqual(0, manager.getNumberHouses());
-		Assert.AreEqual(0, manager.getNumberApps());*/
-	}
+		Assert.AreEqual(0, manager.getNumberApps());
+	}*/
 
-	[Test]
-	public void InstanceManagerErrorHouse()
+	//[Test]
+	/*public void InstanceManagerErrorHouse()
 	{
-		Assert.AreEqual(1, 1);
-		/*InstanceManager manager = new InstanceManager();
+		InstanceManager manager = new InstanceManager();
 
 		Assert.AreEqual(0, manager.getNumberHouses());
 		Assert.AreEqual(0, manager.getNumberApps());
@@ -182,16 +179,16 @@ public class Test
 		Assert.AreEqual(false, start);
 		Assert.AreEqual(0, manager.getNumberHouses());
 		Assert.AreEqual(0, manager.getNumberApps());
-		manager.killGeneratorProcesses();*/
+		manager.killGeneratorProcesses();
 
-	}
+	}*/
 
+	[Test]
 	public void ServerTest()
 	{
-		Assert.AreEqual(1, 1);
 		//yay server
-		/*Server s = new Server("http://requestb.in/1ehzgva1");
-		Assert.AreEqual("http://requestb.in/1ehzgva1", s.URL);
+		Server s = new Server("http://requestb.in/1lzvdlh1");
+		Assert.AreEqual("http://requestb.in/1lzvdlh1", s.URL);
 
 		string response = s.postMessage("Hello");
 		Assert.AreEqual("ok", response);
@@ -201,13 +198,72 @@ public class Test
 		Assert.AreEqual("http://requestb.in/1eh1", s.URL);
 
 		string response2 = s.postMessage("Hello");
-		Assert.AreNotEqual("ok", response2);*/
+		Assert.AreNotEqual("ok", response2);
 
 	}
 
 	[Test]
-	public void testJsonHouse()
+	public void houseTest()
 	{
+		List<string> houseList = new List<string> {"House1", "House2", "House3"};
+
+		//yay server
+		Server h = new Server("http://requestb.in/r5jmi9r5");
+		Assert.AreEqual("http://requestb.in/r5jmi9r5", h.URL);
+
+		for(int i = 0; i < houseList.Count; i++)
+		{
+			string response = h.postMessage(houseList[i]);
+			Assert.AreEqual("ok", response);
+		}
+	}
+
+	[Test]
+	public void userTest()
+	{
+		List<string> userList = new List<string> {"User1", "User2", "User3"};
+
+		//yay server
+		Server u = new Server("http://requestb.in/zozsmgzp");
+		Assert.AreEqual("http://requestb.in/zozsmgzp", u.URL);
+
+		for(int i = 0; i < userList.Count; i++)
+		{
+			string response = u.postMessage(userList[i]);
+			Assert.AreEqual("ok", response);
+		}
+	}
+
+	[Test]
+	public void allServerTest()
+	{
+
+		List<string> houseList = new List<string> {"House1", "House2", "House3"};
+		List<string> userList = new List<string> {"User1", "User2", "User3"};
+
+		Server s = new Server("http://requestb.in/1lzvdlh1");
+		Assert.AreEqual("http://requestb.in/1lzvdlh1", s.URL);
+
+		string response = s.postMessage("Hello");
+		Assert.AreEqual("ok", response);
+
+		Server h = new Server("http://requestb.in/r5jmi9r5");
+		Assert.AreEqual("http://requestb.in/r5jmi9r5", s.URL);
+
+		for(int i = 0; i < houseList.Count; i++)
+		{
+			string houseresponse = h.postMessage(houseList[i]);
+			Assert.AreEqual("ok", houseresponse);
+		}
+
+		Server u = new Server("http://requestb.in/zozsmgzp");
+		Assert.AreEqual("http://requestb.in/zozsmgzp", s.URL);
+
+		for(int i = 0; i < userList.Count; i++)
+		{
+			string userresponse = u.postMessage(userList[i]);
+			Assert.AreEqual("ok", userresponse);
+		}
 	}
 }
 }

@@ -14,6 +14,8 @@ public partial class MainWindow: Gtk.Window
 	public List<string> userList;
 	public List<string> houseList;
 	string urlserver;
+	string houseserver;
+	string userserver;
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
@@ -322,6 +324,25 @@ public partial class MainWindow: Gtk.Window
 
 		currentTestTextview.Buffer.Text = "Make request to server:\n\n\t" + jsonStartString + "\n\n\tServer: " + urlserver + "\n\n\tResponse: " + serverResponse + "\n\n----------------------------------\n\n";
 
+		//Create Houses and Users in the database
+
+		//start prepopulation
+
+		Server h = new Server(houseserver);
+
+		for(int i = 0; i < houseList.Count; i++)
+		{
+			h.postMessage(houseList[i]);
+		}
+
+		Server u = new Server(userserver);
+
+		for(int j = 0; j < userList.Count; j++)
+		{
+			u.postMessage(userList[j]);
+		}
+
+		//end prepopulation
 		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n\n";
 		bool successfullStart = _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text, jsonStartString, jsonBlob);
 
@@ -348,5 +369,18 @@ public partial class MainWindow: Gtk.Window
 		urlserver = serverURLEntry.Text;
 		//throw new NotImplementedException ();
 	}
+
+	protected void OnHouseURLentryChanged (object sender, EventArgs e)
+	{
+		houseserver = HouseURLentry.Text;
+		//throw new NotImplementedException ();
+	}
+
+	protected void OnUserURLentryChanged (object sender, EventArgs e)
+	{
+		userserver = userURLentry.Text;
+		//throw new NotImplementedException ();
+	}
+
 }
 
