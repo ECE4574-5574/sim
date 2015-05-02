@@ -23,7 +23,18 @@ public class TemperatureSetPoint : IComparable
 	/**
 	 * Time at which this temperature should be valid
 	 */
-	public DateTime Time { get; set; }
+	public DateTime Time
+	{
+		get
+		{
+			return _time;
+		}
+		set
+		{
+			_time = value;
+			_time.ToUniversalTime();
+		}
+	}
 	/**
 	 * Temperature, in Celsius, which this set point represents.
 	 */
@@ -33,6 +44,8 @@ public class TemperatureSetPoint : IComparable
 	{
 		return Time.CompareTo((obj as TemperatureSetPoint).Time);
 	}
+
+	protected DateTime _time;
 }
 
 /**
@@ -68,6 +81,7 @@ public class LinearWeather : IWeather
 	 */
 	public void Add(TemperatureSetPoint temp)
 	{
+		temp.Time.ToUniversalTime();
 		int idx = _temps.BinarySearch(temp);
 
 		if(idx < 0)
@@ -113,6 +127,8 @@ public class LinearWeather : IWeather
 		{
 			now = Frame.time(now);
 		}
+
+		now.ToUniversalTime();
 		var search_point = new TemperatureSetPoint(now, 0.0);
 		int idx = _temps.BinarySearch(search_point);
 
