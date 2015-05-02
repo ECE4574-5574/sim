@@ -130,10 +130,13 @@ public class LinearWeather : IWeather
 			{
 				temp = _temps[idx - 1].Temp;
 			}
+			else if(idx == 0)
+			{
+				temp = _temps[0].Temp;
+			}
 			else
 			{
 				int low_idx = idx - 1;
-
 				DateTime low_time = _temps[low_idx].Time;
 				Double now_dt = (now - low_time).TotalSeconds;
 				Double all_dt = (_temps[idx].Time - low_time).TotalSeconds;
