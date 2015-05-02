@@ -52,13 +52,13 @@ public class InstanceManager{
 		_status = "";
 
 		//TODO: read the test Scenario blob. right now it is hard coded to start only one house named "house1"
-		prepProcesses();
-		startSimHouses();
+		//prepProcesses();
+		//startSimHouses();
 	
-		if(_errorHouses.Count != 0)
-		{
-			return false;
-		}
+//		if(_errorHouses.Count != 0)
+//		{
+//			return false;
+//		}
 
 		//TODO: set up how to start the mobile app
 
@@ -66,8 +66,8 @@ public class InstanceManager{
 
 
 		// Send the "go command to the houses 
-		sendGoHouses();
-
+//		sendGoHouses();
+//
 		startOneApp(appLocation);
 
 		return true;
@@ -158,17 +158,17 @@ public class InstanceManager{
 	/**
 	 * This will create every simHouse and every simApp found in the JSON config file
 	 */
-	private void prepProcesses()
-	{
-		// TODO: prep all of the app process information
-		List<string> houseNames= findHouses();
-		foreach(string houseName in houseNames)
-		{
-			SimHouse newHouse = new SimHouse(_jsonScenario, _houseLocation, houseName);
-			_houses.Add(newHouse);
-		}
-	}
-
+//	private void prepProcesses()
+//	{
+//		// TODO: prep all of the app process information
+//		List<string> houseNames= findHouses();
+//		foreach(string houseName in houseNames)
+//		{
+//			SimHouse newHouse = new SimHouse(_jsonScenario, _houseLocation, houseName);
+//			_houses.Add(newHouse);
+//		}
+//	}
+//
 	/**
 	 * Attempts to start every single simHouse in the list and returns any that fail to 
 	 * open correctly

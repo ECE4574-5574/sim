@@ -4,12 +4,15 @@ using Hats.Time;
 using Newtonsoft.Json;
 using Sim_Harness_GUI;
 using System.IO;
+using System.Collections.Generic;
 
 
 public partial class MainWindow: Gtk.Window
 {
 	protected InstanceManager _instances;
 	protected String jsonBlob;
+	public List<string> userList;
+	public List<string> houseList;
 	string urlserver;
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
@@ -17,6 +20,66 @@ public partial class MainWindow: Gtk.Window
 		Build();
 
 	}
+	public class values
+	{
+		public string x { get; set; }
+		public string y { get; set; }
+		public string z { get; set; }
+	}
+	public class UsersData
+	{
+		public string Username { get; set; }
+		public string UserID { get; set; }
+		public values Coordinates { get; set; }
+	}
+
+	public class JsonUsers
+	{
+		public List<UsersData> users { get; set; }
+		public List<HouseData> houses { get; set; }
+	}
+
+	public class deviceInfo
+	{
+		public string name { get; set; }
+		public string Class {get; set;}
+		public string type { get; set; }
+		public bool startState { get; set; }
+		public bool Enabled { get; set; }
+		public int State { get; set; }
+
+	}
+	//
+	public class roomSize
+	{
+		public int x {get; set;}
+		public int y {get; set;}
+	}
+
+	public class DoorInfo
+	{
+		public int x {get;set;}
+		public int y { get; set; }
+		public int connectingRoom { get; set; }
+	}
+
+	public class roomInfo
+	{
+		public string name {get;set;}
+		public roomSize dimensions { get; set; }
+		public string roomLevel { get; set; }
+		public List<DoorInfo> doors { get; set;}
+	}
+	//
+	//
+	public class HouseData
+	{
+		public string name { get; set; }
+		public int port { get; set; }
+		public List<deviceInfo> devices{ get; set; }
+		public List<roomInfo> rooms{get; set;}
+	}
+
 
 
 	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
@@ -25,7 +88,7 @@ public partial class MainWindow: Gtk.Window
 		Application.Quit();
 		a.RetVal = true;
 	}
-		
+
 	protected void OnLoadScenarioButton(object sender, EventArgs e)
 	{
 		var item = new Gtk.TreeIter();
@@ -38,14 +101,76 @@ public partial class MainWindow: Gtk.Window
 		{
 			testSenarioTextview.Buffer.Text = File.ReadAllText(this.testScenarioComboBox.Model.GetValue(item,1).ToString());
 			jsonBlob = testSenarioTextview.Buffer.Text;
+			var jsonStringUser = JsonConvert.DeserializeObject<JsonUsers>(jsonBlob);
+			int counter1 = 1;
+			int counter2 = 1;
 
-			// Remove every new line and tab otherwise it will not work as a command line argument
-			jsonBlob = jsonBlob.Replace("\n", "");
-			jsonBlob = jsonBlob.Replace("\t", "");
+			userList = new List<string> { };
+			houseList = new List<string> { };
+
+			foreach(HouseData val in jsonStringUser.houses)
+			{
+				houseList.Add("Name: " + val.name);
+				houseList.Add("Port: " + val.port.ToString());
+				foreach(deviceInfo dev in val.devices)
+				{
+					houseList.Add("Device: " + counter1.ToString());
+					houseList.Add("Name: " + dev.name);
+					houseList.Add("Class: " + dev.Class);
+					houseList.Add("Type: " + dev.type);
+					houseList.Add("Start State: " + dev.startState.ToString());
+					houseList.Add("State: " + dev.State.ToString());
+					houseList.Add("Enabled: " + dev.Enabled.ToString());
+					houseList.Add("\n");
+					counter1++;
+				}
+				foreach(roomInfo rom in val.rooms)
+				{
+					houseList.Add ("Room: " + counter2);
+					houseList.Add("Name: " + rom.name);
+					houseList.Add ("Dimensions X: " + rom.dimensions.x.ToString());
+					houseList.Add ("Dimensions Y: " + rom.dimensions.y.ToString ());
+					houseList.Add ("Room Level: " + rom.roomLevel.ToString ());
+					houseList.Add("\n");
+
+				}
+				houseList.Add ("\n");
+			}
+
+			foreach(UsersData i in jsonStringUser.users){
+				userList.Add("Username: " + i.Username);
+				userList.Add("UserID: " + i.UserID);
+				userList.Add("Coordinate X: " + i.Coordinates.x);
+				userList.Add("Coordinate Y: " + i.Coordinates.y);
+				userList.Add("Coordinate Z: " + i.Coordinates.z);
+				userList.Add ("\n");
+			}
+
+			for(int i = 0; i < userList.Count; i++)
+			{
+				currentTestTextview.Buffer.Text += userList[i] + "\n";
+			}
+			currentTestTextview.Buffer.Text += "\n";
+			for(int i = 0; i < houseList.Count; i++)
+			{
+				currentTestTextview.Buffer.Text += houseList[i] + "\n";
+			}
+
+
+
+
+			//Remove every new line and tab otherwise it will not work as a command line argument
+									jsonBlob = jsonBlob.Replace("\n", "");
+									jsonBlob = jsonBlob.Replace("\t", "");
+
+
+
 		}
 
 
 	}
+
+
 
 	protected void OnAppSimulatorChooseFileButtonClicked(object sender, EventArgs e)
 	{
@@ -208,7 +333,7 @@ public partial class MainWindow: Gtk.Window
 		}
 
 	}
-		
+
 	protected void OnEndTestButtonClicked(object sender, EventArgs e)
 	{
 		currentTestTextview.Buffer.Text += "\n\n";
