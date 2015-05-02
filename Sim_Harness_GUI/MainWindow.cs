@@ -370,17 +370,18 @@ public partial class MainWindow: Gtk.Window
 		//throw new NotImplementedException ();
 	}
 
+	protected void OnUserURLentryChanged (object sender, EventArgs e)
+	{
+		userserver = userURLentry.Text;
+		//throw new NotImplementedException ();
+	}
 	protected void OnHouseURLentryChanged (object sender, EventArgs e)
 	{
 		houseserver = HouseURLentry.Text;
 		//throw new NotImplementedException ();
 	}
 
-	protected void OnUserURLentryChanged (object sender, EventArgs e)
-	{
-		userserver = userURLentry.Text;
-		//throw new NotImplementedException ();
-	}
+	
 
 }
 
