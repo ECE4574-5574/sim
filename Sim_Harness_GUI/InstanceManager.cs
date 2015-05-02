@@ -170,6 +170,19 @@ public class InstanceManager{
 	}
 
 	/**
+	 * This function will read in the JSON blob and find every house name and return a list of the house names
+	 */
+	private List<string> findHouses()
+	{
+		// TODO: Read in the JSON blob
+		List<string> houseNames = new List<string>();
+		houseNames.Add("house1");
+		houseNames.Add("house2");
+		houseNames.Add("new house");
+		return houseNames;
+	}
+
+	/**
 	 * Attempts to start every single simHouse in the list and returns any that fail to 
 	 * open correctly
 	 */ 
@@ -182,7 +195,7 @@ public class InstanceManager{
 			_houses[i].Start();
 			if(_houses[i].ProcessStarted)
 			{
-				_houses[i].waitForResponse();
+//				_houses[i].waitForResponse();
 			}
 			if(!_houses[i].ProcessStarted || _houses[i].Error)
 			{
@@ -225,7 +238,7 @@ public class InstanceManager{
 		{
 			output += house.ToString() + "\n\n";
 		}
-		return "";
+		return output;
 	}
 
 } //end class
