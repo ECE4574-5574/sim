@@ -53,19 +53,7 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnAppSimulatorChooseFileButtonClicked(object sender, EventArgs e)
 	{
-		//this.appSimLocationEntry.Text = this.selectFile();
-		Gtk.FileChooserDialog chooser = new Gtk.FileChooserDialog("Select Directory of App Files",
-			this,
-			FileChooserAction.SelectFolder,
-			"Cancel", ResponseType.Cancel,
-			"Select", ResponseType.Accept);
-
-		if(chooser.Run() == (int)ResponseType.Accept)
-		{
-			this.appSimLocationEntry.Text = chooser.Filename;
-		}
-
-		chooser.Destroy();
+		this.appSimLocationEntry.Text = this.selectFile();
 	}
 
 	protected void OnHouseSimLocationButtonClicked(object sender, EventArgs e)

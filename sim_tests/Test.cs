@@ -187,6 +187,18 @@ public class Test
 
 	}
 
+	[Test]
+	public void startOneApp_TestInputArgs(){
+		string test_output = "";
+		string apk_dir_test = @"input\file\location\test.apk";
+		string jsonblob_test = "testjsonblob";
+		InstanceManager manager = new InstanceManager();
+		test_output = manager.startOneApp(apk_dir_test, jsonblob_test);
+		
+		Assert.AreEqual(test_output, "Process started successfully");
+
+	}
+
 	public void ServerTest()
 	{
 		Assert.AreEqual(1, 1);

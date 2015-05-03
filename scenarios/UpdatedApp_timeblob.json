@@ -1,9 +1,11 @@
 {
-	"timeFrame": {
+	"timeFrame": [
+		{
 		"wall": "1997-07-16T19:20:30+01:00",
 		"sim": "1997-07-16T20:30:40+01:00",
 		"rate": 2.0
-    },
+    }
+    ],
 	"events": [
 		{
 			"time": "1997-07-16T20:31:30+01:00",
@@ -25,7 +27,7 @@
 		         "value": {
 		              "type":"dimmer",
 		              "roomid": 5,
-		              "name": "light1",
+		              "name": "light1"
 		                  },
 		         "time":"1997-07-16T21:10:22+01:00",
 		         "key":"physical change",

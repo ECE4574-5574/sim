@@ -28,8 +28,6 @@
 						"lon": 5.123456,
 						"altitude": 6.123456
 				}
-
-
         },
         {
             "Username": "User2",
@@ -80,7 +78,7 @@
         },
         {
           "name": "thermo",
-          "class": "Thermostat",
+          "class": "Thermostat"
         }
       ],
       "rooms": [

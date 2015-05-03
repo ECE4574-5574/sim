@@ -27,7 +27,7 @@ public class TimeFrame
 	 */ 
 	public DateTime now()
 	{
-		return time(DateTime.Now);
+		return time(DateTime.UtcNow);
 	}
 
 	/**
@@ -37,10 +37,10 @@ public class TimeFrame
 	 */
 	public DateTime time(DateTime real_time)
 	{
-		TimeSpan diff = real_time - _wall_epoch;
+		TimeSpan diff = real_time.ToUniversalTime() - _wall_epoch;
 		double scaled_ticks = (double)diff.Ticks * Rate;
 		TimeSpan final_diff = TimeSpan.FromTicks((long)scaled_ticks);
-		return _sim_epoch + final_diff;
+		return (_sim_epoch + final_diff);
 	}
 
 	/**
@@ -54,6 +54,14 @@ public class TimeFrame
 		if(rate <= 0.0)
 		{
 			throw new ArgumentException("Time rate must be greater than zero.", "rate");
+		}
+		if(wall == DateTime.MinValue)
+		{
+			wall = DateTime.UtcNow;
+		}
+		if(sim == DateTime.MinValue)
+		{
+			sim = DateTime.UtcNow;
 		}
 		_wall_epoch = wall;
 		_sim_epoch = sim;
