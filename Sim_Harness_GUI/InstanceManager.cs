@@ -99,12 +99,17 @@ public class InstanceManager{
 		//set command line arguments to batch/sh file
 		//the first argument is the path to the .apk that was passed in through the GUI
 		//the second argument is the JSON string to be passed to the app (previously contained in adb.sh)
-		p_info.Arguments = apk_dir + " '" + blob_to_pass + "'";
 
 		//detect operating system and use launch.bat or launch.sh accordingly
 		string base_dir = AppDomain.CurrentDomain.BaseDirectory;
-		if (myOS == "Unix") p_info.FileName = base_dir + "launch.sh";
-		else if (myOS == "Win32NT") p_info.FileName = base_dir + "launch.bat";
+		if(myOS == "Unix"){
+			p_info.FileName = base_dir + "launch.sh";
+			p_info.Arguments = apk_dir + " " + "'" + blob_to_pass + "'";
+		}
+		else if(myOS == "Win32NT"){
+			p_info.FileName = base_dir + "launch.bat";
+			p_info.Arguments = apk_dir + " " + blob_to_pass;
+		}
 		else{
 			output = "OS not recognized: " + myOS + "\n";
 			return output;
