@@ -11,6 +11,7 @@ public partial class MainWindow: Gtk.Window
 	protected InstanceManager _instances;
 	protected String jsonBlob;
 	string urlserver;
+	JsonFile _parser;
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
@@ -42,6 +43,9 @@ public partial class MainWindow: Gtk.Window
 			// Remove every new line and tab otherwise it will not work as a command line argument
 			jsonBlob = jsonBlob.Replace("\n", "");
 			jsonBlob = jsonBlob.Replace("\t", "");
+
+			_parser = new JsonFile(jsonBlob);
+
 		}
 
 
@@ -190,6 +194,7 @@ public partial class MainWindow: Gtk.Window
 
 		// build obj
 		Server s = new Server(urlserver);
+
 
 		// sendmsg store response in serverResponse
 		string serverResponse = s.postMessage(jsonStartString);

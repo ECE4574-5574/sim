@@ -241,6 +241,8 @@ public class Test
 		Assert.AreEqual(false, newHouse.Error);
 		Assert.AreEqual("house1", newHouse.Name);
 
+		Console.WriteLine(newHouse.serverInfo());
+
 		// No ID
 		houseJSON = "{     \"houses\": [     {       \"name\": \"house1\",     \"port\": 8081,       \"devices\": [         {           \"name\": \"light1\",           \"class\": \"LightSwitch\",           \"type\": \"Simulated\",           \"startState\": false         },         {            \"name\": \"Kitchen Ceiling Fan\",            \"class\": \"CeilingFan\",            \"type\": \"Simulated\",            \"Enabled\": false,            \"State\": 0         }       ],       \"rooms\": [         {           \"name\": \"Kitchen\",           \"dimensions\": {             \"x\": 100,             \"y\": 200           },           \"roomLevel\": 1,           \"doors\":           [             {               \"x\": 20,               \"y\": 200,               \"connectingRoom\": 1             }           ],           \"devices\":           [             1           ]         },         {           \"name\": \"Family Room\",           \"dimensions\": {             \"x\": 300,             \"y\": 200           },           \"roomLevel\": 1,           \"doors\":           [             {               \"x\": 20,               \"y\": 0,               \"connectingRoom\": 0             }           ],           \"devices\":           [             0           ]         }       ],       \"weather\":       [         {           \"Time\": \"2015-04-08T13:25:21.803833-04:00\",            \"Temp\": 50         },         {            \"Time\": \"2015-04-08T13:25:21.803833-04:00\",            \"Temp\": 30         }       ]     }   ]   }";
 
@@ -346,6 +348,8 @@ public class Test
 		Assert.AreEqual(false, newUser.Error);
 		Assert.AreEqual("User1", newUser.Name);
 		Assert.AreEqual("thePassword", newUser.Password);
+
+		Console.WriteLine(newUser.serverInfo());
 
 		// No ID
 		userJSON = "{      \"users\": [       {           \"Username\":\"User1\",        \"Password\": \"thePassword\",           \"Coordinates\":           {               \"x\":\"1234\",               \"y\":\"4321\",               \"z\":\"6789\"           }       }       ]   }";
