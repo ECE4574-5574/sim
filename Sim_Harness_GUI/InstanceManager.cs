@@ -55,7 +55,7 @@ public class InstanceManager{
 
 		//TODO: read the test Scenario blob. right now it is hard coded to start only one house named "house1"
 		prepProcesses();
-		//startSimHouses();
+		startSimHouses();
 	
 		if(_errorHouses.Count != 0)
 		{
@@ -90,13 +90,13 @@ public class InstanceManager{
 		string output = "";
 		string blob_to_pass = jsonblob.Replace("\"", "\\\""); //escape the double quotes
 		ProcessStartInfo p_info = new ProcessStartInfo();
-		p_info.UseShellExecute = false;
+		//p_info.UseShellExecute = false;
 		p_info.ErrorDialog = false;
 
 		//set command line arguments to batch/sh file
 		//the first argument is the path to the .apk that was passed in through the GUI
 		//the second argument is the JSON string to be passed to the app (previously contained in adb.sh)
-		p_info.Arguments = apk_dir + " " + blob_to_pass;
+		p_info.Arguments = apk_dir + " '" + blob_to_pass + "'";
 
 		//detect operating system and use launch.bat or launch.sh accordingly
 		string base_dir = AppDomain.CurrentDomain.BaseDirectory;
