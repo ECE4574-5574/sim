@@ -90,7 +90,7 @@ public class InstanceManager{
 		string output = "";
 		string blob_to_pass = jsonblob.Replace("\"", "\\\""); //escape the double quotes
 		ProcessStartInfo p_info = new ProcessStartInfo();
-		//p_info.UseShellExecute = false;
+		p_info.UseShellExecute = false;
 		p_info.ErrorDialog = false;
 
 		//set command line arguments to batch/sh file
