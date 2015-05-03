@@ -9,6 +9,7 @@ public class JsonUser
 	private JToken _info;
 	private string _name;
 	private int _id;
+	private string _events;
 	private string _password;
 	private bool _error;
 
@@ -44,6 +45,14 @@ public class JsonUser
 		}
 	}
 
+	public string Events
+	{
+		get
+		{
+			return _events;
+		}
+	}
+
 	public string JsonBlob
 	{
 		get
@@ -61,6 +70,7 @@ public class JsonUser
 		JToken name;
 		JToken id;
 		JToken password;
+		JToken events;
 
 
 		// Try to get the name
@@ -96,8 +106,18 @@ public class JsonUser
 			_password = "";
 			_error = true;
 		}
-	}
 
+		// Set Password
+		if(userObj.TryGetValue("events", out events))
+		{
+			_events = events.ToString();
+		}
+		else
+		{
+			_events = "";
+			_error = true;
+		}
+	}
 
 	public string serverInfo()
 	{
@@ -105,9 +125,10 @@ public class JsonUser
 	}
 		
 
+
 	public override string ToString()
 		{
-			return string.Format("[JsonUser: Name={0}, Id={1}, Password={2}, Error={3}, JsonBlob={4}]", Name, Id, Password, Error, JsonBlob);
+			return string.Format("[JsonUser: Name={0}, Id={1}, Password={2}, Error={3}, Events={4}, JsonBlob={5}]", Name, Id, Password, Error, Events, JsonBlob);
 		}
 
 
