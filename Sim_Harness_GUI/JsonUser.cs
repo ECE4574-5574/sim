@@ -93,7 +93,7 @@ public class JsonUser
 		}
 		else
 		{
-			password = "";
+			_password = "";
 			_error = true;
 		}
 	}

@@ -161,12 +161,12 @@ public class InstanceManager{
 	private void prepProcesses()
 	{
 		// TODO: prep all of the app process information
-		List<string> houseNames= findHouses();
-		foreach(string houseName in houseNames)
+		//List<string> houseNames= findHouses();
+		/*foreach(string houseName in houseNames)
 		{
 			SimHouse newHouse = new SimHouse(_jsonScenario, _houseLocation, houseName);
 			_houses.Add(newHouse);
-		}
+		}*/
 	}
 
 	/**
