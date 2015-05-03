@@ -9,6 +9,7 @@ namespace Sim_Harness_GUI
 public class InstanceManager{
 	protected List<SimHouse> _houses, _errorHouses;
 	protected List<SimApp> _apps;
+	protected JsonFile _parser;
 	protected string _timeFrameInfo, _jsonScenario, _appPath, _houseLocation, _status;
 	protected string myOS;
 
@@ -50,6 +51,8 @@ public class InstanceManager{
 		_houseLocation = houseLocation;
 		_appPath = appLocation;
 		_jsonScenario = testScenarioBlob;
+		_parser = new JsonFile(testScenarioBlob);
+
 
 		_status = "";
 
@@ -161,23 +164,12 @@ public class InstanceManager{
 	private void prepProcesses()
 	{
 		// TODO: prep all of the app process information
-		List<string> houseNames= findHouses();
-		foreach(string houseName in houseNames)
+		//List<string> houseNames= findHouses();
+		/*foreach(string houseName in houseNames)
 		{
 			SimHouse newHouse = new SimHouse(_jsonScenario, _houseLocation, houseName);
 			_houses.Add(newHouse);
-		}
-	}
-
-	/**
-	 * This function will read in the JSON blob and find every house name and return a list of the house names
-	 */
-	private List<string> findHouses()
-	{
-		// TODO: Read in the JSON blob
-		List<string> houseNames = new List<string>();
-		houseNames.Add("house1");
-		return houseNames;
+		}*/
 	}
 
 	/**
@@ -221,7 +213,7 @@ public class InstanceManager{
 
 	public override string ToString()
 	{
-		/*
+		
 		string output = "[Instance Manager]\n\n\tNumber of Houses: " + (_houses.Count + _errorHouses.Count)  + "\n" +
 						"\tNumber of Apps: " +_apps.Count + "\n"+
 						"\tHouses:\n\n";
@@ -235,7 +227,7 @@ public class InstanceManager{
 		foreach(SimHouse house in _errorHouses)
 		{
 			output += house.ToString() + "\n\n";
-		}*/
+		}
 		return "";
 	}
 

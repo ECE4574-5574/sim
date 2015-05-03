@@ -4,7 +4,7 @@
         "users": [
         {
             "Username":"User1",
-            "UserID": "12345",
+            "UserID": 0,
             "Password": "thePassword",
             "Coordinates":
             {
@@ -12,29 +12,26 @@
                 "y":"4321",
                 "z":"6789"
             },
-            "events":[
-			{
-				"time": "1997-07-16T19:20:30+01:00",
-				"key": "locationchange",
-				"value": {
-					"lat": 1.123456,
-					"lon": 2.123456,
-					"altitude": 3.123456
-				},
-				"time": "1997-07-16T20:21:22+01:00",
-				"key": "locationchange",
-				"value": {
-					"lat": 4.123456,
-					"lon": 5.123456,
-					"altitude": 6.123456
+			"events": [
+				{
+					"time": "1997-07-16T19:20:30+01:00",
+					"key": "locationchange",
+					"value": {
+						"lat": 1.123456,
+						"lon": 2.123456,
+						"altitude": 3.123456
+					        },
+					"time": "1997-07-16T20:21:22+01:00",
+					"key": "locationchange",
+					"value": {
+						"lat": 4.123456,
+						"lon": 5.123456,
+						"altitude": 6.123456
 				}
-			}
-			]
-
         },
         {
             "Username": "User2",
-            "UserID": "67890",
+            "UserID": 1,
             "Password": "secondPassword",
             "Coordinates":
             {
@@ -42,24 +39,22 @@
                 "y":"4321",
                 "z":"6789"
             },
-            "events":[
-			{
-				"time": "1997-07-16T19:20:30+01:00",
-				"key": "locationchange",
-				"value": {
-					"lat": 1.123456,
-					"lon": 2.123456,
-					"altitude": 3.123456
-				},
-				"time": "1997-07-16T20:21:22+01:00",
-				"key": "locationchange",
-				"value": {
-					"lat": 4.123456,
-					"lon": 5.123456,
-					"altitude": 6.123456
+            "events": [
+				{
+					"time": "1997-07-16T19:20:30+01:00",
+					"key": "locationchange",
+					"value": {
+						"lat": 1.123456,
+						"lon": 2.123456,
+						"altitude": 3.123456
+					        },
+					"time": "1997-07-16T20:21:22+01:00",
+					"key": "locationchange",
+					"value": {
+						"lat": 4.123456,
+						"lon": 5.123456,
+						"altitude": 6.123456
 				}
-			}
-			]
         }
     ],
     "houses": [
