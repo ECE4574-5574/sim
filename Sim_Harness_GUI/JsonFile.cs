@@ -44,11 +44,11 @@ public class JsonFile
 
 	private bool jsonStringParser(string jsonConfig)
 	{
-		
+		bool wasError = false;
 
 		if(String.IsNullOrEmpty(jsonConfig))
 		{
-			return false;
+			return true;
 		}
 
 		JObject info = null;
@@ -62,7 +62,7 @@ public class JsonFile
 		{
 			var error = String.Format("Scenario parsing error: {0}", ex.Message);
 			Console.WriteLine(error);
-			return false;
+			return true;
 		}
 
 		JToken house_list;
@@ -77,6 +77,10 @@ public class JsonFile
 			{
 				JsonHouse newHouse = new JsonHouse(house);
 				_houses.Add(newHouse.Id, newHouse);
+				if(newHouse.Error)
+				{
+					wasError = true;
+				}
 			}
 		}
 
@@ -89,11 +93,16 @@ public class JsonFile
 			{
 				JsonUser newUser = new JsonUser(user);
 				_users.Add(newUser.Id, newUser);
+				if(newUser.Error)
+				{
+					wasError = true;
+				}
 			}
 		}
-		return true;
+		return wasError;
 
 	}
+		
 
 	public override string ToString()
 		{

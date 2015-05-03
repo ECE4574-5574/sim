@@ -79,6 +79,10 @@ public class JsonHouse
 
 	}
 
+	public string serverInfo()
+	{
+		return _info.ToString();
+	}
 
 	public override string ToString()
 		{

@@ -11,79 +11,17 @@ public partial class MainWindow: Gtk.Window
 {
 	protected InstanceManager _instances;
 	protected String jsonBlob;
-	public List<string> userList;
-	public List<string> houseList;
 	string urlserver;
 	string houseserver;
 	string userserver;
+	JsonFile _parser;
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
 		Build();
 
 	}
-	public class values
-	{
-		public string x { get; set; }
-		public string y { get; set; }
-		public string z { get; set; }
-	}
-	public class UsersData
-	{
-		public string Username { get; set; }
-		public string UserID { get; set; }
-		public values Coordinates { get; set; }
-	}
-
-	public class JsonUsers
-	{
-		public List<UsersData> users { get; set; }
-		public List<HouseData> houses { get; set; }
-	}
-
-	public class deviceInfo
-	{
-		public string name { get; set; }
-		public string Class {get; set;}
-		public string type { get; set; }
-		public bool startState { get; set; }
-		public bool Enabled { get; set; }
-		public int State { get; set; }
-
-	}
-	//
-	public class roomSize
-	{
-		public int x {get; set;}
-		public int y {get; set;}
-	}
-
-	public class DoorInfo
-	{
-		public int x {get;set;}
-		public int y { get; set; }
-		public int connectingRoom { get; set; }
-	}
-
-	public class roomInfo
-	{
-		public string name {get;set;}
-		public roomSize dimensions { get; set; }
-		public string roomLevel { get; set; }
-		public List<DoorInfo> doors { get; set;}
-	}
-	//
-	//
-	public class HouseData
-	{
-		public string name { get; set; }
-		public int port { get; set; }
-		public List<deviceInfo> devices{ get; set; }
-		public List<roomInfo> rooms{get; set;}
-	}
-
-
-
+		
 	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
 	{
 		_instances.killGeneratorProcesses();
@@ -99,76 +37,16 @@ public partial class MainWindow: Gtk.Window
 		//TODO: Read in file, prep for launch here right now the "house1" is hard coded in
 		this.testScenarioComboBox.Model.GetValue(item,1);
 		// Make sure a valid file was selected
-		if(this.testScenarioComboBox.Model.GetValue(item,1) != null && File.Exists(this.testScenarioComboBox.Model.GetValue(item,1).ToString()))
+		if(this.testScenarioComboBox.Model.GetValue(item, 1) != null && File.Exists(this.testScenarioComboBox.Model.GetValue(item, 1).ToString()))
 		{
-			testSenarioTextview.Buffer.Text = File.ReadAllText(this.testScenarioComboBox.Model.GetValue(item,1).ToString());
+			testSenarioTextview.Buffer.Text = File.ReadAllText(this.testScenarioComboBox.Model.GetValue(item, 1).ToString());
 			jsonBlob = testSenarioTextview.Buffer.Text;
-			var jsonStringUser = JsonConvert.DeserializeObject<JsonUsers>(jsonBlob);
-			int counter1 = 1;
-			int counter2 = 1;
 
-			userList = new List<string> { };
-			houseList = new List<string> { };
+			jsonBlob = jsonBlob.Replace("\n", "");
+			jsonBlob = jsonBlob.Replace("\t", "");
 
-			foreach(HouseData val in jsonStringUser.houses)
-			{
-				houseList.Add("Name: " + val.name);
-				houseList.Add("Port: " + val.port.ToString());
-				foreach(deviceInfo dev in val.devices)
-				{
-					houseList.Add("Device: " + counter1.ToString());
-					houseList.Add("Name: " + dev.name);
-					houseList.Add("Class: " + dev.Class);
-					houseList.Add("Type: " + dev.type);
-					houseList.Add("Start State: " + dev.startState.ToString());
-					houseList.Add("State: " + dev.State.ToString());
-					houseList.Add("Enabled: " + dev.Enabled.ToString());
-					houseList.Add("\n");
-					counter1++;
-				}
-				foreach(roomInfo rom in val.rooms)
-				{
-					houseList.Add ("Room: " + counter2);
-					houseList.Add("Name: " + rom.name);
-					houseList.Add ("Dimensions X: " + rom.dimensions.x.ToString());
-					houseList.Add ("Dimensions Y: " + rom.dimensions.y.ToString ());
-					houseList.Add ("Room Level: " + rom.roomLevel.ToString ());
-					houseList.Add("\n");
-
-				}
-				houseList.Add ("\n");
-			}
-
-			foreach(UsersData i in jsonStringUser.users){
-				userList.Add("Username: " + i.Username);
-				userList.Add("UserID: " + i.UserID);
-				userList.Add("Coordinate X: " + i.Coordinates.x);
-				userList.Add("Coordinate Y: " + i.Coordinates.y);
-				userList.Add("Coordinate Z: " + i.Coordinates.z);
-				userList.Add ("\n");
-			}
-
-			for(int i = 0; i < userList.Count; i++)
-			{
-				currentTestTextview.Buffer.Text += userList[i] + "\n";
-			}
-			currentTestTextview.Buffer.Text += "\n";
-			for(int i = 0; i < houseList.Count; i++)
-			{
-				currentTestTextview.Buffer.Text += houseList[i] + "\n";
-			}
-
-
-
-
-			//Remove every new line and tab otherwise it will not work as a command line argument
-									jsonBlob = jsonBlob.Replace("\n", "");
-									jsonBlob = jsonBlob.Replace("\t", "");
-
-
-
+			_parser = new JsonFile(jsonBlob);
 		}
-
 
 	}
 
@@ -231,6 +109,7 @@ public partial class MainWindow: Gtk.Window
 
 		chooser.Destroy();
 	}
+
 
 	protected void buildScenarioList(String dir)
 	{
@@ -324,23 +203,31 @@ public partial class MainWindow: Gtk.Window
 
 		currentTestTextview.Buffer.Text = "Make request to server:\n\n\t" + jsonStartString + "\n\n\tServer: " + urlserver + "\n\n\tResponse: " + serverResponse + "\n\n----------------------------------\n\n";
 
+		string userServerResponse = "";
+		string houseServerResponse = "";
 		//Create Houses and Users in the database
 
 		//start prepopulation
+		Dictionary <int, JsonHouse> houses = _parser.Houses;
+		Dictionary <int, JsonUser> users = _parser.Users;
 
 		Server h = new Server(houseserver);
 
-		for(int i = 0; i < houseList.Count; i++)
+		foreach(JsonHouse x in houses.Values)
 		{
-			h.postMessage(houseList[i]);
+			houseServerResponse = h.postMessage(x.serverInfo());
+
 		}
+		currentTestTextview.Buffer.Text = "\tHouse Server: " + houseserver + "\n\n\tResponse: " + houseServerResponse + "\n\n----------------------------------\n\n";
 
 		Server u = new Server(userserver);
 
-		for(int j = 0; j < userList.Count; j++)
+		foreach(JsonUser y in users.Values)
 		{
-			u.postMessage(userList[j]);
+			userServerResponse = u.postMessage(y.serverInfo());
 		}
+
+		currentTestTextview.Buffer.Text = "\tUser Server: " + userserver + "\n\n\tResponse: " + userServerResponse + "\n\n----------------------------------\n\n";
 
 		//end prepopulation
 		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n\n";
@@ -380,8 +267,6 @@ public partial class MainWindow: Gtk.Window
 		houseserver = HouseURLentry.Text;
 		//throw new NotImplementedException ();
 	}
-
-	
 
 }
 

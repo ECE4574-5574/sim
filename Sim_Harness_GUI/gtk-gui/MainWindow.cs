@@ -63,15 +63,15 @@ public partial class MainWindow
 	
 	private global::Gtk.TextView testSenarioTextview;
 	
-	private global::Gtk.VBox vbox1;
+	private global::Gtk.VBox vbox5;
 	
-	private global::Gtk.Label House;
-	
-	private global::Gtk.Entry HouseURLentry;
-	
-	private global::Gtk.Label User;
+	private global::Gtk.Label label3;
 	
 	private global::Gtk.Entry userURLentry;
+	
+	private global::Gtk.Label label4;
+	
+	private global::Gtk.Entry HouseURLentry;
 	
 	private global::Gtk.VBox vbox4;
 	
@@ -306,13 +306,13 @@ public partial class MainWindow
 		w17.Expand = false;
 		w17.Fill = false;
 		// Container child hbox10.Gtk.Box+BoxChild
-		this.timeFrameSpeedSpinbutton = new global::Gtk.SpinButton (1D, 10000D, 1D);
+		this.timeFrameSpeedSpinbutton = new global::Gtk.SpinButton (1, 10000, 1);
 		this.timeFrameSpeedSpinbutton.CanFocus = true;
 		this.timeFrameSpeedSpinbutton.Name = "timeFrameSpeedSpinbutton";
-		this.timeFrameSpeedSpinbutton.Adjustment.PageIncrement = 10D;
-		this.timeFrameSpeedSpinbutton.ClimbRate = 1D;
+		this.timeFrameSpeedSpinbutton.Adjustment.PageIncrement = 10;
+		this.timeFrameSpeedSpinbutton.ClimbRate = 1;
 		this.timeFrameSpeedSpinbutton.Numeric = true;
-		this.timeFrameSpeedSpinbutton.Value = 4D;
+		this.timeFrameSpeedSpinbutton.Value = 4;
 		this.hbox10.Add (this.timeFrameSpeedSpinbutton);
 		global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox10 [this.timeFrameSpeedSpinbutton]));
 		w18.Position = 1;
@@ -395,53 +395,52 @@ public partial class MainWindow
 		w28.Expand = false;
 		w28.Fill = false;
 		// Container child topLayoutBox.Gtk.Box+BoxChild
-		this.vbox1 = new global::Gtk.VBox ();
-		this.vbox1.Name = "vbox1";
-		this.vbox1.Spacing = 6;
-		// Container child vbox1.Gtk.Box+BoxChild
-		this.House = new global::Gtk.Label ();
-		this.House.Name = "House";
-		this.House.LabelProp = "HouseURL";
-		this.House.Justify = ((global::Gtk.Justification)(2));
-		this.vbox1.Add (this.House);
-		global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.House]));
+		this.vbox5 = new global::Gtk.VBox ();
+		this.vbox5.Name = "vbox5";
+		this.vbox5.Spacing = 6;
+		// Container child vbox5.Gtk.Box+BoxChild
+		this.label3 = new global::Gtk.Label ();
+		this.label3.Name = "label3";
+		this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("User URL ");
+		this.label3.Justify = ((global::Gtk.Justification)(2));
+		this.vbox5.Add (this.label3);
+		global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.label3]));
 		w29.Position = 0;
 		w29.Expand = false;
 		w29.Fill = false;
-		// Container child vbox1.Gtk.Box+BoxChild
-		this.HouseURLentry = new global::Gtk.Entry ();
-		this.HouseURLentry.CanFocus = true;
-		this.HouseURLentry.Name = "HouseURLentry";
-		this.HouseURLentry.IsEditable = true;
-		this.HouseURLentry.InvisibleChar = '●';
-		this.vbox1.Add (this.HouseURLentry);
-		global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.HouseURLentry]));
-		w30.Position = 1;
-		w30.Expand = false;
-		w30.Fill = false;
-		// Container child vbox1.Gtk.Box+BoxChild
-		this.User = new global::Gtk.Label ();
-		this.User.Name = "User";
-		this.User.LabelProp = global::Mono.Unix.Catalog.GetString ("User URL");
-		this.User.Justify = ((global::Gtk.Justification)(2));
-		this.vbox1.Add (this.User);
-		global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.User]));
-		w31.Position = 2;
-		w31.Expand = false;
-		w31.Fill = false;
-		// Container child vbox1.Gtk.Box+BoxChild
+		// Container child vbox5.Gtk.Box+BoxChild
 		this.userURLentry = new global::Gtk.Entry ();
 		this.userURLentry.CanFocus = true;
 		this.userURLentry.Name = "userURLentry";
 		this.userURLentry.IsEditable = true;
 		this.userURLentry.InvisibleChar = '●';
-		this.vbox1.Add (this.userURLentry);
-		global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.userURLentry]));
+		this.vbox5.Add (this.userURLentry);
+		global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.userURLentry]));
+		w30.Position = 1;
+		w30.Expand = false;
+		w30.Fill = false;
+		// Container child vbox5.Gtk.Box+BoxChild
+		this.label4 = new global::Gtk.Label ();
+		this.label4.Name = "label4";
+		this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("House URL");
+		this.vbox5.Add (this.label4);
+		global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.label4]));
+		w31.Position = 2;
+		w31.Expand = false;
+		w31.Fill = false;
+		// Container child vbox5.Gtk.Box+BoxChild
+		this.HouseURLentry = new global::Gtk.Entry ();
+		this.HouseURLentry.CanFocus = true;
+		this.HouseURLentry.Name = "HouseURLentry";
+		this.HouseURLentry.IsEditable = true;
+		this.HouseURLentry.InvisibleChar = '●';
+		this.vbox5.Add (this.HouseURLentry);
+		global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.HouseURLentry]));
 		w32.Position = 3;
 		w32.Expand = false;
 		w32.Fill = false;
-		this.topLayoutBox.Add (this.vbox1);
-		global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.topLayoutBox [this.vbox1]));
+		this.topLayoutBox.Add (this.vbox5);
+		global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.topLayoutBox [this.vbox5]));
 		w33.Position = 3;
 		w33.Expand = false;
 		w33.Fill = false;
@@ -472,13 +471,13 @@ public partial class MainWindow
 		this.hbox14.Name = "hbox14";
 		this.hbox14.Spacing = 6;
 		// Container child hbox14.Gtk.Box+BoxChild
-		this.hourSpinBox = new global::Gtk.SpinButton (0D, 23D, 1D);
+		this.hourSpinBox = new global::Gtk.SpinButton (0, 23, 1);
 		this.hourSpinBox.CanFocus = true;
 		this.hourSpinBox.Name = "hourSpinBox";
-		this.hourSpinBox.Adjustment.PageIncrement = 1D;
-		this.hourSpinBox.ClimbRate = 1D;
+		this.hourSpinBox.Adjustment.PageIncrement = 1;
+		this.hourSpinBox.ClimbRate = 1;
 		this.hourSpinBox.Numeric = true;
-		this.hourSpinBox.Value = 1D;
+		this.hourSpinBox.Value = 1;
 		this.hbox14.Add (this.hourSpinBox);
 		global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.hbox14 [this.hourSpinBox]));
 		w36.Position = 0;
@@ -498,13 +497,13 @@ public partial class MainWindow
 		this.hbox16.Name = "hbox16";
 		this.hbox16.Spacing = 6;
 		// Container child hbox16.Gtk.Box+BoxChild
-		this.minSpinBox = new global::Gtk.SpinButton (0D, 59D, 1D);
+		this.minSpinBox = new global::Gtk.SpinButton (0, 59, 1);
 		this.minSpinBox.CanFocus = true;
 		this.minSpinBox.Name = "minSpinBox";
-		this.minSpinBox.Adjustment.PageIncrement = 1D;
-		this.minSpinBox.ClimbRate = 1D;
+		this.minSpinBox.Adjustment.PageIncrement = 1;
+		this.minSpinBox.ClimbRate = 1;
 		this.minSpinBox.Numeric = true;
-		this.minSpinBox.Value = 59D;
+		this.minSpinBox.Value = 59;
 		this.hbox16.Add (this.minSpinBox);
 		global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.hbox16 [this.minSpinBox]));
 		w38.Position = 0;
@@ -659,10 +658,9 @@ public partial class MainWindow
 		this.appSimLocationEntry.Changed += new global::System.EventHandler (this.OnAppSimLocationEntryChanged);
 		this.houseSimLocationButton.Clicked += new global::System.EventHandler (this.OnHouseSimLocationButtonClicked);
 		this.houseSimLocationEntry.Changed += new global::System.EventHandler (this.OnHouseSimLocationEntryChanged);
-		this.HouseURLentry.Changed += new global::System.EventHandler (this.OnHouseURLentryChanged);
 		this.userURLentry.Changed += new global::System.EventHandler (this.OnUserURLentryChanged);
+		this.HouseURLentry.Changed += new global::System.EventHandler (this.OnHouseURLentryChanged);
 		this.loadScenarioButton.Clicked += new global::System.EventHandler (this.OnLoadScenarioButton);
 		this.startTestButton.Clicked += new global::System.EventHandler (this.OnStartTestButtonClicked);
-		this.endTestButton.Clicked += new global::System.EventHandler (this.OnEndTestButtonClicked);
 	}
 }

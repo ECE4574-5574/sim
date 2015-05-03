@@ -98,6 +98,12 @@ public class JsonUser
 		}
 	}
 		
+	public string serverInfo()
+	{
+		return _info.ToString();
+	}
+
+
 	public override string ToString()
 		{
 			return string.Format("[JsonUser: Name={0}, Id={1}, Password={2}, Error={3}, JsonBlob={4}]", Name, Id, Password, Error, JsonBlob);
