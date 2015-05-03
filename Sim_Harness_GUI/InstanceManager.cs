@@ -188,11 +188,13 @@ public class InstanceManager{
 		for(int i = 0; i < _houses.Count; i++)
 		{
 			_houses[i].Start();
-			if(_houses[i].ProcessStarted)
+//			Console.WriteLine(_houses[i].hasExited());
+			if(_houses[i].isRunning())
 			{
 				_houses[i].waitForResponse();
 			}
-			if(!_houses[i].ProcessStarted || _houses[i].Error)
+//			Console.WriteLine(_houses[i].hasExited());
+			if(!_houses[i].isRunning() || _houses[i].Error)
 			{
 				_errorHouses.Add(_houses[i]);
 				houseIndexRemove.Add(i);

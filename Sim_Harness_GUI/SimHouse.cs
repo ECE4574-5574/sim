@@ -33,13 +33,14 @@ public class SimHouse
 		/* register a handler */
 		_process.EnableRaisingEvents = true;
 		_process.Exited += new EventHandler(house_Exited);
-
 	}
 
 	public void Start()
 	{
 		try{
 			_process = Process.Start(_startInformation);
+//			Console.WriteLine("House process id: " + _process.Id);
+//			Console.WriteLine("House process status: " + _process.HasExited);
 			_processStarted = true;
 		}
 		catch (Exception e){
@@ -71,7 +72,7 @@ public class SimHouse
 	public void waitForResponse()
 	{
 
-		if(_processStarted)
+		if(isRunning())
 		{
 			while(_standardOut.EndOfStream && _errorOut.EndOfStream)
 			{
@@ -107,7 +108,7 @@ public class SimHouse
 		                "\tLocation:        " + _process.StartInfo.FileName + "\n" +
 		                "\tProcess Started: " + _processStarted + "\n"; 
 
-		if(_processStarted)
+		if(isRunning())
 		{
 			output += 	"\tProcess ID:      " + _process.Id + "\n" +
 						"\tProcess Name:    " + _process.ProcessName + "\n" +
@@ -122,7 +123,11 @@ public class SimHouse
 		Console.WriteLine("House exited!");
 	}
 
-	protected Process _process = new Process();
+	public bool isRunning() {
+		return !_process.HasExited;
+	}
+
+	protected Process _process;
 	protected ProcessStartInfo _startInformation;
 	protected StreamWriter _standardIn;
 	protected StreamReader _standardOut, _errorOut;
