@@ -39,6 +39,7 @@ public class JsonFile
 	{
 		_users = new Dictionary<int, JsonUser>();
 		_houses = new Dictionary<int, JsonHouse>();
+		/* check if string is in correct json format */
 		try {
 			var obj = JToken.Parse(jsonConfig);
 			Console.WriteLine(obj.ToString(Newtonsoft.Json.Formatting.Indented));
