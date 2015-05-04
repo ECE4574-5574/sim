@@ -221,7 +221,8 @@ public class InstanceManager{
 		{
 			output += house.ToString() + "\n\n";
 		}
-		return "";
+//		return "";
+		return output;
 	}
 
 } //end class
