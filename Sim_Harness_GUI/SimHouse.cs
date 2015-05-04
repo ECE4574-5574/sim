@@ -29,6 +29,16 @@ public class SimHouse
 		_processStarted = false;
 		_processError = false;
 
+		_process = new Process();
+
+		/* 
+		 * register a handler 
+		 * when process terminate,
+		 * the event handler would be invoked
+		 * Note that this mechanism somehow dosen't work for our program
+		 */
+		_process.EnableRaisingEvents = true;
+		_process.Exited += new EventHandler(house_Exited);
 	}
 
 	public void Start()
@@ -66,7 +76,7 @@ public class SimHouse
 	public void waitForResponse()
 	{
 
-		if(_processStarted)
+		if(isRunning())
 		{
 			while(_standardOut.EndOfStream && _errorOut.EndOfStream)
 			{
@@ -102,7 +112,7 @@ public class SimHouse
 		                "\tLocation:        " + _process.StartInfo.FileName + "\n" +
 		                "\tProcess Started: " + _processStarted + "\n"; 
 
-		if(_processStarted)
+		if(isRunning())
 		{
 			output += 	"\tProcess ID:      " + _process.Id + "\n" +
 						"\tProcess Name:    " + _process.ProcessName + "\n" +
@@ -111,6 +121,24 @@ public class SimHouse
 
 		output += 		"\tProcess Output:  " + _houseOutput + "\n";
 		return output;
+	}
+
+	/*
+	 * event handler, asynchronized with program
+	 * Conceptually when process terminates this routine would be called
+	 */
+	protected void house_Exited(object sender, System.EventArgs e) {
+		Console.WriteLine("House exited!");
+	}
+
+	/* 
+	 * routine that returns state of process 
+	 * check if a process is sitll running
+	 */
+	public bool isRunning() {
+		if(_process == null)
+			return false;
+		return !_process.HasExited;
 	}
 
 	protected Process _process;
