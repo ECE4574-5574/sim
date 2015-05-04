@@ -20,9 +20,7 @@ public class InstanceManager{
 		_apps = new List<SimApp>();
 		_status = "";
 	}
-
-
-
+		
 	public int getNumberHouses()
 	{
 		return _houses.Count;
@@ -32,9 +30,6 @@ public class InstanceManager{
 	{
 		return _apps.Count;
 	}
-
-
-
 
 	//NOTE: names are from the parent's (this program's) perspective
 
@@ -188,12 +183,11 @@ public class InstanceManager{
 		for(int i = 0; i < _houses.Count; i++)
 		{
 			_houses[i].Start();
-//			Console.WriteLine(_houses[i].hasExited());
+			/* check if process is running as expected */
 			if(_houses[i].isRunning())
 			{
 				_houses[i].waitForResponse();
 			}
-//			Console.WriteLine(_houses[i].hasExited());
 			if(!_houses[i].isRunning() || _houses[i].Error)
 			{
 				_errorHouses.Add(_houses[i]);
