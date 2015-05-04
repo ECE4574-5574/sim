@@ -162,6 +162,12 @@ public class InstanceManager{
 			SimHouse newHouse = new SimHouse(_jsonScenario, _houseLocation, houseName);
 			_houses.Add(newHouse);
 		}*/
+		foreach(KeyValuePair<int, JsonHouse> entry in _parser.Houses)
+		{
+			// add new simhouse from _parser
+			SimHouse simHouse = new SimHouse(_jsonScenario, _houseLocation, entry.Value.Name);
+			_houses.Add(simHouse);
+		}
 	}
 
 	/**
