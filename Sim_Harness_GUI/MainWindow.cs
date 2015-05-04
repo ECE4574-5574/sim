@@ -183,10 +183,8 @@ public partial class MainWindow: Gtk.Window
 		// build obj
 		Server s = new Server(urlserver);
 
-
 		// sendmsg store response in serverResponse
 		string serverResponse = s.postMessage(jsonStartString);
-
 
 		currentTestTextview.Buffer.Text = "Make request to server:\n\n\t" + jsonStartString + "\n\n\tServer: " + urlserver + "\n\n\tResponse: " + serverResponse + "\n\n----------------------------------\n\n";
 

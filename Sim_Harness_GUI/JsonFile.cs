@@ -42,7 +42,7 @@ public class JsonFile
 		/* check if string is in correct json format */
 		try {
 			var obj = JToken.Parse(jsonConfig);
-			Console.WriteLine(obj.ToString(Newtonsoft.Json.Formatting.Indented));
+//			Console.WriteLine(obj.ToString(Newtonsoft.Json.Formatting.Indented));
 		}
 		catch(JsonReaderException jex) {
 			//Exception in parsing json

@@ -70,24 +70,27 @@ public class Server
 
 			var response = task.Result;
 
-			body = response.Content.ReadAsStringAsync().Result;
+			body = response.StatusCode.ToString();
+
+//			body = response.Content.ReadAsStringAsync().Result;
 		}
 		else
 		{
 			body = "Invalid Server";
 		}
 		return body;
-
 	}
 
 	private static async Task<HttpResponseMessage> MakeRequest(string msg)
 	{
 		var httpClient = new HttpClient();
-		await httpClient.GetAsync(new Uri(url));
+		Console.WriteLine(string.Concat(url, "/api/sim/timeframe"));
+		await httpClient.GetAsync(new Uri(string.Concat(url, "/api/sim/timeframe")));
 
 		var stringContent = new StringContent(msg, Encoding.UTF8, "application/json");
 
-		var response= await httpClient.PostAsync(url, stringContent);	
+		var response= await httpClient.PostAsync(url, stringContent);
+		Console.WriteLine(response.StatusCode);
 		return response;
 	}
 
