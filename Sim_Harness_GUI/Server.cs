@@ -47,6 +47,7 @@ public class Server
 
 
 	public Server(string serverURL){
+//		Console.WriteLine(serverURL);
 		if(serverURL != null)
 			url = serverURL;
 		else
@@ -84,7 +85,7 @@ public class Server
 	private static async Task<HttpResponseMessage> MakeRequest(string msg)
 	{
 		var httpClient = new HttpClient();
-		Console.WriteLine(string.Concat(url, "/api/sim/timeframe"));
+//		Console.WriteLine(string.Concat(url, "/api/sim/timeframe"));
 		await httpClient.GetAsync(new Uri(string.Concat(url, "/api/sim/timeframe")));
 
 		var stringContent = new StringContent(msg, Encoding.UTF8, "application/json");

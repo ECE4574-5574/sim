@@ -153,6 +153,7 @@ public partial class MainWindow
 		this.serverURLEntry.Name = "serverURLEntry";
 		this.serverURLEntry.IsEditable = true;
 		this.serverURLEntry.InvisibleChar = '●';
+		this.serverURLEntry.Text = "http://serverapi1.azurewebsites.net";
 		this.paramsBox.Add (this.serverURLEntry);
 		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.paramsBox [this.serverURLEntry]));
 		w3.Position = 1;

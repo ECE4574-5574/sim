@@ -181,6 +181,7 @@ public partial class MainWindow: Gtk.Window
 		String jsonStartString = buildStartString();
 
 		// build obj
+		urlserver = serverURLEntry.Text;
 		Server s = new Server(urlserver);
 
 		// sendmsg store response in serverResponse
