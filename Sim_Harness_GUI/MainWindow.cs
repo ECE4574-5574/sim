@@ -4,6 +4,7 @@ using Hats.Time;
 using Newtonsoft.Json;
 using Sim_Harness_GUI;
 using System.IO;
+using System.Collections.Generic;
 
 
 public partial class MainWindow: Gtk.Window
@@ -11,6 +12,8 @@ public partial class MainWindow: Gtk.Window
 	protected InstanceManager _instances;
 	protected String jsonBlob;
 	string urlserver;
+	string houseserver;
+	string userserver;
 	JsonFile _parser;
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
@@ -24,7 +27,7 @@ public partial class MainWindow: Gtk.Window
 		Application.Quit();
 		a.RetVal = true;
 	}
-		
+
 	protected void OnLoadScenarioButton(object sender, EventArgs e)
 	{
 		var item = new Gtk.TreeIter();
@@ -33,12 +36,11 @@ public partial class MainWindow: Gtk.Window
 		//TODO: Read in file, prep for launch here right now the "house1" is hard coded in
 		this.testScenarioComboBox.Model.GetValue(item,1);
 		// Make sure a valid file was selected
-		if(this.testScenarioComboBox.Model.GetValue(item,1) != null && File.Exists(this.testScenarioComboBox.Model.GetValue(item,1).ToString()))
+		if(this.testScenarioComboBox.Model.GetValue(item, 1) != null && File.Exists(this.testScenarioComboBox.Model.GetValue(item, 1).ToString()))
 		{
-			testSenarioTextview.Buffer.Text = File.ReadAllText(this.testScenarioComboBox.Model.GetValue(item,1).ToString());
+			testSenarioTextview.Buffer.Text = File.ReadAllText(this.testScenarioComboBox.Model.GetValue(item, 1).ToString());
 			jsonBlob = testSenarioTextview.Buffer.Text;
 
-			// Remove every new line and tab otherwise it will not work as a command line argument
 			jsonBlob = jsonBlob.Replace("\n", "");
 			jsonBlob = jsonBlob.Replace("\t", "");
 
@@ -46,6 +48,8 @@ public partial class MainWindow: Gtk.Window
 
 		}
 	}
+
+
 
 	protected void OnAppSimulatorChooseFileButtonClicked(object sender, EventArgs e)
 	{
@@ -92,6 +96,7 @@ public partial class MainWindow: Gtk.Window
 
 		chooser.Destroy();
 	}
+
 
 	protected void buildScenarioList(String dir)
 	{
@@ -185,6 +190,34 @@ public partial class MainWindow: Gtk.Window
 
 		currentTestTextview.Buffer.Text = "Make request to server:\n\n\t" + jsonStartString + "\n\n\tServer: " + urlserver + "\n\n\tResponse: " + serverResponse + "\n\n----------------------------------\n\n";
 
+		string userServerResponse = "";
+		string houseServerResponse = "";
+		//Create Houses and Users in the database
+
+		//start prepopulation
+		Dictionary <int, JsonHouse> houses = _parser.Houses;
+		Dictionary <int, JsonUser> users = _parser.Users;
+
+		Server h = new Server(houseserver);
+
+		foreach(JsonHouse x in houses.Values)
+		{
+			houseServerResponse = h.postMessage(x.serverInfo());
+
+		}
+		currentTestTextview.Buffer.Text += "\tHouse Server: " + houseserver + "\n\n\tResponse: " + houseServerResponse + "\n\n----------------------------------\n\n";
+
+		Server u = new Server(userserver);
+
+		foreach(JsonUser y in users.Values)
+		{
+			userServerResponse = u.postMessage(y.serverInfo());
+			currentTestTextview.Buffer.Text += "\t " + y.serverInfo();
+		}
+
+		currentTestTextview.Buffer.Text += "\tUser Server: " + userserver + "\n\n\tResponse: " + userServerResponse + "\n\n----------------------------------\n\n";
+
+		//end prepopulation
 		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n\n";
 		bool successfullStart = _instances.startGeneratorProcesses(appSimLocationEntry.Text, houseSimLocationEntry.Text, jsonStartString, jsonBlob);
 
@@ -196,7 +229,7 @@ public partial class MainWindow: Gtk.Window
 		}
 
 	}
-		
+
 	protected void OnEndTestButtonClicked(object sender, EventArgs e)
 	{
 		currentTestTextview.Buffer.Text += "\n\n";
@@ -211,5 +244,17 @@ public partial class MainWindow: Gtk.Window
 		urlserver = serverURLEntry.Text;
 		//throw new NotImplementedException ();
 	}
+
+	protected void OnUserURLentryChanged (object sender, EventArgs e)
+	{
+		userserver = userURLentry.Text;
+		//throw new NotImplementedException ();
+	}
+	protected void OnHouseURLentryChanged (object sender, EventArgs e)
+	{
+		houseserver = HouseURLentry.Text;
+		//throw new NotImplementedException ();
+	}
+
 }
 

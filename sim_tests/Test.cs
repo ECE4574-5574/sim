@@ -82,13 +82,12 @@ public class Test
 		Assert.AreEqual(15, linear.Temperature(start + new TimeSpan(0, 0, 25)));
 	}
 
-	[Test]
-	public void InstanceManagerWorkingHouse()
+	//[Test]
+	/*public void InstanceManagerWorkingHouse()
 	{
-		Assert.AreEqual(1, 1);
-		/*InstanceManager manager = new InstanceManager();
+		InstanceManager manager = new InstanceManager();
 
-		Assert.AreEqual(0, manager.getNumberHouses());
+		//Assert.AreEqual(0, manager.getNumberHouses());
 		Assert.AreEqual(0, manager.getNumberApps());
 
 		string pathToHouse = Directory.GetCurrentDirectory();
@@ -116,15 +115,14 @@ public class Test
 
 		manager.killGeneratorProcesses();
 		Assert.AreEqual(0, manager.getNumberHouses());
-		Assert.AreEqual(0, manager.getNumberApps());*/
+		Assert.AreEqual(0, manager.getNumberApps());
 
-	}
+	}*/
 
-	[Test]
-	public void InstanceManagerInvalidHouseExe()
+	//[Test]
+	/*public void InstanceManagerInvalidHouseExe()
 	{
-		Assert.AreEqual(1, 1);
-		/*InstanceManager manager = new InstanceManager();
+		InstanceManager manager = new InstanceManager();
 
 		Assert.AreEqual(0, manager.getNumberHouses());
 		Assert.AreEqual(0, manager.getNumberApps());
@@ -149,14 +147,13 @@ public class Test
 		bool start = manager.startGeneratorProcesses(pathToApp, pathToHouse, tfString, jsonBlob);
 		Assert.AreEqual(false, start);
 		Assert.AreEqual(0, manager.getNumberHouses());
-		Assert.AreEqual(0, manager.getNumberApps());*/
-	}
+		Assert.AreEqual(0, manager.getNumberApps());
+	}*/
 
-	[Test]
-	public void InstanceManagerErrorHouse()
+	//[Test]
+	/*public void InstanceManagerErrorHouse()
 	{
-		Assert.AreEqual(1, 1);
-		/*InstanceManager manager = new InstanceManager();
+		InstanceManager manager = new InstanceManager();
 
 		Assert.AreEqual(0, manager.getNumberHouses());
 		Assert.AreEqual(0, manager.getNumberApps());
@@ -183,9 +180,9 @@ public class Test
 		Assert.AreEqual(false, start);
 		Assert.AreEqual(0, manager.getNumberHouses());
 		Assert.AreEqual(0, manager.getNumberApps());
-		manager.killGeneratorProcesses();*/
+		manager.killGeneratorProcesses();
 
-	}
+	}*/
 
 	[Test]
 	public void startOneApp_TestInputArgs(){
@@ -201,10 +198,9 @@ public class Test
 
 	public void ServerTest()
 	{
-		Assert.AreEqual(1, 1);
 		//yay server
-		/*Server s = new Server("http://requestb.in/1ehzgva1");
-		Assert.AreEqual("http://requestb.in/1ehzgva1", s.URL);
+		Server s = new Server("http://requestb.in/tfykibtf");
+		Assert.AreEqual("http://requestb.in/tfykibtf", s.URL);
 
 		string response = s.postMessage("Hello");
 		Assert.AreEqual("ok", response);
