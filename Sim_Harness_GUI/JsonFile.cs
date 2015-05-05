@@ -112,7 +112,6 @@ public class JsonFile
 			}
 		}
 		return wasError;
-
 	}
 
 	public override string ToString()

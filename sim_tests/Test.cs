@@ -285,8 +285,6 @@ public class Test
 		Assert.AreEqual(true, newHouse.Error);
 		Assert.AreEqual("house1", newHouse.Name);
 
-
-
 		// No name
 		houseJSON = "{     \"houses\": [     {           \"port\": 8081,       \"devices\": [         {           \"name\": \"light1\",           \"class\": \"LightSwitch\",           \"type\": \"Simulated\",           \"startState\": false         },         {            \"name\": \"Kitchen Ceiling Fan\",            \"class\": \"CeilingFan\",            \"type\": \"Simulated\",            \"Enabled\": false,            \"State\": 0         }       ],       \"rooms\": [         {           \"name\": \"Kitchen\",           \"dimensions\": {             \"x\": 100,             \"y\": 200           },           \"roomLevel\": 1,           \"doors\":           [             {               \"x\": 20,               \"y\": 200,               \"connectingRoom\": 1             }           ],           \"devices\":           [             1           ]         },         {           \"name\": \"Family Room\",           \"dimensions\": {             \"x\": 300,             \"y\": 200           },           \"roomLevel\": 1,           \"doors\":           [             {               \"x\": 20,               \"y\": 0,               \"connectingRoom\": 0             }           ],           \"devices\":           [             0           ]         }       ],       \"weather\":       [         {           \"Time\": \"2015-04-08T13:25:21.803833-04:00\",            \"Temp\": 50         },         {            \"Time\": \"2015-04-08T13:25:21.803833-04:00\",            \"Temp\": 30         }       ]     }   ]   }";
 
@@ -319,12 +317,7 @@ public class Test
 
 
 	}
-
-
-
-
-
-
+		
 	[Test]
 	public void testJsonUser()
 	{
@@ -491,6 +484,79 @@ public class Test
 		Assert.AreEqual(0, jsonFile.Users.Count);
 
 
+	}
+
+	/* 
+	 * unit test
+	 * verify that the program is able to start multiple house processes 
+	*/
+	[Test]
+	public void multipleHouses() {
+		InstanceManager manager = new InstanceManager();
+		Assert.AreEqual(manager.getNumberHouses(), 0);
+		/* Path below need to be changed to pass unit test on a different computer */
+		const string app_path = "/Users/ningli/Desktop/5574G/Assignment7/ECE4574-SimHarnessExes/com.homeAutomationApp.apk";
+		const string house_path = "/Users/ningli/Desktop/Automation_System/Devices/House/bin/Debug/House.exe";
+		const string time_blob = "{\"WallEpoch\":\"2015-05-04T22:56:24.475282-04:00\",\"SimEpoch\":\"2015-05-04T01:59:00-04:00\",\"Rate\":4.0}";
+		/* 
+		 * read from a json blob that contains 2 houses 
+		 * file path need to be changed to pass unit test on a different computer
+		 */
+		string json_blob = System.IO.File.ReadAllText(@"/Users/ningli/Desktop/5574G/Assignment7/sim_harness/scenarios/multipleHouse.json");
+		manager.startGeneratorProcesses(app_path, house_path, time_blob, json_blob);
+		/* verify that there are 2 process for houses */
+		Assert.AreEqual(manager.getNumberHouses(), 2);
+		/* kill all house processes */
+		manager.killGeneratorProcesses();
+		/* verify that there are no more houses */
+		Assert.AreEqual(manager.getNumberHouses(), 0);
+	}
+
+
+	/*
+	 * unit test
+	 * verify that the program is able to handle invalid server url without crashing
+	 */
+	[Test]
+	public void invalidServerURL() {
+		/* invalid server url */
+		const string url_bad = "www.invalidserver.net";
+		Server server = new Server(url_bad);
+		/* verify that when post message, results will be invalid */
+		string msg = "{\"WallEpoch\":\"2015-05-04T22:56:24.475282-04:00\",\"SimEpoch\":\"2015-05-04T01:59:00-04:00\",\"Rate\":4.0}";
+		Assert.AreEqual(server.postMessage(msg), "Invalid Server");
+		/* good server url */
+		const string url_good = "http://serverapi1.azurewebsites.net";
+		Server server2 = new Server(url_good);
+		/* verify that when post message, server will return 200 */
+		Assert.AreEqual(server2.postMessage(msg), "OK");
+	}
+
+	/*
+	 * unit test
+	 * verify that when terminated, house process will update its status
+	 */
+	[Test]
+	public void killHouse() {
+		/* 
+		 * read from a json blob that contains 2 houses 
+		 * file path need to be changed to pass unit test on a different computer
+		 */
+		string json_blob = System.IO.File.ReadAllText(@"/Users/ningli/Desktop/5574G/Assignment7/sim_harness/scenarios/multipleHouse.json");
+		const string house_path = "/Users/ningli/Desktop/Automation_System/Devices/House/bin/Debug/House.exe";
+
+		Hats.Sim.SimHouse sh1 = new Hats.Sim.SimHouse(json_blob, house_path, "house 1");
+		Hats.Sim.SimHouse sh2 = new Hats.Sim.SimHouse(json_blob, house_path, "house 2");
+		sh1.Start();
+		sh2.Start();
+		/* verify that both process are running */
+		Assert.AreEqual(sh1.isRunning(), true);
+		Assert.AreEqual(sh2.isRunning(), true);
+		/* kill one hosue process, verify that the process has stoped */
+		sh1.Kill();
+		/* verify that both process are running */
+		Assert.AreEqual(sh1.isRunning(), false);
+		Assert.AreEqual(sh2.isRunning(), true);
 	}
 
 }

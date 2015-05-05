@@ -48,7 +48,6 @@ public class InstanceManager{
 		_jsonScenario = testScenarioBlob;
 		_parser = new JsonFile(testScenarioBlob);
 
-
 		_status = "";
 
 		//TODO: read the test Scenario blob. right now it is hard coded to start only one house named "house1"

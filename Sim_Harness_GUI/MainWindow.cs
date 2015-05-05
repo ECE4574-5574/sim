@@ -16,10 +16,8 @@ public partial class MainWindow: Gtk.Window
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
 		Build();
-
 	}
-
-
+		
 	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
 	{
 		_instances.killGeneratorProcesses();
@@ -47,8 +45,6 @@ public partial class MainWindow: Gtk.Window
 			_parser = new JsonFile(jsonBlob);
 
 		}
-
-
 	}
 
 	protected void OnAppSimulatorChooseFileButtonClicked(object sender, EventArgs e)
