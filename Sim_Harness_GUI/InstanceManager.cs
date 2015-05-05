@@ -50,7 +50,6 @@ public class InstanceManager{
 			//TODO: read the test Scenario blob. right now it is hard coded to start only one house named "house1"
 			prepProcesses();
 			startSimHouses();
-	
 			if(_errorHouses.Count != 0)
 			{
 				return false;
@@ -169,12 +168,9 @@ public class InstanceManager{
 			if(!_houses[i].isRunning() || _houses[i].Error)
 			{
 				_errorHouses.Add(_houses[i]);
-				houseIndexRemove.Add(i);
+				_houses.RemoveAt(i);
+				i--;
 			}
-		}
-		foreach(int i in houseIndexRemove)
-		{
-			_houses.RemoveAt(i);
 		}
 	}
 
