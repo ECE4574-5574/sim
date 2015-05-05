@@ -218,16 +218,17 @@ public partial class MainWindow: Gtk.Window
 			houseServerResponse = h.postMessage(x.serverInfo());
 
 		}
-		currentTestTextview.Buffer.Text = "\tHouse Server: " + houseserver + "\n\n\tResponse: " + houseServerResponse + "\n\n----------------------------------\n\n";
+		currentTestTextview.Buffer.Text += "\tHouse Server: " + houseserver + "\n\n\tResponse: " + houseServerResponse + "\n\n----------------------------------\n\n";
 
 		Server u = new Server(userserver);
 
 		foreach(JsonUser y in users.Values)
 		{
 			userServerResponse = u.postMessage(y.serverInfo());
+			currentTestTextview.Buffer.Text += "\t " + y.serverInfo();
 		}
 
-		currentTestTextview.Buffer.Text = "\tUser Server: " + userserver + "\n\n\tResponse: " + userServerResponse + "\n\n----------------------------------\n\n";
+		currentTestTextview.Buffer.Text += "\tUser Server: " + userserver + "\n\n\tResponse: " + userServerResponse + "\n\n----------------------------------\n\n";
 
 		//end prepopulation
 		currentTestTextview.Buffer.Text += "Attempting to open the Generator processes..\n\n";
