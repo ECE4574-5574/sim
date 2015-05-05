@@ -24,14 +24,11 @@ public class InstanceManager{
 		OperatingSystem os = Environment.OSVersion;
 		myOS = os.Platform.ToString();
 	}
-
-
-
+		
 	public int getNumberHouses()
 	{
 		return _houses.Count;
 	}
-
 
 	//NOTE: names are from the parent's (this program's) perspective
 
@@ -125,9 +122,6 @@ public class InstanceManager{
 		return output;
 	}
 
-
-
-
 	/**
 	 * Attempts to start a process with particualar information. If the process starts
 	 * correctly it will retrun true.
@@ -167,11 +161,12 @@ public class InstanceManager{
 		for(int i = 0; i < _houses.Count; i++)
 		{
 			_houses[i].Start();
-			if(_houses[i].ProcessStarted)
+			/* check if process is running as expected */
+			if(_houses[i].isRunning())
 			{
 				_houses[i].waitForResponse();
 			}
-			if(!_houses[i].ProcessStarted || _houses[i].Error)
+			if(!_houses[i].isRunning() || _houses[i].Error)
 			{
 				_errorHouses.Add(_houses[i]);
 				houseIndexRemove.Add(i);

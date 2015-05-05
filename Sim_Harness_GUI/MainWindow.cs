@@ -16,10 +16,8 @@ public partial class MainWindow: Gtk.Window
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
 		Build();
-
 	}
-
-
+		
 	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
 	{
 		_instances.killGeneratorProcesses();
@@ -47,8 +45,6 @@ public partial class MainWindow: Gtk.Window
 			_parser = new JsonFile(jsonBlob);
 
 		}
-
-
 	}
 
 	protected void OnAppSimulatorChooseFileButtonClicked(object sender, EventArgs e)
@@ -181,12 +177,11 @@ public partial class MainWindow: Gtk.Window
 		String jsonStartString = buildStartString();
 
 		// build obj
+		urlserver = serverURLEntry.Text;
 		Server s = new Server(urlserver);
-
 
 		// sendmsg store response in serverResponse
 		string serverResponse = s.postMessage(jsonStartString);
-
 
 		currentTestTextview.Buffer.Text = "Make request to server:\n\n\t" + jsonStartString + "\n\n\tServer: " + urlserver + "\n\n\tResponse: " + serverResponse + "\n\n----------------------------------\n\n";
 

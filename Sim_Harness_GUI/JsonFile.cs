@@ -39,6 +39,19 @@ public class JsonFile
 	{
 		_users = new Dictionary<int, JsonUser>();
 		_houses = new Dictionary<int, JsonHouse>();
+		/* check if string is in correct json format */
+		try {
+			var obj = JToken.Parse(jsonConfig);
+//			Console.WriteLine(obj.ToString(Newtonsoft.Json.Formatting.Indented));
+		}
+		catch(JsonReaderException jex) {
+			//Exception in parsing json
+			Console.WriteLine(jex.Message);
+		}
+		catch (Exception ex) //some other exception
+		{
+			Console.WriteLine(ex.ToString());
+		}
 		_error = jsonStringParser(jsonConfig);
 	}
 
@@ -52,7 +65,6 @@ public class JsonFile
 		}
 
 		JObject info = null;
-
 
 		try
 		{
@@ -100,7 +112,6 @@ public class JsonFile
 			}
 		}
 		return wasError;
-
 	}
 
 	public override string ToString()
