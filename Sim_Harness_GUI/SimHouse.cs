@@ -16,7 +16,7 @@ public class SimHouse
  	 * Instantiates a SimHouse object - a simulated house
  	 * \param[in] scenarioConfig String containing the scenario config in JSON format
  	 */
-	public SimHouse(String scenarioConfig, string app_path, string house_id)
+	public SimHouse(String scenarioConfig, string app_path, string house_name, int house_id)
 	{
 		_startInformation = new ProcessStartInfo();
 		_startInformation.FileName = app_path;
@@ -25,7 +25,8 @@ public class SimHouse
 		_startInformation.RedirectStandardOutput = true;
 		_startInformation.RedirectStandardError = true;
 		_startInformation.UseShellExecute = false;
-		_houseName = house_id;
+		_houseName = house_name;
+		_houseID = house_id;
 		_processStarted = false;
 		_processError = false;
 
@@ -109,6 +110,7 @@ public class SimHouse
 
 	public override string ToString(){
 		string output = "\tHouse Name:        " + _houseName + "\n" +
+						"\tHouse ID:        " + _houseName + "\n" +
 		                "\tLocation:        " + _process.StartInfo.FileName + "\n" +
 		                "\tProcess Started: " + _processStarted + "\n"; 
 
@@ -146,6 +148,7 @@ public class SimHouse
 	protected StreamWriter _standardIn;
 	protected StreamReader _standardOut, _errorOut;
 	protected String _status, _houseName, _houseOutput;
+	int _houseID;
 	protected bool _processStarted;
 	public bool ProcessStarted
 	{

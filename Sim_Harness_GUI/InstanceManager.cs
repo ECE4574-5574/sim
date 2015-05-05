@@ -8,7 +8,6 @@ namespace Sim_Harness_GUI
 {
 public class InstanceManager{
 	protected List<SimHouse> _houses, _errorHouses;
-	protected List<SimApp> _apps;
 	protected JsonFile _parser;
 	protected string _timeFrameInfo, _jsonScenario, _appPath, _houseLocation, _status;
 	protected string myOS;
@@ -19,7 +18,6 @@ public class InstanceManager{
 	{
 		_houses = new List<SimHouse>();
 		_errorHouses = new List<SimHouse>();
-		_apps = new List<SimApp>();
 		_status = "";
 
 		//set myOS as either "Unix" for a Mac OS, or "Win32NT" for a Windows OS
@@ -31,16 +29,13 @@ public class InstanceManager{
 	{
 		return _houses.Count;
 	}
-
-	public int getNumberApps()
-	{
-		return _apps.Count;
-	}
-
+		
 	//NOTE: names are from the parent's (this program's) perspective
 
 	//this function gets called when the 'startTestButton' button is clicked
 	public bool startGeneratorProcesses(string appLocation, string houseLocation, string timeFrameBlob, string testScenarioBlob){
+		_houses.Clear();
+		_errorHouses.Clear();
 
 		_timeFrameInfo = timeFrameBlob;
 		_houseLocation = houseLocation;
@@ -48,24 +43,32 @@ public class InstanceManager{
 		_jsonScenario = testScenarioBlob;
 		_parser = new JsonFile(testScenarioBlob);
 
-		_status = "";
+		if(!_parser.Error)
+		{
+			_status = "";
 
-		//TODO: read the test Scenario blob. right now it is hard coded to start only one house named "house1"
-		prepProcesses();
-		startSimHouses();
+			//TODO: read the test Scenario blob. right now it is hard coded to start only one house named "house1"
+			prepProcesses();
+			startSimHouses();
 	
-		if(_errorHouses.Count != 0)
+			if(_errorHouses.Count != 0)
+			{
+				return false;
+			}
+
+			//TODO: set up how to start the mobile app
+			startOneApp(appLocation, testScenarioBlob);
+
+			// Send the "go command to the houses 
+			sendGoHouses();
+			return true;
+		}
+		else
 		{
 			return false;
 		}
 
-		//TODO: set up how to start the mobile app
-		startOneApp(appLocation, testScenarioBlob);
 
-		// Send the "go command to the houses 
-		sendGoHouses();
-
-		return true;
 	}
 
 	public void killGeneratorProcesses(){
@@ -77,6 +80,7 @@ public class InstanceManager{
 		}
 
 		_houses.Clear();
+		_errorHouses.Clear();
 
 	}
 		
@@ -133,39 +137,16 @@ public class InstanceManager{
 		return started;
 	}
 
-	/*
-	private string killProcess(ref Process p){
-		string output = "\tProcess ID: " + p.Id + "\n";
-		try {
-			p.Kill();
-			output = string.Concat(output,"\tProcess killed successfully\n");
-		} catch (InvalidOperationException ex) {
-			output = string.Concat(output, "\tInvalidOperationException thrown - the process has already exited\n");
-		} catch (Exception ex) {
-			output = string.Concat(output, "\tException thrown while trying to kill the process\n");
-			output = string.Concat(output, ex.Message);
-			output = string.Concat(output, "\n");
-		}
-		return output;
-	}*/
-
 	/**
 	 * This will create every simHouse and every simApp found in the JSON config file
 	 */
 	private void prepProcesses()
 	{
 		// TODO: prep all of the app process information
-		//List<string> houseNames= findHouses();
-		/*foreach(string houseName in houseNames)
+		foreach(JsonHouse house in _parser.Houses.Values)
 		{
-			SimHouse newHouse = new SimHouse(_jsonScenario, _houseLocation, houseName);
+			SimHouse newHouse = new SimHouse(_jsonScenario, _houseLocation, house.Name, house.Id);
 			_houses.Add(newHouse);
-		}*/
-		foreach(KeyValuePair<int, JsonHouse> entry in _parser.Houses)
-		{
-			// add new simhouse from _parser
-			SimHouse simHouse = new SimHouse(_jsonScenario, _houseLocation, entry.Value.Name);
-			_houses.Add(simHouse);
 		}
 	}
 
@@ -213,7 +194,6 @@ public class InstanceManager{
 	{
 		
 		string output = "[Instance Manager]\n\n\tNumber of Houses: " + (_houses.Count + _errorHouses.Count)  + "\n" +
-						"\tNumber of Apps: " +_apps.Count + "\n"+
 						"\tHouses:\n\n";
 
 		output += "\tSuccessfully run houses:\n\n";
@@ -226,7 +206,7 @@ public class InstanceManager{
 		{
 			output += house.ToString() + "\n\n";
 		}
-//		return "";
+
 		return output;
 	}
 

@@ -14,7 +14,7 @@ public class SimApp
  	 * Instantiates a SimApp object - a representation of an end-user's app
  	 * \param[in] scenarioConfig String containing the scenario config in JSON format
  	 */
-	public SimApp(String scenarioConfig, string app_path, string user_id)
+	public SimApp(String scenarioConfig, string app_path, string user_name, int user_id)
 	{
 		string args = String.Concat("--user ", user_id);
 		args = String.Concat(" --scenario ", scenarioConfig);
