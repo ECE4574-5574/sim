@@ -33,8 +33,6 @@ public class InstanceManager{
 	}
 
 
-
-
 	//NOTE: names are from the parent's (this program's) perspective
 
 	//this function gets called when the 'startTestButton' button is clicked
