@@ -1,0 +1,67 @@
+{
+    "storageLocation": "54.152.190.217",
+    "serverLocation": "52.5.95.215",
+    "users": [
+        {
+            "Username": "User1",
+            "UserID": 0,
+            "Password": "thePassword",
+            "Coordinates": {
+                "x": "1234",
+                "y": "4321",
+                "z": "6789"
+            },
+            "events": [
+                {
+                    "time": "1997-07-16T19:20:30+01:00",
+                    "key": "locationchange",
+                    "value": {
+                        "lat": 1.123456,
+                        "lon": 2.123456,
+                        "altitude": 3.123456
+                    }
+                },
+                {
+                    "time": "1997-07-16T20:21:22+01:00",
+                    "key": "locationchange",
+                    "value": {
+                        "lat": 4.123456,
+                        "lon": 5.123456,
+                        "altitude": 6.123456
+                    }
+                }
+            ]
+        },
+        {
+            "Username": "User2",
+            "UserID": 1,
+            "Password": "secondPassword",
+            "Coordinates": {
+                "x": "1234",
+                "y": "4321",
+                "z": "6789"
+            },
+            "events": [
+                {
+                    "time": "1997-07-16T19:20:30+01:00",
+                    "key": "locationchange",
+                    "value": {
+                        "lat": 1.123456,
+                        "lon": 2.123456,
+                        "altitude": 3.123456
+                    }
+                },
+                {
+                    "time": "1997-07-16T20:21:22+01:00",
+                    "key": "locationchange",
+                    "value": {
+                        "lat": 4.123456,
+                        "lon": 5.123456,
+                        "altitude": 6.123456
+                    }
+                }
+            ]
+        }
+    ],
+    "houses": []
+}

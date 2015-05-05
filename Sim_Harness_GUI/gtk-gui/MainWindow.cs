@@ -119,16 +119,16 @@ public partial class MainWindow
 		this.mainLayoutBox.Name = "mainLayoutBox";
 		this.mainLayoutBox.Spacing = 6;
 		// Container child mainLayoutBox.Gtk.Box+BoxChild
-		this.mainWindowTitleLabel = new global::Gtk.Label ();
-		this.mainWindowTitleLabel.Name = "mainWindowTitleLabel";
-		this.mainWindowTitleLabel.Ypad = 7;
-		this.mainWindowTitleLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Sim Harness");
-		this.mainWindowTitleLabel.Justify = ((global::Gtk.Justification)(2));
-		this.mainLayoutBox.Add (this.mainWindowTitleLabel);
-		global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.mainLayoutBox [this.mainWindowTitleLabel]));
-		w1.Position = 0;
-		w1.Expand = false;
-		w1.Fill = false;
+//		this.mainWindowTitleLabel = new global::Gtk.Label ();
+//		this.mainWindowTitleLabel.Name = "mainWindowTitleLabel";
+//		this.mainWindowTitleLabel.Ypad = 7;
+//		this.mainWindowTitleLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Sim Harness");
+//		this.mainWindowTitleLabel.Justify = ((global::Gtk.Justification)(2));
+//		this.mainLayoutBox.Add (this.mainWindowTitleLabel);
+//		global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.mainLayoutBox [this.mainWindowTitleLabel]));
+//		w1.Position = 0;
+//		w1.Expand = false;
+//		w1.Fill = false;
 		// Container child mainLayoutBox.Gtk.Box+BoxChild
 		this.topLayoutBox = new global::Gtk.HBox ();
 		this.topLayoutBox.Name = "topLayoutBox";
@@ -555,8 +555,10 @@ public partial class MainWindow
 		// Container child GtkScrolledWindow1.Gtk.Container+ContainerChild
 		this.currentTestTextview = new global::Gtk.TextView ();
 		this.currentTestTextview.WidthRequest = 500;
+		this.currentTestTextview.HeightRequest = 200;
 		this.currentTestTextview.CanFocus = true;
 		this.currentTestTextview.Name = "currentTestTextview";
+		this.currentTestTextview.Editable = false;
 		this.GtkScrolledWindow1.Add (this.currentTestTextview);
 		this.vbox15.Add (this.GtkScrolledWindow1);
 		global::Gtk.Box.BoxChild w46 = ((global::Gtk.Box.BoxChild)(this.vbox15 [this.GtkScrolledWindow1]));
@@ -588,8 +590,8 @@ public partial class MainWindow
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 939;
-		this.DefaultHeight = 753;
+		this.DefaultWidth = DefaultWidth;
+		this.DefaultHeight = DefaultHeight;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.serverURLEntry.Changed += new global::System.EventHandler (this.OnServerURLEntryChanged);

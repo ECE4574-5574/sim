@@ -65,6 +65,7 @@ public class Server
 		data.Close();*/
 		var body = "";
 		var task = MakeRequest(msg);
+		try {
 		if(task.Status != TaskStatus.Faulted)
 		{
 			task.Wait();
@@ -80,6 +81,11 @@ public class Server
 			body = "Invalid Server";
 		}
 		return body;
+		}
+		catch (Exception e) {
+			Console.WriteLine(e.Message);
+			return "Invalid Server";
+		}
 	}
 
 	private static async Task<HttpResponseMessage> MakeRequest(string msg)
