@@ -54,6 +54,7 @@ public class Server
 			url = "fake_server";
 	}
 
+	/* return either OK or Invalid Server */
 	public string postMessage(string msg){
 		/*WebRequest request = WebRequest.CreateHttp("https://posttestserver.com/post.php");
 		request.Method = "POST";
@@ -66,21 +67,21 @@ public class Server
 		var body = "";
 		var task = MakeRequest(msg);
 		try {
-		if(task.Status != TaskStatus.Faulted)
-		{
-			task.Wait();
+			if(task.Status != TaskStatus.Faulted)
+			{
+				task.Wait();
 
-			var response = task.Result;
+				var response = task.Result;
 
-			body = response.StatusCode.ToString();
+				body = response.StatusCode.ToString();
 
-//			body = response.Content.ReadAsStringAsync().Result;
-		}
-		else
-		{
-			body = "Invalid Server";
-		}
-		return body;
+	//			body = response.Content.ReadAsStringAsync().Result;
+			}
+			else
+			{
+				body = "Invalid Server";
+			}
+			return body;
 		}
 		catch (Exception e) {
 			Console.WriteLine(e.Message);
